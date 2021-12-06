@@ -37,7 +37,6 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
                 Naziv = meniAddVM.naziv,
                 Opis = meniAddVM.opis,
                 Cijena = meniAddVM.cijena,
-                Izdvojeno = meniAddVM.izdvojeno,
                 MeniGrupaID = meniAddVM.meniGrupaId
             };
 
