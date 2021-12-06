@@ -1,0 +1,32 @@
+<!-- Header-->
+<header class="py-5 bg-image-full" style="background-image: url('/assets/img/cover/posebna-ponuda.jpg')">
+  <div class="text-center my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">Posebna ponuda</h1>
+      <p class="lead fw-normal text-white mb-0">Ove sedmice za Vas posebno izdvajamo sljedeće specijalitete</p>
+    </div>
+  </div>
+</header>
+<!-- Portfolio Grid-->
+<section class="page-section bg-light" id="portfolio">
+  <div class="container">
+    <div class="row">
+      <div *ngFor = "let stavka of posebnaPonuda" class="col-lg-4 col-sm-6 mb-4">
+        <!-- stavka posebne ponude -->
+        <div class="portfolio-item">
+          <a class="portfolio-link" (click)="prikaziDetalje(stavka)">
+            <div class="portfolio-hover">
+              <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+            </div>
+            <img class="img-fluid" src="{{stavka.slika}}" alt="Nije učitana slika" />
+          </a>
+          <div class="portfolio-caption">
+            <div class="portfolio-caption-heading">{{stavka.naziv}}</div>
+            <div class="portfolio-caption-subheading text-muted">{{stavka.opis}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

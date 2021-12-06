@@ -1,0 +1,50 @@
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand">eRestoran</a>
+    <button style="color:white" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fas fa-bars ms-1"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+        <li class="nav-item"><a class="nav-link active" routerLink="home-page">Home</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="meni">Meni</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="posebna-ponuda">Posebna ponuda</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Rezervacija</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Omiljeno</a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="#">Najdraže stavke</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item" href="#">Najdraže narudžbe</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="navbar-nav d-flex">
+        <li class="nav-item btn btn-outline-light" type="submit">
+          <i class="bi-cart-fill me-1"></i>
+          Korpa
+          <span class="badge bg-light text-black ms-1 rounded-pill">0</span>
+        </li>
+        <li class="nav-item btn btn-outline-light">
+          <i class="bi bi-person-lines-fill"></i>
+          Moj profil
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<router-outlet></router-outlet>
+<!-- Footer-->
+<footer class="footer py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-4 text-lg-start"></div>
+      <div class="col-lg-4 my-3 my-lg-0">
+        Copyright &copy; eRestoran 2021
+      </div>
+      <div class="col-lg-4 text-lg-end">
+      </div>
+    </div>
+  </div>
+</footer>
