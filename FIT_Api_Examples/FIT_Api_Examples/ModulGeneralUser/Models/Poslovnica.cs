@@ -12,6 +12,7 @@ namespace FIT_Api_Examples.ModulGeneralUser.Models
         public int ID { get; set; }
         public string Adresa { get; set; }
         public string BrojTelefona { get; set; }
+        public string RadnoVrijeme { get; set; }
         [ForeignKey("OpstinaID")]
         public int OpstinaID { get; set; }
         public Opstina Opstina { get; set; }
