@@ -23,4 +23,23 @@ export class NovaStavkaComponent implements OnInit {
       this.meniGrupe = result;
     });
   }
+
+  generisiPreview() {
+    // @ts-ignore
+    var file = document.getElementById("fajl-input").files[0];
+
+    if (file){
+      var reader = new FileReader();
+      reader.onload = function (){
+        document.getElementById("preview-slika").setAttribute("src", reader.result.toString());
+      }
+
+      reader.readAsDataURL(file);
+    }
+
+  }
+
+  posaljiPodatke() {
+
+  }
 }
