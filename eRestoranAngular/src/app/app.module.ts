@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { PosebnaPonudaComponent } from './posebna-ponuda/posebna-ponuda.component';
 import { MeniComponent } from './meni/meni.component';
+import { NovaStavkaComponent } from './meni/nova-stavka/nova-stavka.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomePageComponent,
     PosebnaPonudaComponent,
-    MeniComponent
+    MeniComponent,
+    NovaStavkaComponent
   ],
   imports: [
     BrowserModule,
@@ -21,7 +23,8 @@ import { MeniComponent } from './meni/meni.component';
     RouterModule.forRoot([
       {path:"home-page", component:HomePageComponent},
       {path:"posebna-ponuda", component:PosebnaPonudaComponent},
-      {path:"meni", component:MeniComponent}
+      {path:"meni", component:MeniComponent},
+      {path:"nova-stavka", component:NovaStavkaComponent}
     ],{
       anchorScrolling : 'enabled',
       scrollPositionRestoration : 'enabled',

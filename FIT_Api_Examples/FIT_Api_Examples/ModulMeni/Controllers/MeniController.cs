@@ -43,8 +43,8 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
 
             if (meniAddVM.slikaMeniStavke != null)
             {
-                if (meniAddVM.slikaMeniStavke.Length > 400 * 1000) 
-                    return BadRequest("Maksimalna velicina slike je 400 KB");
+                if (meniAddVM.slikaMeniStavke.Length > 200 * 1000) 
+                    return BadRequest("Maksimalna velicina slike je 200 KB");
 
                 string ekstenzijaSlike = Path.GetExtension(meniAddVM.slikaMeniStavke.FileName);
                 string noviNaziv = $"{Guid.NewGuid()}{ekstenzijaSlike}";
