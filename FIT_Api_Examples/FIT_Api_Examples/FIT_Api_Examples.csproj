@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>d34a87ca-df94-40ff-9646-3a36e6c2616a</UserSecretsId>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="3.1.10" />
+		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.10" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.10" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.10" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.10" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.10" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.10" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="ModulGeneralUser\Controllers\" />
+	  <Folder Include="ModulGeneralUser\ViewModels\" />
+	  <Folder Include="ModulKorisnik\Controllers\" />
+	  <Folder Include="ModulKorisnik\ViewModels\" />
+	  <Folder Include="ModulNarudzba\Controllers\" />
+	  <Folder Include="ModulNarudzba\ViewModels\" />
+	  <Folder Include="wwwroot\uploads\" />
+	</ItemGroup>
+</Project>
