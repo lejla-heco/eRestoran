@@ -1,0 +1,69 @@
+
+<header class="py-5 bg-image-full" style="background-image: url('/assets/img/cover/nova-stavka.jpg')">
+  <div class="text-center my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">Uređivanje meni stavke</h1>
+    </div>
+  </div>
+</header>
+<!-- Product section-->
+<!--*ngIf="urediStavka!=null"-->
+<section  class="py-5 bg-light">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="row gx-4 gx-lg-5 align-items-center">
+      <div class="col-md-6">
+        <img id="preview-slika" class="card-img-top mb-5 mb-md-0" alt="Prostor za fotografiju"/>
+        <div  class="d-flex">
+          <input class="btn btn-outline-dark flex-shrink-0" id="fajl-input" accept="image/*" type="file" (change)="generisiPreview()"/>
+        </div>
+      </div>
+      <div  class="col-md-6">
+        <div class="small mb-1">Uredite podatke o meni stavci</div>
+        <h3 class="display-5 fw-bolder">Uređivanje meni stavka</h3>
+        <div class="fs-6 mb-5">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Naziv</span>
+            </div>
+            <input type="text" class="form-control" [(ngModel)]="urediStavka.naziv">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Sastojci</span>
+            </div>
+            <input type="text" class="form-control" [(ngModel)]="urediStavka.opis">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Cijena</span>
+            </div>
+            <input type="number" min="0.1" class="form-control" [(ngModel)]="urediStavka.cijena">
+            <div class="input-group-append">
+              <span class="input-group-text">KM</span>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Cijena posebne ponude</span>
+            </div>
+            <input type="number" min="0.1" class="form-control" [(ngModel)]="urediStavka.snizenaCijena">
+            <div class="input-group-append">
+              <span class="input-group-text">KM</span>
+            </div>
+          </div>
+          <label>Meni kategorija:</label>
+          <select class="form-control mb-3" [(ngModel)]="urediStavka.nazivGrupe">
+            <option *ngFor = "let grupa of meniGrupe" [value]=grupa.id>{{grupa.naziv}}</option>
+          </select>
+        </div>
+        <div class="d-flex">
+          <button class="btn btn-outline-dark flex-shrink-0" type="button" (click)="posaljiPodatke()">
+            <i class="bi bi-plus-circle-fill"></i>
+            Dodaj na meni
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

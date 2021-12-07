@@ -45,6 +45,7 @@
           <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
             <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Dodaj u korpu</a>
               <a *ngIf="stavka.izdvojeno==false" class="btn btn-outline-dark mt-auto mx-1" (click)="izdvoji(stavka)">Izdvoji</a>
+              <a class="btn btn-outline-dark mt-auto" routerLink="/edit-stavka" (click)="detalji(stavka)">Uredi</a>
             </div>
             <i class="omiljeno bi bi-heart"></i>
             <i class="bi bi-three-dots"></i>
@@ -54,3 +55,5 @@
     </div>
   </div>
 </section>
+
+<!--<app-edit-stavka [urediStavka]= "odabranaStavka"></app-edit-stavka>-->

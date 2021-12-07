@@ -9,3 +9,4 @@ export class MeniStavka{
   ocjena : number;
   nazivGrupe : string;
 }
+

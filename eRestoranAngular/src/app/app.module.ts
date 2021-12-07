@@ -8,6 +8,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { PosebnaPonudaComponent } from './posebna-ponuda/posebna-ponuda.component';
 import { MeniComponent } from './meni/meni.component';
 import { NovaStavkaComponent } from './meni/nova-stavka/nova-stavka.component';
+import { EditStavkaComponent } from './meni/edit-stavka/edit-stavka.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { NovaStavkaComponent } from './meni/nova-stavka/nova-stavka.component';
     HomePageComponent,
     PosebnaPonudaComponent,
     MeniComponent,
-    NovaStavkaComponent
+    NovaStavkaComponent,
+    EditStavkaComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +27,8 @@ import { NovaStavkaComponent } from './meni/nova-stavka/nova-stavka.component';
       {path:"home-page", component:HomePageComponent},
       {path:"posebna-ponuda", component:PosebnaPonudaComponent},
       {path:"meni", component:MeniComponent},
-      {path:"nova-stavka", component:NovaStavkaComponent}
+      {path:"nova-stavka", component:NovaStavkaComponent},
+      {path:"edit-stavka", component:EditStavkaComponent}
     ],{
       anchorScrolling : 'enabled',
       scrollPositionRestoration : 'enabled',

@@ -44,7 +44,37 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
             _dbContext.SaveChanges();
             return Ok(meniStavkaNova.ID);
         }
+        [HttpPost("{id}")]
+        public ActionResult Update(int id, [FromBody] MeniUpdateVM meniUpdateVM)
+        {
+            
+            MeniStavka meniStavka = _dbContext.MeniStavka.Find(id);
 
+            if (meniStavka == null)
+                return BadRequest("pogresan ID");
+
+            meniStavka.Naziv = meniUpdateVM.naziv.RemoveTags();
+            meniStavka.Opis =meniUpdateVM.opis.RemoveTags();
+            meniStavka.Cijena = meniUpdateVM.cijena;
+            meniStavka.SnizenaCijena = meniUpdateVM.snizenaCijena;
+           meniStavka.MeniGrupaID = meniUpdateVM.meniGrupaId;
+
+            _dbContext.SaveChanges();
+            return Ok(meniStavka.ID);
+        }
+        [HttpPost("{id}")]
+        public ActionResult Delete(int id)
+        {
+            MeniStavka meniStavka = _dbContext.MeniStavka.Find(id);
+
+            if (meniStavka == null || id == 1)
+                return BadRequest("pogresan ID");
+
+            _dbContext.Remove(meniStavka);
+
+            _dbContext.SaveChanges();
+            return Ok(meniStavka);
+        }
         [HttpPost("{id}")]
         public ActionResult AddSlika(int id, [FromForm] MeniAddSlikaVM meniAddSlikaVM)
         {
