@@ -37,6 +37,7 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
                 Naziv = meniAddVM.naziv,
                 Opis = meniAddVM.opis,
                 Cijena = meniAddVM.cijena,
+                SnizenaCijena = meniAddVM.snizenaCijena,
                 MeniGrupaID = meniAddVM.meniGrupaId
             };
             _dbContext.MeniStavka.Add(meniStavkaNova);

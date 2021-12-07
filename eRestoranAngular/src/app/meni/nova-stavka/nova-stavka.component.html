@@ -40,6 +40,15 @@
               <span class="input-group-text">KM</span>
             </div>
           </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Cijena posebne ponude</span>
+            </div>
+            <input type="number" min="0.1" class="form-control" [(ngModel)]="novaStavka.snizenaCijena">
+            <div class="input-group-append">
+              <span class="input-group-text">KM</span>
+            </div>
+          </div>
           <label>Meni kategorija:</label>
           <select class="form-control mb-3" [(ngModel)]="novaStavka.meniGrupaId">
             <option *ngFor = "let grupa of meniGrupe" [value]=grupa.id>{{grupa.naziv}}</option>
