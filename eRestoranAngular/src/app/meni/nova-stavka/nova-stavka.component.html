@@ -10,8 +10,8 @@
   <div class="container px-4 px-lg-5 my-5">
     <div class="row gx-4 gx-lg-5 align-items-center">
       <div class="col-md-6">
-        <img id="preview-slika" class="card-img-top mb-5 mb-md-0" alt="Prostor za fotografiju" />
-        <div class="d-flex">
+        <img id="preview-slika" class="card-img-top mb-5 mb-md-0" alt="Prostor za fotografiju"/>
+        <div  class="d-flex">
           <input class="btn btn-outline-dark flex-shrink-0" id="fajl-input" accept="image/*" type="file" (change)="generisiPreview()"/>
         </div>
       </div>
@@ -23,26 +23,26 @@
             <div class="input-group-prepend">
               <span class="input-group-text">Naziv</span>
             </div>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" [(ngModel)]="novaStavka.naziv">
           </div>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Sastojci</span>
             </div>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" [(ngModel)]="novaStavka.opis">
           </div>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Cijena</span>
             </div>
-            <input type="text" class="form-control">
+            <input type="number" min="0.1" class="form-control" [(ngModel)]="novaStavka.cijena">
             <div class="input-group-append">
               <span class="input-group-text">KM</span>
             </div>
           </div>
           <label>Meni kategorija:</label>
-          <select class="form-control mb-3">
-            <option *ngFor = "let grupa of meniGrupe" [value]="grupa.id">{{grupa.naziv}}</option>
+          <select class="form-control mb-3" [(ngModel)]="novaStavka.meniGrupaId">
+            <option *ngFor = "let grupa of meniGrupe" [value]=grupa.id>{{grupa.naziv}}</option>
           </select>
         </div>
         <div class="d-flex">

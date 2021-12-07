@@ -12,6 +12,7 @@ import {MeniGrupa} from "../view-models/meni-grupa-vm";
 export class NovaStavkaComponent implements OnInit {
   novaStavka : NovaMeniStavka = new NovaMeniStavka();
   meniGrupe : MeniGrupa[] = null;
+  vraceniId : number = null;
   constructor(private httpKlijent : HttpClient) { }
 
   ngOnInit(): void {
@@ -33,13 +34,31 @@ export class NovaStavkaComponent implements OnInit {
       reader.onload = function (){
         document.getElementById("preview-slika").setAttribute("src", reader.result.toString());
       }
-
       reader.readAsDataURL(file);
     }
-
   }
 
   posaljiPodatke() {
+    // @ts-ignore
+    var file = document.getElementById("fajl-input").files[0];
+    this.novaStavka.meniGrupaId = parseInt(this.novaStavka.meniGrupaId.toString());
+    var data = new FormData();
+    data.append("slikaMeniStavke", file);
+    this.httpKlijent.post(MyConfig.adresaServera + "/Meni/Add", this.novaStavka).subscribe((result : any)=>{
+      this.httpKlijent.post(MyConfig.adresaServera + "/Meni/AddSlika/" + result, data).subscribe((result:any)=>{
+        alert("uspjesno?");
+      });
+    });
+  }
 
+  posaljiSliku() {
+    // @ts-ignore
+    var file = document.getElementById("fajl-input").files[0];
+
+    var data = new FormData();
+    data.append("slikaMeniStavke", file);
+    this.httpKlijent.post(MyConfig.adresaServera + "/Meni/AddSlika/" + this.vraceniId, data).subscribe((result:any)=>{
+      alert("uspjesno?");
+    });
   }
 }

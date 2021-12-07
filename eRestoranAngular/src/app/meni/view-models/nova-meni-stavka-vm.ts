@@ -1,7 +1,6 @@
 export class NovaMeniStavka {
   naziv : string;
-  opis : number;
-  cijena : string;
+  opis : string;
+  cijena : number;
   meniGrupaId : number;
-  slika : string;
 }

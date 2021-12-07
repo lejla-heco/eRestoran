@@ -39,20 +39,38 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
                 Cijena = meniAddVM.cijena,
                 MeniGrupaID = meniAddVM.meniGrupaId
             };
-
-            if (meniAddVM.slikaMeniStavke != null)
-            {
-                if (meniAddVM.slikaMeniStavke.Length > 200 * 1000) 
-                    return BadRequest("Maksimalna velicina slike je 200 KB");
-
-                string ekstenzijaSlike = Path.GetExtension(meniAddVM.slikaMeniStavke.FileName);
-                string noviNaziv = $"{Guid.NewGuid()}{ekstenzijaSlike}";
-                meniAddVM.slikaMeniStavke.CopyTo(new FileStream(Config.SlikeFolder + noviNaziv, FileMode.Create));
-                meniStavkaNova.Slika = Config.SlikeURL + noviNaziv;
-            }
             _dbContext.MeniStavka.Add(meniStavkaNova);
             _dbContext.SaveChanges();
-            return Ok(meniStavkaNova);
+            return Ok(meniStavkaNova.ID);
+        }
+
+        [HttpPost("{id}")]
+        public ActionResult AddSlika(int id, [FromForm] MeniAddSlikaVM meniAddSlikaVM)
+        {
+            try
+            {
+                MeniStavka meniStavka = _dbContext.MeniStavka.Find(id);
+
+                if (meniAddSlikaVM.slikaMeniStavke != null && meniStavka != null)
+                {
+                    if (meniAddSlikaVM.slikaMeniStavke.Length > 250 * 1000)
+                        return BadRequest("max velicina fajla je 250 KB");
+
+                    string ekstenzija = Path.GetExtension(meniAddSlikaVM.slikaMeniStavke.FileName);
+
+                    var filename = $"{Guid.NewGuid()}{ekstenzija}";
+
+                    meniAddSlikaVM.slikaMeniStavke.CopyTo(new FileStream(Config.SlikeFolder + filename, FileMode.Create));
+                    meniStavka.Slika = Config.SlikeURL + filename;
+                    _dbContext.SaveChanges();
+                }
+
+                return Ok(meniStavka);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message + ex.InnerException);
+            }
         }
 
         [HttpGet]

@@ -32,7 +32,7 @@ namespace FIT_Api_Examples
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-          
+
             services.AddControllers();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
