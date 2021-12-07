@@ -7,4 +7,5 @@ export class MeniStavka{
   izdvojeno : boolean;
   snizenaCijena : number;
   ocjena : number;
+  nazivGrupe : string;
 }

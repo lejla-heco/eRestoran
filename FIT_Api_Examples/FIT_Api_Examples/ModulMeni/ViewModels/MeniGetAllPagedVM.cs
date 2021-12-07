@@ -15,5 +15,6 @@ namespace FIT_Api_Examples.ModulMeni.ViewModels
         public bool izdvojeno { get; set; }
         public float snizenaCijena { get; set; }
         public float ocjena { get; set; }
+        public string nazivGrupe { get; set; }
     }
 }

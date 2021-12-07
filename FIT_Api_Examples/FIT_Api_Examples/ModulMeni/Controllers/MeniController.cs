@@ -87,7 +87,8 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
                                                 slika = ms.Slika,
                                                 izdvojeno = ms.Izdvojeno,
                                                 snizenaCijena = ms.SnizenaCijena,
-                                                ocjena = ms.Ocjena
+                                                ocjena = ms.Ocjena,
+                                                nazivGrupe = ms.MeniGrupa.Naziv
                                             }).ToList();
             return pagedStavke;
         }

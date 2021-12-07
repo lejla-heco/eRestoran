@@ -35,4 +35,10 @@ export class MeniComponent implements OnInit {
       this.meniGrupe = result;
     })
   }
+
+  izdvoji(stavka : MeniStavka) {
+    this.httpKlijent.post(MyConfig.adresaServera + "/PosebnaPonuda/Izdvoji", stavka.id).subscribe((result : any)=>{
+      this.ucitajMeniStavke(stavka.nazivGrupe);
+    });
+  }
 }

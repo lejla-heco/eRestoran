@@ -11,10 +11,10 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    public class PosbenaPonudaController : Controller
+    public class PosebnaPonudaController : Controller
     {
         private ApplicationDbContext _dbContext;
-        public PosbenaPonudaController(ApplicationDbContext dbContext)
+        public PosebnaPonudaController(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -34,5 +34,24 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
                 }).ToList();
             return posebnaPonuda;
         }
+
+        [HttpPost]
+        public IActionResult Izdvoji([FromBody]int id)
+        {
+            MeniStavka izdvojenaStavka = _dbContext.MeniStavka.Find(id);
+            izdvojenaStavka.Izdvojeno = true;
+            _dbContext.SaveChanges();
+            return Ok();
+        }
+
+        [HttpPost]
+        public IActionResult Ukloni([FromBody]int id)
+        {
+            MeniStavka izdvojenaStavka = _dbContext.MeniStavka.Find(id);
+            izdvojenaStavka.Izdvojeno = false;
+            _dbContext.SaveChanges();
+            return Ok();
+        }
+
     }
 }

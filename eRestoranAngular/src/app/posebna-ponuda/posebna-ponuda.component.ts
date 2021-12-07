@@ -18,12 +18,19 @@ export class PosebnaPonudaComponent implements OnInit {
   }
 
   private getPosebnaPonuda() {
-    this.httpKlijent.get(MyConfig.adresaServera + "/PosbenaPonuda/GetAll").subscribe((result:any) =>{
+    this.httpKlijent.get(MyConfig.adresaServera + "/PosebnaPonuda/GetAll").subscribe((result:any) =>{
       this.posebnaPonuda = result;
     })
   }
 
   public prikaziDetalje(stavka : PosebnaPonudaStavka){
     this.stavkaDetalji = stavka;
+  }
+
+  ukloni(id : number) {
+    this.httpKlijent.post(MyConfig.adresaServera + "/PosebnaPonuda/Ukloni", id).subscribe((result : any)=>{
+      alert("Uklonjena stavka posebne ponude");
+      this.getPosebnaPonuda();
+    });
   }
 }
