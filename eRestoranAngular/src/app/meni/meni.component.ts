@@ -15,6 +15,7 @@ export class MeniComponent implements OnInit {
   constructor(private httpKlijent : HttpClient) { }
 
   ngOnInit(): void {
+    this.getMeniGrupe();
     this.ucitajMeniStavke();
   }
 
@@ -27,5 +28,11 @@ export class MeniComponent implements OnInit {
   createRange(ocjena: number) {
     let velicina = Math.round(ocjena);
     return new Array(velicina);
+  }
+
+  private getMeniGrupe() {
+    this.httpKlijent.get(MyConfig.adresaServera + "/MeniGrupa/GetAll").subscribe((result : any)=>{
+      this.meniGrupe = result;
+    })
   }
 }

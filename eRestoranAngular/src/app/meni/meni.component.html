@@ -12,14 +12,14 @@
     <div class="col-md-8">
       <ul class="nav site-tab-nav">
         <li *ngFor ="let grupa of meniGrupe" class="nav-item">
-          <a class="nav-link active" (click)="ucitajMeniStavke('{{grupa.naziv}}')">{{grupa.naziv}}</a>
+          <a class="nav-link active" (click)="ucitajMeniStavke(grupa.naziv)">{{grupa.naziv}}</a>
         </li>
       </ul>
     </div>
   </div>
   <div class="container px-4 px-lg-5 mt-5">
     <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-      <div *ngFor="let stavka of meniStavke" class="col mb-5">
+      <div *ngFor="let stavka of meniStavke" class="animate__animated animate__fadeIn col mb-5">
         <div class="card h-100">
           <!-- Sale badge-->
           <div *ngIf="stavka.izdvojeno==true" class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Izdvojeno</div>
