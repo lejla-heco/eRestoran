@@ -11,23 +11,8 @@
   <div class="row justify-content-center">
     <div class="col-md-8">
       <ul class="nav site-tab-nav">
-        <li class="nav-item">
-          <a class="nav-link active" (click)="ucitajMeniStavke()">Doručak</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" (click)="ucitajMeniStavke('Predjelo')">Predjelo</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" (click)="ucitajMeniStavke('Glavno jelo')">Glavno jelo</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" (click)="ucitajMeniStavke('Salata')">Salata</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" (click)="ucitajMeniStavke('Desert')">Desert</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" (click)="ucitajMeniStavke('Piće')">Piće</a>
+        <li *ngFor ="let grupa of meniGrupe" class="nav-item">
+          <a class="nav-link active" (click)="ucitajMeniStavke('{{grupa.naziv}}')">{{grupa.naziv}}</a>
         </li>
       </ul>
     </div>

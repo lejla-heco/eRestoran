@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {MeniStavka} from "./view-models/meni-stavka-vm";
 import {MyConfig} from "../my-config";
+import {MeniGrupa} from "./view-models/meni-grupa-vm";
 
 @Component({
   selector: 'app-meni',
@@ -10,6 +11,7 @@ import {MyConfig} from "../my-config";
 })
 export class MeniComponent implements OnInit {
   meniStavke : MeniStavka[] = null;
+  meniGrupe : MeniGrupa[] = null;
   constructor(private httpKlijent : HttpClient) { }
 
   ngOnInit(): void {

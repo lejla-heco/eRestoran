@@ -50,15 +50,4 @@ export class NovaStavkaComponent implements OnInit {
       });
     });
   }
-
-  posaljiSliku() {
-    // @ts-ignore
-    var file = document.getElementById("fajl-input").files[0];
-
-    var data = new FormData();
-    data.append("slikaMeniStavke", file);
-    this.httpKlijent.post(MyConfig.adresaServera + "/Meni/AddSlika/" + this.vraceniId, data).subscribe((result:any)=>{
-      alert("uspjesno?");
-    });
-  }
 }
