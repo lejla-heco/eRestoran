@@ -27,7 +27,7 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
                     id = ms.ID,
                     naziv = ms.Naziv,
                     opis = ms.Opis,
-                    cijena = ms.Cijena,
+                    snizenaCijena = ms.SnizenaCijena,
                     slika = ms.Slika,
                     ocjena = ms.Ocjena,
                     meniGrupaNaziv = ms.MeniGrupa.Naziv

@@ -10,7 +10,6 @@ import { MyConfig } from '../my-config';
 })
 export class PosebnaPonudaComponent implements OnInit {
   posebnaPonuda : PosebnaPonudaStavka[] = null;
-  stavkaDetalji : PosebnaPonudaStavka = null;
   odabranaStavka: PosebnaPonudaStavka = null;
   constructor(private httpKlijent : HttpClient) { }
 
@@ -25,7 +24,7 @@ export class PosebnaPonudaComponent implements OnInit {
   }
 
   public prikaziDetalje(stavka : PosebnaPonudaStavka){
-    this.stavkaDetalji = stavka;
+    this.odabranaStavka = stavka;
   }
 
   ukloni(id : number) {
@@ -33,5 +32,10 @@ export class PosebnaPonudaComponent implements OnInit {
       alert("Uklonjena stavka posebne ponude");
       this.getPosebnaPonuda();
     });
+  }
+
+  createRange(ocjena: number) {
+    let velicina = Math.round(ocjena);
+    return new Array(velicina);
   }
 }

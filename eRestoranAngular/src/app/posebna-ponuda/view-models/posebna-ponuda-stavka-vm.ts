@@ -2,7 +2,7 @@ export class PosebnaPonudaStavka{
   id : number;
   naziv : string;
   opis : number;
-  cijena : string;
+  snizenaCijena : string;
   slika : string;
   ocjena : number;
   meniGrupaNaziv : string;
