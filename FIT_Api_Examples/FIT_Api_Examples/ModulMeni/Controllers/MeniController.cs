@@ -143,11 +143,5 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
             }
             return null;
         }
-
-        [HttpGet]
-        public string GetGuid()
-        {
-            return Guid.NewGuid().ToString();
-        }
     }
 }

@@ -11,6 +11,7 @@ import { MyConfig } from '../my-config';
 export class PosebnaPonudaComponent implements OnInit {
   posebnaPonuda : PosebnaPonudaStavka[] = null;
   stavkaDetalji : PosebnaPonudaStavka = null;
+  odabranaStavka: PosebnaPonudaStavka = null;
   constructor(private httpKlijent : HttpClient) { }
 
   ngOnInit(): void {
