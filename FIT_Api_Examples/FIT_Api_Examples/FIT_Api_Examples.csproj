@@ -17,8 +17,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="ModulGeneralUser\Controllers\" />
-	  <Folder Include="ModulGeneralUser\ViewModels\" />
+	  <Folder Include="ModulKorisnickiNalog\Controllers\" />
+	  <Folder Include="ModulKorisnickiNalog\ViewModels\" />
 	  <Folder Include="ModulKorisnik\Controllers\" />
 	  <Folder Include="ModulKorisnik\ViewModels\" />
 	  <Folder Include="ModulNarudzba\Controllers\" />

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FIT_Api_Examples.ModulGeneralUser.Models
 {
-    public class GeneralUser
+    public class KorisnickiNalog
     {
         public int ID { get; set; }
         public string Ime { get; set; }

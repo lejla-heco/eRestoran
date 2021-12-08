@@ -14,6 +14,8 @@ namespace FIT_Api_Examples.ModulNarudzba.Models
         public bool Omiljeno { get; set; }
         public float Cijena { get; set; }
         public DateTime DatumNarucivanja { get; set; }
+        public bool Zakljucena { get; set; }
+        public int BrojStavki { get; set; }
         [ForeignKey("KorisnikID")]
         public int KorisnikID { get; set; }
         public Korisnik Korisnik { get; set; }

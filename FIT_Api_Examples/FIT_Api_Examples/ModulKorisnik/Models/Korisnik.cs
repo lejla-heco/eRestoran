@@ -7,14 +7,11 @@ using System.Threading.Tasks;
 
 namespace FIT_Api_Examples.ModulKorisnik.Models
 {
-    public class Korisnik
+    public class Korisnik : KorisnickiNalog
     {
         public int ID { get; set; }
         public string AdresaStanovanja { get; set; }
         public string BrojTelefona { get; set; }
-        [ForeignKey("GeneralUserID")]
-        public int GeneralUserID { get; set; }
-        public GeneralUser GeneralUser { get; set; }
         [ForeignKey("OpstinaID")]
         public int OpstinaID { get; set; }
         public Opstina Opstina { get; set; }
