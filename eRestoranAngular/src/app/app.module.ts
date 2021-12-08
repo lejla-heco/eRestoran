@@ -28,7 +28,7 @@ import { EditStavkaComponent } from './meni/edit-stavka/edit-stavka.component';
       {path:"posebna-ponuda", component:PosebnaPonudaComponent},
       {path:"meni", component:MeniComponent},
       {path:"nova-stavka", component:NovaStavkaComponent},
-      {path:"edit-stavka", component:EditStavkaComponent}
+      {path:"edit-stavka/:id", component:EditStavkaComponent}
     ],{
       anchorScrolling : 'enabled',
       scrollPositionRestoration : 'enabled',

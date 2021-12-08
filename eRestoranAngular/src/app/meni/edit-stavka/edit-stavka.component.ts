@@ -1,10 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {NovaMeniStavka} from "../view-models/nova-meni-stavka-vm";
 import {MeniGrupa} from "../view-models/meni-grupa-vm";
 import {MyConfig} from "../../my-config";
 import {ActivatedRoute} from "@angular/router";
-import {MeniStavka} from "../view-models/meni-stavka-vm";
+import {EditMeniStavka} from "../view-models/edit-meni-stavka-vm";
 
 @Component({
   selector: 'app-edit-stavka',
@@ -12,12 +11,16 @@ import {MeniStavka} from "../view-models/meni-stavka-vm";
   styleUrls: ['./edit-stavka.component.css']
 })
 export class EditStavkaComponent implements OnInit {
- @Input() urediStavka : any;
+  id : number;
+  urediStavka : EditMeniStavka = null;
   meniGrupe : MeniGrupa[] = null;
-  vraceniId : number = null;
-  constructor(private httpKlijent : HttpClient,private route: ActivatedRoute) { }
+  constructor(private httpKlijent : HttpClient, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.id = +params['id'];
+    });
+    this.dohvatiMeniStavku();
   }
 
   generisiPreview() {
@@ -53,4 +56,9 @@ export class EditStavkaComponent implements OnInit {
     });
   }
 
+  private dohvatiMeniStavku() {
+    this.httpKlijent.get(MyConfig.adresaServera + "/Meni/GetById/"+this.id).subscribe((result : any) =>{
+      this.urediStavka = result;
+    })
+  }
 }

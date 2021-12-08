@@ -1,8 +1,8 @@
 export class MeniStavka{
   id : number;
   naziv : string;
-  opis : number;
-  cijena : string;
+  opis : string;
+  cijena : number;
   slika : string;
   izdvojeno : boolean;
   snizenaCijena : number;

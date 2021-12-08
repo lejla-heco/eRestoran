@@ -12,7 +12,6 @@ import {MeniGrupa} from "../view-models/meni-grupa-vm";
 export class NovaStavkaComponent implements OnInit {
   novaStavka : NovaMeniStavka = new NovaMeniStavka();
   meniGrupe : MeniGrupa[] = null;
-  vraceniId : number = null;
   constructor(private httpKlijent : HttpClient) { }
 
   ngOnInit(): void {

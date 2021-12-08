@@ -123,6 +123,27 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
             return pagedStavke;
         }
 
+        [HttpGet("{id}")]
+        public MeniUpdateVM GetById(int id)
+        {
+            MeniStavka meniStavka = _dbContext.MeniStavka.Find(id);
+            if (meniStavka != null)
+            {
+                MeniUpdateVM odabranaStavka = new MeniUpdateVM()
+                {
+                    id = meniStavka.ID,
+                    naziv = meniStavka.Naziv,
+                    opis = meniStavka.Opis,
+                    cijena = meniStavka.Cijena,
+                    snizenaCijena = meniStavka.SnizenaCijena,
+                    meniGrupaId = meniStavka.MeniGrupaID,
+                    slika = meniStavka.Slika
+                };
+                return odabranaStavka;
+            }
+            return null;
+        }
+
         [HttpGet]
         public string GetGuid()
         {

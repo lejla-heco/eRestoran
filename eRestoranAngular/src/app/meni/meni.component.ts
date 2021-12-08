@@ -4,6 +4,7 @@ import {MeniStavka} from "./view-models/meni-stavka-vm";
 import {MyConfig} from "../my-config";
 import {MeniGrupa} from "./view-models/meni-grupa-vm";
 import {NovaMeniStavka} from "./view-models/nova-meni-stavka-vm";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-meni',
@@ -13,16 +14,12 @@ import {NovaMeniStavka} from "./view-models/nova-meni-stavka-vm";
 export class MeniComponent implements OnInit {
   meniStavke : MeniStavka[] = null;
   meniGrupe : MeniGrupa[] = null;
-  odabranaStavka: any=null;
-  constructor(private httpKlijent : HttpClient) { }
+  odabranaStavka: NovaMeniStavka = new NovaMeniStavka();
+  constructor(private httpKlijent : HttpClient, private router : Router) { }
 
   ngOnInit(): void {
     this.getMeniGrupe();
     this.ucitajMeniStavke();
-  }
-  detalji(s:any){
-    this.odabranaStavka=s;
-   // this.odabranaStavka.prikazi = true;
   }
   public ucitajMeniStavke(kategorija : string = "Doručak") {
     this.httpKlijent.get(MyConfig.adresaServera + "/Meni/GetAllPaged?nazivKategorije=" + kategorija).subscribe((result : any)=>{
@@ -45,5 +42,9 @@ export class MeniComponent implements OnInit {
     this.httpKlijent.post(MyConfig.adresaServera + "/PosebnaPonuda/Izdvoji", stavka.id).subscribe((result : any)=>{
       this.ucitajMeniStavke(stavka.nazivGrupe);
     });
+  }
+
+  detalji(id : number) {
+    this.router.navigate(['/edit-stavka', id]);
   }
 }
