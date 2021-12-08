@@ -45,12 +45,15 @@
           <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
             <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Dodaj u korpu</a>
               <a *ngIf="stavka.izdvojeno==false" class="btn btn-outline-dark mt-auto mx-1" (click)="izdvoji(stavka)">Izdvoji</a>
-              <a class="btn btn-outline-dark mt-auto" (click)="detalji(stavka.id)"><i class="bi bi-pencil-square"></i></a>
-              <a class="btn btn-outline-dark mt-auto" (click)="brisanje(stavka)"><i class="bi bi-trash"></i></a>
+              <!--<a class="btn btn-outline-dark mt-auto" (click)="detalji(stavka.id)"><i class="bi bi-pencil-square"></i></a>
+              <a class="btn btn-outline-dark mt-auto" (click)="brisanje(stavka)"><i class="bi bi-trash"></i></a>-->
 
             </div>
             <i class="omiljeno bi bi-heart"></i>
-            <i class="bi bi-three-dots"></i>
+            <i class="bi bi-three-dots"  >    </i>
+            <i class="bi bi-pencil-square" (click)="detalji(stavka.id)" style="margin-left: 10px"> </i>
+            <i class="bi bi-trash" (click)="prikazi_brisanje(stavka)" style="margin-left: 10px"></i>
+
           </div>
         </div>
       </div>
@@ -58,5 +61,31 @@
   </div>
 </section>
 
-<!--<app-edit-stavka [urediStavka]= "odabranaStavka"></app-edit-stavka>-->
+<!-- Modal za brisanje stavke menija-->
+<div *ngIf="odabranaStavkaMenija != null" class="animate__animated animate__fadeIn portfolio-modal modal" id="portfolioModal" tabindex="-1" aria-labelledby="portfolioModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" aria-label="Close" (click)="odabranaStavkaMenija = null"></button>
+      </div>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <div class="modal-body">
+              <!-- Project details-->
+              <h3 class="text-uppercase">{{odabranaStavkaMenija.naziv}}</h3>
+              <p class="item-intro text-muted"></p>
 
+              <p>{{odabranaStavkaMenija.opis}}</p>
+              <p style="font-size: larger ">Da li ste sigurni da želite obrisati odabranu stavku menija?</p>
+              <button class="btn btn-danger  text-uppercase" (click)="brisanje(odabranaStavkaMenija)">
+                <i class="bi bi-trash"></i>
+                Obriši
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
