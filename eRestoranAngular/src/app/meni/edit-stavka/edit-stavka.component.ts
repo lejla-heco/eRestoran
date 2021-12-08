@@ -14,6 +14,7 @@ export class EditStavkaComponent implements OnInit {
   id : number;
   urediStavka : EditMeniStavka = null;
   meniGrupe : MeniGrupa[] = null;
+
   constructor(private httpKlijent : HttpClient, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -21,8 +22,13 @@ export class EditStavkaComponent implements OnInit {
       this.id = +params['id'];
     });
     this.dohvatiMeniStavku();
+    this.getAllMeniGrupe();
   }
-
+  private getAllMeniGrupe() {
+    this.httpKlijent.get(MyConfig.adresaServera + "/MeniGrupa/GetAll").subscribe((result:any)=>{
+      this.meniGrupe = result;
+    });
+  }
   generisiPreview() {
     // @ts-ignore
     var file = document.getElementById("fajl-input").files[0];
@@ -36,23 +42,16 @@ export class EditStavkaComponent implements OnInit {
     }
   }
   posaljiPodatke() {
-    // @ts-ignore
 
-  /*  this.httpKlijent.post(MojConfig.adresa_servera+ "/Student/Update/"+this.urediStudent.id,this.urediStudent).subscribe
-    ((x:any)=>{
-      //alert("uredu..."+ x.opstina_rodjenja.drzava.naziv);
-      alert("Vaši podaci su uspješno izmjenjeni, "+x.ime+" "+x.prezime);
-      this.urediStudent=null;// kako ucitati kod  dodan u html???
-    });*/
-
-    /*var file = document.getElementById("fajl-input").files[0];
+     // @ts-ignore
+    var file = document.getElementById("fajl-input").files[0];
     this.urediStavka.meniGrupaId = parseInt(this.urediStavka.meniGrupaId.toString());
     var data = new FormData();
-    data.append("slikaMeniStavke", file);*/
-    this.httpKlijent.post(MyConfig.adresaServera + "/Meni/Update/"+ this.urediStavka, this.urediStavka).subscribe((result : any)=>{
-      //this.httpKlijent.post(MyConfig.adresaServera + "/Meni/AddSlika/" + result, data).subscribe((result:any)=>{
-        alert("uspjesno?");
-      //});
+    data.append("slikaMeniStavke", file);
+    this.httpKlijent.post(MyConfig.adresaServera + "/Meni/Update/"+ this.urediStavka.id, this.urediStavka).subscribe((result :any)=>{
+      this.httpKlijent.post(MyConfig.adresaServera + "/Meni/AddSlika/" + result, data).subscribe((result: any)=>{
+        alert("Uspješno uređena stavka menija "+ this.urediStavka.naziv);
+      });
     });
   }
 
