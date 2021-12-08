@@ -15,6 +15,8 @@ export class MeniComponent implements OnInit {
   meniStavke : MeniStavka[] = null;
   meniGrupe : MeniGrupa[] = null;
   odabranaStavka: NovaMeniStavka = new NovaMeniStavka();
+
+
   constructor(private httpKlijent : HttpClient, private router : Router) { }
 
   ngOnInit(): void {
@@ -46,5 +48,17 @@ export class MeniComponent implements OnInit {
 
   detalji(id : number) {
     this.router.navigate(['/edit-stavka', id]);
+
   }
+
+  brisanje(s :MeniStavka) {
+    //this.router.navigate(['/delete-stavka', id]);
+if(confirm("Da li želite obrisati odabranu stavku "+s.naziv)){
+  this.httpKlijent.post(MyConfig.adresaServera+"/Meni/Delete/"+s.id, s).subscribe((x:any)=>{
+    alert("Stavka "+ s.naziv+ " je uspješno obrisana");
+  })
+  }
+}
+
+
 }

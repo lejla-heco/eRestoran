@@ -10,6 +10,7 @@ import { MeniComponent } from './meni/meni.component';
 import { NovaStavkaComponent } from './meni/nova-stavka/nova-stavka.component';
 import { EditStavkaComponent } from './meni/edit-stavka/edit-stavka.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,6 +19,7 @@ import { EditStavkaComponent } from './meni/edit-stavka/edit-stavka.component';
     MeniComponent,
     NovaStavkaComponent,
     EditStavkaComponent
+
   ],
   imports: [
     BrowserModule,
@@ -29,6 +31,7 @@ import { EditStavkaComponent } from './meni/edit-stavka/edit-stavka.component';
       {path:"meni", component:MeniComponent},
       {path:"nova-stavka", component:NovaStavkaComponent},
       {path:"edit-stavka/:id", component:EditStavkaComponent}
+
     ],{
       anchorScrolling : 'enabled',
       scrollPositionRestoration : 'enabled',
