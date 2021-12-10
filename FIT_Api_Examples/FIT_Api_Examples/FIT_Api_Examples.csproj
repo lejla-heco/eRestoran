@@ -17,12 +17,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="ModulKorisnickiNalog\Controllers\" />
-	  <Folder Include="ModulKorisnickiNalog\ViewModels\" />
 	  <Folder Include="ModulKorisnik\Controllers\" />
 	  <Folder Include="ModulKorisnik\ViewModels\" />
-	  <Folder Include="ModulNarudzba\Controllers\" />
-	  <Folder Include="ModulNarudzba\ViewModels\" />
 	  <Folder Include="wwwroot\uploads\" />
 	</ItemGroup>
 </Project>
