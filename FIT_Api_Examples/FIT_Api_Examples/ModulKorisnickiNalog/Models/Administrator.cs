@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace FIT_Api_Examples.ModulKorisnickiNalog.Models
 {
-    public class Uloga
+    public class Administrator : KorisnickiNalog
     {
-        public int ID { get; set; }
-        public string Naziv { get; set; }
+        public DateTime DatumKreiranja { get; set; }
     }
 }

@@ -10,7 +10,8 @@ import {Router} from "@angular/router";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  prijava : Login = null;
+  prijava : Login = new Login();
+  zapamtiMe : boolean;
   constructor(private httpKlijent : HttpClient, private router : Router) { }
 
   ngOnInit(): void {
@@ -18,14 +19,13 @@ export class LoginComponent implements OnInit {
 
   posaljiPodatke() {
     this.httpKlijent.post(MyConfig.adresaServera+'/Autentifikacija/Login',this.prijava).subscribe((response : any)=>{
-      localStorage.setItem("autentifikacija-token", response)
-
-      if (response!="greska") {
-        //redirect na login putanju
-        this.router.navigateByUrl("/login");
+      if (response!=null) {
+        if (this.zapamtiMe) localStorage.setItem("autentifikacija-token", JSON.stringify(response));
+        else sessionStorage.setItem("autentifikacija-token", JSON.stringify(response));
+        this.router.navigateByUrl("/home-page");
       }
       else {
-        alert("pogresan username i/ili password");
+        alert("Neispravno korisničko ime i lozinka");
       }
       }
     )

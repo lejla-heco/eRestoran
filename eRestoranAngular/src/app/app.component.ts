@@ -29,6 +29,7 @@ export class AppComponent {
         else this.uloga = Uloga.GOST;
       }
     });
+    router.navigateByUrl('home-page');
   }
 
 }

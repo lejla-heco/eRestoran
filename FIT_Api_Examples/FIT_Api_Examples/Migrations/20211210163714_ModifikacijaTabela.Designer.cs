@@ -4,14 +4,16 @@ using FIT_Api_Examples.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FIT_Api_Examples.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211210163714_ModifikacijaTabela")]
+    partial class ModifikacijaTabela
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,7 +47,7 @@ namespace FIT_Api_Examples.Migrations
                     b.ToTable("AutentifikacijaToken");
                 });
 
-            modelBuilder.Entity("FIT_Api_Examples.ModulKorisnickiNalog.Models.KorisnickiNalog", b =>
+            modelBuilder.Entity("FIT_Api_Examples.ModulGeneralUser.Models.KorisnickiNalog", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -83,7 +85,7 @@ namespace FIT_Api_Examples.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("KorisnickiNalog");
                 });
 
-            modelBuilder.Entity("FIT_Api_Examples.ModulKorisnickiNalog.Models.Poslovnica", b =>
+            modelBuilder.Entity("FIT_Api_Examples.ModulGeneralUser.Models.Poslovnica", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -109,7 +111,7 @@ namespace FIT_Api_Examples.Migrations
                     b.ToTable("Poslovnica");
                 });
 
-            modelBuilder.Entity("FIT_Api_Examples.ModulKorisnickiNalog.Models.Uloga", b =>
+            modelBuilder.Entity("FIT_Api_Examples.ModulGeneralUser.Models.Uloga", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -422,19 +424,9 @@ namespace FIT_Api_Examples.Migrations
                     b.ToTable("StatusRezervacije");
                 });
 
-            modelBuilder.Entity("FIT_Api_Examples.ModulKorisnickiNalog.Models.Administrator", b =>
-                {
-                    b.HasBaseType("FIT_Api_Examples.ModulKorisnickiNalog.Models.KorisnickiNalog");
-
-                    b.Property<DateTime>("DatumKreiranja")
-                        .HasColumnType("datetime2");
-
-                    b.HasDiscriminator().HasValue("Administrator");
-                });
-
             modelBuilder.Entity("FIT_Api_Examples.ModulKorisnik.Models.Korisnik", b =>
                 {
-                    b.HasBaseType("FIT_Api_Examples.ModulKorisnickiNalog.Models.KorisnickiNalog");
+                    b.HasBaseType("FIT_Api_Examples.ModulGeneralUser.Models.KorisnickiNalog");
 
                     b.Property<string>("AdresaStanovanja")
                         .HasColumnType("nvarchar(max)");
@@ -452,7 +444,7 @@ namespace FIT_Api_Examples.Migrations
 
             modelBuilder.Entity("FIT_Api_Examples.ModulZaposleni.Models.Dostavljac", b =>
                 {
-                    b.HasBaseType("FIT_Api_Examples.ModulKorisnickiNalog.Models.KorisnickiNalog");
+                    b.HasBaseType("FIT_Api_Examples.ModulGeneralUser.Models.KorisnickiNalog");
 
                     b.Property<int>("DostavljeneNarudzbe")
                         .HasColumnType("int");
@@ -465,7 +457,7 @@ namespace FIT_Api_Examples.Migrations
 
             modelBuilder.Entity("FIT_Api_Examples.ModulZaposleni.Models.Zaposlenik", b =>
                 {
-                    b.HasBaseType("FIT_Api_Examples.ModulKorisnickiNalog.Models.KorisnickiNalog");
+                    b.HasBaseType("FIT_Api_Examples.ModulGeneralUser.Models.KorisnickiNalog");
 
                     b.Property<int>("ObavljeneNarudzbe")
                         .HasColumnType("int");
@@ -479,23 +471,23 @@ namespace FIT_Api_Examples.Migrations
 
             modelBuilder.Entity("FIT_Api_Examples.ModulAutentifikacija.Models.AutentifikacijaToken", b =>
                 {
-                    b.HasOne("FIT_Api_Examples.ModulKorisnickiNalog.Models.KorisnickiNalog", "korisnickiNalog")
+                    b.HasOne("FIT_Api_Examples.ModulGeneralUser.Models.KorisnickiNalog", "korisnickiNalog")
                         .WithMany()
                         .HasForeignKey("KorisnickiNalogId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FIT_Api_Examples.ModulKorisnickiNalog.Models.KorisnickiNalog", b =>
+            modelBuilder.Entity("FIT_Api_Examples.ModulGeneralUser.Models.KorisnickiNalog", b =>
                 {
-                    b.HasOne("FIT_Api_Examples.ModulKorisnickiNalog.Models.Uloga", "Uloga")
+                    b.HasOne("FIT_Api_Examples.ModulGeneralUser.Models.Uloga", "Uloga")
                         .WithMany()
                         .HasForeignKey("UlogaID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FIT_Api_Examples.ModulKorisnickiNalog.Models.Poslovnica", b =>
+            modelBuilder.Entity("FIT_Api_Examples.ModulGeneralUser.Models.Poslovnica", b =>
                 {
                     b.HasOne("FIT_Api_Examples.ModulKorisnik.Models.Opstina", "Opstina")
                         .WithMany()

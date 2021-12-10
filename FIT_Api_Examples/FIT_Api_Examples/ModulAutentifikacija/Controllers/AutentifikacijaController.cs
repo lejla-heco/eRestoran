@@ -2,7 +2,7 @@
 using FIT_Api_Examples.Helper;
 using FIT_Api_Examples.ModulAutentifikacija.Models;
 using FIT_Api_Examples.ModulAutentifikacija.ViewModels;
-using FIT_Api_Examples.ModulGeneralUser.Models;
+using FIT_Api_Examples.ModulKorisnickiNalog.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -27,7 +27,7 @@ namespace FIT_Api_Examples.ModulAutentifikacija.Controllers
         public AutentifikacijaToken Login([FromBody] LoginVM x)
         {
             //1- provjera logina
-            KorisnickiNalog logiraniKorisnik = _dbContext.KorisnickiNalog.Include(kn => kn.Uloga).SingleOrDefault(k => k.Username != null && k.Username == x.korisnickoIme && k.Password == x.lozinka);
+            KorisnickiNalog logiraniKorisnik = _dbContext.KorisnickiNalog.Include(k => k.Uloga).SingleOrDefault(k => k.Username != null && k.Username == x.korisnickoIme && k.Password == x.lozinka);
 
             if (logiraniKorisnik == null)
             {
@@ -53,6 +53,12 @@ namespace FIT_Api_Examples.ModulAutentifikacija.Controllers
 
             //4- vratiti token string
             return noviToken;
+        }
+
+        [HttpGet("{id}")]
+        public KorisnickiNalog GetUser(int id)
+        {
+            return _dbContext.KorisnickiNalog.Find(id);
         }
 
 

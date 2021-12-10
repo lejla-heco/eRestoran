@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {PosebnaPonudaStavka} from "./view-models/posebna-ponuda-stavka-vm";
 import {HttpClient} from "@angular/common/http";
 import { MyConfig } from '../my-config';
+import {Router} from "@angular/router";
+import {Uloga} from "../helper/uloga";
 
 @Component({
   selector: 'app-posebna-ponuda',
@@ -11,7 +13,15 @@ import { MyConfig } from '../my-config';
 export class PosebnaPonudaComponent implements OnInit {
   posebnaPonuda : PosebnaPonudaStavka[] = null;
   odabranaStavka: PosebnaPonudaStavka = null;
-  constructor(private httpKlijent : HttpClient) { }
+  uloga: string;
+  constructor(private httpKlijent : HttpClient, private router : Router) {
+    if (sessionStorage.getItem("autentifikacija-token") || localStorage.getItem("autentifikacija-token")) {
+      var korisnik = JSON.parse(sessionStorage.getItem("autentifikacija-token"));
+      if (korisnik == null) korisnik = JSON.parse(localStorage.getItem("autentifikacija-token"));
+      this.uloga = korisnik.korisnickiNalog.uloga.naziv;
+    }
+    else this.uloga = Uloga.GOST;
+  }
 
   ngOnInit(): void {
     this.getPosebnaPonuda();

@@ -1,5 +1,5 @@
 ﻿using FIT_Api_Examples.ModulAutentifikacija.Models;
-using FIT_Api_Examples.ModulGeneralUser.Models;
+using FIT_Api_Examples.ModulKorisnickiNalog.Models;
 using FIT_Api_Examples.ModulKorisnik.Models;
 using FIT_Api_Examples.ModulMeni.Models;
 using FIT_Api_Examples.ModulNarudzba.Models;
@@ -36,6 +36,7 @@ namespace FIT_Api_Examples.Data
         public DbSet<Rezervacija> Rezervacija { get; set; }
         public DbSet<Dostavljac> Dostavljac { get; set; }
         public DbSet<Zaposlenik> Zaposlenik { get; set; }
+        public DbSet<Administrator> Administrator { get; set; }
         public DbSet<AutentifikacijaToken> AutentifikacijaToken { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

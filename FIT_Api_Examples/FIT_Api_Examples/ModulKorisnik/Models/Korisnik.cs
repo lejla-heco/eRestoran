@@ -1,4 +1,4 @@
-﻿using FIT_Api_Examples.ModulGeneralUser.Models;
+﻿using FIT_Api_Examples.ModulKorisnickiNalog.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,7 +9,6 @@ namespace FIT_Api_Examples.ModulKorisnik.Models
 {
     public class Korisnik : KorisnickiNalog
     {
-        public int ID { get; set; }
         public string AdresaStanovanja { get; set; }
         public string BrojTelefona { get; set; }
         [ForeignKey("OpstinaID")]

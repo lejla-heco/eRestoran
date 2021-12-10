@@ -1,4 +1,4 @@
-﻿using FIT_Api_Examples.ModulGeneralUser.Models;
+﻿using FIT_Api_Examples.ModulKorisnickiNalog.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,7 +9,6 @@ namespace FIT_Api_Examples.ModulZaposleni.Models
 {
     public class Dostavljac : KorisnickiNalog
     {
-        public int ID { get; set; }
         public string Slika { get; set; }
         public int DostavljeneNarudzbe { get; set; }
     }

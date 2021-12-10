@@ -2432,9 +2432,9 @@ textarea.form-control-lg {
   }
 }
 .form-select:focus {
-  border-color: #ffe480;
+  border-color: #212529;
   outline: 0;
-  box-shadow: 0 0 0 0.25rem rgba(255, 200, 0, 0.25);
+  box-shadow: 0 0 0 0.25rem #212529;
 }
 .form-select[multiple], .form-select[size]:not([size="1"]) {
   padding-right: 0.75rem;
@@ -2501,13 +2501,13 @@ textarea.form-control-lg {
   filter: brightness(90%);
 }
 .form-check-input:focus {
-  border-color: #ffe480;
+  border-color: white;
   outline: 0;
-  box-shadow: 0 0 0 0.25rem rgba(255, 200, 0, 0.25);
+  box-shadow: #bfbfbf;
 }
 .form-check-input:checked {
-  background-color: #c8a97e;
-  border-color: #c8a97e;
+  background-color: #212529;
+  border-color: #212529;
 }
 .form-check-input:checked[type=checkbox] {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
@@ -2516,8 +2516,8 @@ textarea.form-control-lg {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e");
 }
 .form-check-input[type=checkbox]:indeterminate {
-  background-color: #c8a97e;
-  border-color: #c8a97e;
+  background-color: #212529;
+  border-color: #212529;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/%3e%3c/svg%3e");
 }
 .form-check-input:disabled {
@@ -2546,7 +2546,7 @@ textarea.form-control-lg {
   }
 }
 .form-switch .form-check-input:focus {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23ffe480'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23212529'/%3e%3c/svg%3e");
 }
 .form-switch .form-check-input:checked {
   background-position: right center;
@@ -11718,54 +11718,54 @@ header.masthead .masthead-heading {
   height: 2.75rem;
 }
 
-section#rezervacija {
+section#kontakt {
   background-color: #212529;
   background-repeat: no-repeat;
   background-position: center;
 }
-section#rezervacija .section-heading {
+section#kontakt .section-heading {
   color: #fff;
 }
-section#rezervacija form#rezervacijaForm .form-group {
+section#kontakt form#kontaktForm .form-group {
   margin-bottom: 1.5rem;
 }
-section#rezervacija form#rezervacijaForm .form-group input,
-section#rezervacija form#rezervacijaForm .form-group textarea {
+section#kontakt form#kontaktForm .form-group input,
+section#kontakt form#kontaktForm .form-group textarea {
   padding: 1.25rem;
 }
-section#rezervacija form#rezervacijaForm .form-group input.form-control {
+section#kontakt form#kontaktForm .form-group input.form-control {
   height: auto;
 }
-section#rezervacija form#rezervacijaForm .form-group-textarea {
+section#kontakt form#kontaktForm .form-group-textarea {
   height: 100%;
 }
-section#rezervacija form#rezervacijaForm .form-group-textarea textarea {
+section#kontakt form#kontaktForm .form-group-textarea textarea {
   height: 100%;
   min-height: 10rem;
 }
-section#rezervacija form#rezervacijaForm p.help-block {
+section#kontakt form#kontaktForm p.help-block {
   margin: 0;
 }
-section#rezervacija form#rezervacijaForm .form-control:focus {
+section#kontakt form#kontaktForm .form-control:focus {
   border-color: #c8a97e;
   box-shadow: none;
 }
-section#rezervacija form#rezervacijaForm ::-webkit-input-placeholder {
+section#kontakt form#kontaktForm ::-webkit-input-placeholder {
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-weight: 700;
   color: #ced4da;
 }
-section#rezervacija form#rezervacijaForm :-moz-placeholder {
+section#kontakt form#kontaktForm :-moz-placeholder {
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-weight: 700;
   color: #ced4da;
 }
-section#rezervacija form#rezervacijaForm ::-moz-placeholder {
+section#kontakt form#kontaktForm ::-moz-placeholder {
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-weight: 700;
   color: #ced4da;
 }
-section#rezervacija form#rezervacijaForm :-ms-input-placeholder {
+section#kontakt form#kontaktForm :-ms-input-placeholder {
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-weight: 700;
   color: #ced4da;

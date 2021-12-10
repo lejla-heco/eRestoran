@@ -1,5 +1,5 @@
 ﻿using FIT_Api_Examples.Data;
-using FIT_Api_Examples.ModulGeneralUser.Models;
+using FIT_Api_Examples.ModulKorisnickiNalog.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;

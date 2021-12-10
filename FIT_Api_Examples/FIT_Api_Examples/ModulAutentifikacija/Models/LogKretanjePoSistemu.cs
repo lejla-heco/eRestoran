@@ -1,4 +1,4 @@
-﻿using FIT_Api_Examples.ModulGeneralUser.Models;
+﻿using FIT_Api_Examples.ModulKorisnickiNalog.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

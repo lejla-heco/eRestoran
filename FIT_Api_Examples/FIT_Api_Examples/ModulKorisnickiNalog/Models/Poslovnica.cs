@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FIT_Api_Examples.ModulGeneralUser.Models
+namespace FIT_Api_Examples.ModulKorisnickiNalog.Models
 {
     public class Poslovnica
     {

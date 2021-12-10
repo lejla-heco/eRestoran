@@ -26,15 +26,8 @@ export class MeniComponent implements OnInit {
   constructor(private httpKlijent : HttpClient, private router : Router) {
     if (sessionStorage.getItem("autentifikacija-token") || localStorage.getItem("autentifikacija-token")) {
       var korisnik = JSON.parse(sessionStorage.getItem("autentifikacija-token"));
-
-      if (korisnik == null)
-        korisnik = JSON.parse(localStorage.getItem("autentifikacija-token"));
-
-      if (korisnik.korisnickiNalog.uloga.naziv == Uloga.ADMIN) this.uloga = Uloga.ADMIN;
-      else if (korisnik.korisnickiNalog.uloga.naziv == Uloga.KORISNIK) this.uloga = Uloga.KORISNIK;
-      else if (korisnik.korisnickiNalog.uloga.naziv == Uloga.ZAPOSLENIK) this.uloga = Uloga.ZAPOSLENIK;
-      else if (korisnik.korisnickiNalog.uloga.naziv == Uloga.DOSTAVLJAC) this.uloga = Uloga.DOSTAVLJAC;
-      else this.uloga = Uloga.GOST;
+      if(korisnik == null) korisnik = JSON.parse(localStorage.getItem("autentifikacija-token"));
+      this.uloga = korisnik.korisnickiNalog.uloga.naziv;
     }
     else this.uloga = Uloga.GOST;
   }

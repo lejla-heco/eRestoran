@@ -1,4 +1,4 @@
-﻿using FIT_Api_Examples.ModulGeneralUser.Models;
+﻿using FIT_Api_Examples.ModulKorisnickiNalog.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;

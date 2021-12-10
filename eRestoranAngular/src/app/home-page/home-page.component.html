@@ -3,7 +3,7 @@
   <div class="container">
     <div class="masthead-subheading">Dobro došli u</div>
     <div class="masthead-heading text-uppercase">eRestoran</div>
-    <a class="btn btn-primary btn-xl text-uppercase" [routerLink] = "['/home-page']"  fragment="rezervacija">Rezervišite sto</a>
+    <a class="btn btn-primary btn-xl text-uppercase" [routerLink] = "['/home-page']"  fragment="kontakt">Kontakt</a>
   </div>
 </header>
 <!-- Posebna ponuda -->
@@ -32,44 +32,11 @@
 
 <!-- Rezervacija-->
 
-<section id="rezervacija" class="page-section">
+<section id="kontakt" class="page-section">
   <div class="container">
     <div class="text-center">
-      <h2 class="section-heading text-uppercase">Rezervišite sto</h2>
-      <h3 class="section-subheading text-muted">Popunite sljedeću formu kako biste obavili rezervaciju</h3>
+      <h2 class="section-heading text-uppercase">Kontakt podaci</h2>
+      <h3 class="section-subheading text-muted">Ovdje možete pregledati kontakt podatke naših restorana</h3>
     </div>
-    <form>
-      <div class="row align-items-stretch mb-5">
-        <div class="col-md-6">
-          <div class="form-group">
-            <!-- Name input-->
-            <input class="form-control" id="name" type="text" placeholder="Ime *"/>
-            <!--
-            <div class="invalid-feedback">A name is required.</div> -->
-          </div>
-          <div class="form-group">
-            <!-- Email address input-->
-            <input class="form-control" id="email" type="email" placeholder="Email *"/>
-            <!--
-            <div class="invalid-feedback">An email is required.</div>
-            <div class="invalid-feedback">Email is not valid.</div>-->
-          </div>
-          <div class="form-group mb-md-0">
-            <!-- Phone number input-->
-            <input class="form-control" id="phone" type="tel" placeholder="Broj telefona *"/>
-            <!--
-            <div class="invalid-feedback">A phone number is required.</div>-->
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group form-group-textarea mb-md-0">
-            <!-- Message input-->
-            <textarea class="form-control" id="message" placeholder="Poruka *"></textarea>
-            <!--<div class="invalid-feedback">A message is required.</div>-->
-          </div>
-        </div>
-      </div>
-      <div class="text-center"><button class="btn btn-primary btn-xl text-uppercase" id="submitButton" type="submit">Send Message</button></div>
-    </form>
   </div>
 </section>
