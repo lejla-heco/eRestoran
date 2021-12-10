@@ -1,0 +1,43 @@
+<header class="py-5 bg-image-full" style="background-image: url('/assets/img/cover/narudzba.png')">
+  <div class="text-center my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">Moja korpa</h1>
+      <p class="lead fw-normal text-white mb-0">Sve stavke Vaše narudžbe</p>
+    </div>
+  </div>
+</header>
+<section class="page-section bg-light py-5">
+  <div class="container px-4 px-lg-5 mt-5">
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+      <div *ngFor="let stavka of stavkeNarudzbe" class="animate__animated animate__fadeIn col mb-5">
+        <div class="card h-100">
+          <!-- Sale badge-->
+          <div *ngIf="stavka.izdvojeno==true" class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Izdvojeno</div>
+          <!-- Product image-->
+          <img class="card-img-top" src="{{stavka.slika}}" alt="Nije učitana slika" />
+          <!-- Product details-->
+          <div class="card-body p-4">
+            <div class="text-center">
+              <!-- Product name-->
+              <h5 class="fw-bolder">{{stavka.naziv}}</h5>
+              <span class="text-muted">{{stavka.opis}}</span>
+              <!-- Product reviews-->
+              <div class="d-flex justify-content-center small text-warning mb-2">
+                <div *ngFor = "let item of createRange(stavka.ocjena)"class="bi-star-fill"></div>
+              </div>
+              <!-- Product price-->
+              <span *ngIf="stavka.izdvojeno==true" class="text-muted text-decoration-line-through">{{stavka.cijena}} KM </span>
+              <span *ngIf="stavka.izdvojeno">{{stavka.snizenaCijena}} KM</span>
+              <span *ngIf="!stavka.izdvojeno">{{stavka.cijena}} KM</span>
+            </div>
+          </div>
+          <!-- Product actions-->
+          <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Količina</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
