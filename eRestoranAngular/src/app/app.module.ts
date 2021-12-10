@@ -9,6 +9,7 @@ import { PosebnaPonudaComponent } from './posebna-ponuda/posebna-ponuda.componen
 import { MeniComponent } from './meni/meni.component';
 import { NovaStavkaComponent } from './meni/nova-stavka/nova-stavka.component';
 import { EditStavkaComponent } from './meni/edit-stavka/edit-stavka.component';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { EditStavkaComponent } from './meni/edit-stavka/edit-stavka.component';
     PosebnaPonudaComponent,
     MeniComponent,
     NovaStavkaComponent,
-    EditStavkaComponent
+    EditStavkaComponent,
+    LoginComponent
 
   ],
   imports: [
@@ -30,7 +32,8 @@ import { EditStavkaComponent } from './meni/edit-stavka/edit-stavka.component';
       {path:"posebna-ponuda", component:PosebnaPonudaComponent},
       {path:"meni", component:MeniComponent},
       {path:"nova-stavka", component:NovaStavkaComponent},
-      {path:"edit-stavka/:id", component:EditStavkaComponent}
+      {path:"edit-stavka/:id", component:EditStavkaComponent},
+      {path:"login", component:LoginComponent}
 
     ],{
       anchorScrolling : 'enabled',

@@ -11827,3 +11827,15 @@ section#rezervacija form#rezervacijaForm :-ms-input-placeholder {
   font-size: 20px;
   margin-right: 8px;
 }
+
+header.masthead-login {
+  padding-top: 11rem;
+  padding-bottom: 6rem;
+  text-align: center;
+  color: #fff;
+  background-image: url("../img/header-bg1.jpg");
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: center center;
+  background-size: cover;
+}
