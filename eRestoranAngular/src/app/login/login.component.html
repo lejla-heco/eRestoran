@@ -20,19 +20,19 @@
 
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                      <span class="input-group-text">Korisničko ime</span>
+                      <span class="input-group-text" [(ngModel)]="prijava.korisnickoIme">Korisničko ime</span>
                     </div>
                     <input type="text" class="form-control">
                   </div>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                      <span class="input-group-text">Lozinka</span>
+                      <span class="input-group-text" [(ngModel)]="prijava.lozinka">Lozinka</span>
                     </div>
                     <input type="text" class="form-control">
                   </div>
 
                   <div class="d-flex">
-                    <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                    <button class="btn btn-outline-dark flex-shrink-0" type="button" (click)="posaljiPodatke()">
                       <i class="bi bi-box-arrow-in-right"></i>
                       Prijava
                     </button>
