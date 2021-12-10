@@ -4,6 +4,7 @@ using FIT_Api_Examples.ModulAutentifikacija.Models;
 using FIT_Api_Examples.ModulAutentifikacija.ViewModels;
 using FIT_Api_Examples.ModulGeneralUser.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace FIT_Api_Examples.ModulAutentifikacija.Controllers
         public AutentifikacijaToken Login([FromBody] LoginVM x)
         {
             //1- provjera logina
-            KorisnickiNalog logiraniKorisnik = _dbContext.KorisnickiNalog.SingleOrDefault(k => k.Username != null && k.Username == x.korisnickoIme && k.Password == x.lozinka);
+            KorisnickiNalog logiraniKorisnik = _dbContext.KorisnickiNalog.Include(kn => kn.Uloga).SingleOrDefault(k => k.Username != null && k.Username == x.korisnickoIme && k.Password == x.lozinka);
 
             if (logiraniKorisnik == null)
             {
