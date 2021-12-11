@@ -61,7 +61,7 @@
                   {{odabranaStavka.snizenaCijena}} KM
                 </li>
               </ul>
-              <button *ngIf="uloga == 'Korisnik'" class="btn btn-outline-dark mb-3">
+              <button *ngIf="uloga == 'Korisnik'" class="btn btn-outline-dark mb-3" (click)="dodajUKorpu(odabranaStavka)">
                 <i class="bi bi-cart-plus-fill"></i>
                 Dodaj u korpu
               </button>
