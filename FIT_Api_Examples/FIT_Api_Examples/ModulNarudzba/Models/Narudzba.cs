@@ -20,13 +20,13 @@ namespace FIT_Api_Examples.ModulNarudzba.Models
         public int KorisnikID { get; set; }
         public Korisnik Korisnik { get; set; }
         [ForeignKey("StatusNarudzbeID")]
-        public int StatusNarudzbeID { get; set; }
+        public int? StatusNarudzbeID { get; set; }
         public StatusNarudzbe StatusNarudzbe { get; set; }
         [ForeignKey("ZaposlenikID")]
-        public int ZaposlenikID { get; set; }
+        public int? ZaposlenikID { get; set; }
         public Zaposlenik Zaposlenik { get; set; }
         [ForeignKey("DostavljacID")]
-        public int DostavljacID { get; set; }
+        public int? DostavljacID { get; set; }
         public Dostavljac Dostavljac { get; set; }
     }
 }

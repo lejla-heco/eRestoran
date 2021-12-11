@@ -49,11 +49,8 @@
           </div>
           <!-- Product actions-->
           <div *ngIf="uloga != 'Gost'" class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-            <div class="text-center"><a *ngIf = "uloga == 'Korisnik'" class="btn btn-outline-dark mt-auto" href="#">Dodaj u korpu</a>
+            <div class="text-center"><a *ngIf = "uloga == 'Korisnik'" class="btn btn-outline-dark mt-auto" (click)="dodajUKorpu(stavka)">Dodaj u korpu</a>
               <a *ngIf="uloga == 'Admin' && stavka.izdvojeno==false" class="btn btn-outline-dark mt-auto mx-1" (click)="izdvoji(stavka)">Izdvoji</a>
-              <!--<a class="btn btn-outline-dark mt-auto" (click)="detalji(stavka.id)"><i class="bi bi-pencil-square"></i></a>
-              <a class="btn btn-outline-dark mt-auto" (click)="brisanje(stavka)"><i class="bi bi-trash"></i></a>-->
-
             </div>
             <i *ngIf="uloga == 'Korisnik'" class="omiljeno bi bi-heart"></i>
             <i *ngIf="uloga == 'Korisnik'" class="bi bi-three-dots"  >    </i>

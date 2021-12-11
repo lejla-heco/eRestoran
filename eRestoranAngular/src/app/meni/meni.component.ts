@@ -8,6 +8,7 @@ import {Router} from "@angular/router";
 import {askConfirmation} from "@angular/cli/utilities/prompt";
 import {PosebnaPonudaStavka} from "../posebna-ponuda/view-models/posebna-ponuda-stavka-vm";
 import {Uloga} from "../helper/uloga";
+import {NovaStavkaNarudzbe} from "../narudzba/view-models/nova-stavka-narudzbe-vm";
 
 @Component({
   selector: 'app-meni',
@@ -19,6 +20,8 @@ export class MeniComponent implements OnInit {
   meniGrupe : MeniGrupa[] = null;
   odabranaStavka: NovaMeniStavka = new NovaMeniStavka();
   uloga : string = null;
+  id : number = null;
+  novaStavkaNarudzbe : NovaStavkaNarudzbe = new NovaStavkaNarudzbe();
 
   odabranaStavkaMenija: MeniStavka = null;
 
@@ -28,6 +31,7 @@ export class MeniComponent implements OnInit {
       var korisnik = JSON.parse(sessionStorage.getItem("autentifikacija-token"));
       if(korisnik == null) korisnik = JSON.parse(localStorage.getItem("autentifikacija-token"));
       this.uloga = korisnik.korisnickiNalog.uloga.naziv;
+      this.id = korisnik.korisnickiNalog.id;
     }
     else this.uloga = Uloga.GOST;
   }
@@ -78,4 +82,11 @@ export class MeniComponent implements OnInit {
     this.odabranaStavkaMenija = stavka;
   }
 
+  dodajUKorpu(stavka : MeniStavka) {
+    this.novaStavkaNarudzbe.korisnikId = this.id;
+    this.novaStavkaNarudzbe.meniStavkaId = stavka.id;
+    this.httpKlijent.post(MyConfig.adresaServera+"/Narudzba/AddStavka",this.novaStavkaNarudzbe).subscribe((response : any)=>{
+      document.getElementById('kolicina').innerHTML = response;
+    });
+  }
 }
