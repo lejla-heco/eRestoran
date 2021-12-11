@@ -8,7 +8,7 @@ import {Router} from "@angular/router";
 import {askConfirmation} from "@angular/cli/utilities/prompt";
 import {PosebnaPonudaStavka} from "../posebna-ponuda/view-models/posebna-ponuda-stavka-vm";
 import {Uloga} from "../helper/uloga";
-import {NovaStavkaNarudzbe} from "../narudzba/view-models/nova-stavka-narudzbe-vm";
+import {StavkaNarudzbe} from "../narudzba/view-models/stavka-narudzbe-vm";
 
 @Component({
   selector: 'app-meni',
@@ -21,7 +21,7 @@ export class MeniComponent implements OnInit {
   odabranaStavka: NovaMeniStavka = new NovaMeniStavka();
   uloga : string = null;
   id : number = null;
-  novaStavkaNarudzbe : NovaStavkaNarudzbe = new NovaStavkaNarudzbe();
+  novaStavkaNarudzbe : StavkaNarudzbe = new StavkaNarudzbe();
 
   odabranaStavkaMenija: MeniStavka = null;
 

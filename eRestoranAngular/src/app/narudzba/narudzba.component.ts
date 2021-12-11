@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Narudzba} from "./view-models/narudzba-vm";
 import {HttpClient} from "@angular/common/http";
 import {MyConfig} from "../my-config";
+import {StavkaNarudzbe} from "./view-models/stavka-narudzbe-vm";
+import {NarudzbaStavka} from "./view-models/narudzba-stavka";
 
 @Component({
   selector: 'app-narudzba',
@@ -11,6 +13,7 @@ import {MyConfig} from "../my-config";
 export class NarudzbaComponent implements OnInit {
   narudzba : Narudzba = null;
   id : number;
+  podaci : StavkaNarudzbe = new StavkaNarudzbe();
 
   constructor(private httpKlijent : HttpClient) {
     if (sessionStorage.getItem("autentifikacija-token") || localStorage.getItem("autentifikacija-token")) {
@@ -27,6 +30,19 @@ export class NarudzbaComponent implements OnInit {
   private ucitajNarudzbu() {
     this.httpKlijent.get(MyConfig.adresaServera + "/Narudzba/GetNarudzba/" + this.id).subscribe((response : any)=>{
       this.narudzba = response;
+    });
+  }
+
+  ukloni(stavka : NarudzbaStavka) {
+    this.httpKlijent.get(MyConfig.adresaServera+"/Narudzba/UkloniStavku/" + stavka.id).subscribe((response : any)=>{
+      this.narudzba = response;
+      this.ucitajBrojStavki(this.id);
+    });
+  }
+
+  private ucitajBrojStavki(id : number) {
+    this.httpKlijent.get(MyConfig.adresaServera + "/Narudzba/GetBrojStavki/" + id).subscribe((response : any) => {
+      document.getElementById('kolicina').innerHTML = response;
     });
   }
 }

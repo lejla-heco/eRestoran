@@ -4,7 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import { MyConfig } from '../my-config';
 import {Router} from "@angular/router";
 import {Uloga} from "../helper/uloga";
-import {NovaStavkaNarudzbe} from "../narudzba/view-models/nova-stavka-narudzbe-vm";
+import {StavkaNarudzbe} from "../narudzba/view-models/stavka-narudzbe-vm";
 
 @Component({
   selector: 'app-posebna-ponuda',
@@ -16,7 +16,7 @@ export class PosebnaPonudaComponent implements OnInit {
   odabranaStavka: PosebnaPonudaStavka = null;
   uloga: string;
   id : number;
-  novaStavkaNarudzbe : NovaStavkaNarudzbe = new NovaStavkaNarudzbe();
+  novaStavkaNarudzbe : StavkaNarudzbe = new StavkaNarudzbe();
 
   constructor(private httpKlijent : HttpClient, private router : Router) {
     if (sessionStorage.getItem("autentifikacija-token") || localStorage.getItem("autentifikacija-token")) {

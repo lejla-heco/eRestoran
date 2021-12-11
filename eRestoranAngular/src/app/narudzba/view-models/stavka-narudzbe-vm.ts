@@ -1,4 +1,4 @@
-export class NovaStavkaNarudzbe{
+export class StavkaNarudzbe{
   korisnikId : number;
   meniStavkaId : number;
 }

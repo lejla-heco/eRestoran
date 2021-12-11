@@ -100,5 +100,40 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
 
             return narudzba.BrojStavki;
         }
+
+        [HttpGet("{id}")]
+        public IActionResult UkloniStavku(int id)
+        {
+            StavkaNarudzbe stavkaNarudzbe = _dbContext.StavkaNarudzbe.Where(sn => sn.ID == id).FirstOrDefault();
+
+            Narudzba narudzba = _dbContext.Narudzba.Where(n => n.ID == stavkaNarudzbe.NarudzbaID).SingleOrDefault();
+            if (narudzba == null)
+                return BadRequest("Nepostojeca narudzba");
+
+            _dbContext.StavkaNarudzbe.Remove(stavkaNarudzbe);
+            narudzba.Cijena -= stavkaNarudzbe.Iznos * stavkaNarudzbe.Kolicina;
+            narudzba.BrojStavki -= stavkaNarudzbe.Kolicina;
+            _dbContext.SaveChanges();
+
+            GetNarudzbaVM getNarudzbaVM = new GetNarudzbaVM()
+            {
+                id = narudzba.ID,
+                cijena = narudzba.Cijena,
+                stavke = _dbContext.StavkaNarudzbe.Where(sn => sn.NarudzbaID == narudzba.ID).Select(sn => new GetNarudzbaVM.Stavka()
+                {
+                    id = sn.ID,
+                    naziv = sn.MeniStavka.Naziv,
+                    opis = sn.MeniStavka.Opis,
+                    cijena = sn.MeniStavka.Cijena,
+                    slika = sn.MeniStavka.Slika,
+                    izdvojeno = sn.MeniStavka.Izdvojeno,
+                    snizenaCijena = sn.MeniStavka.SnizenaCijena,
+                    ocjena = sn.MeniStavka.Ocjena,
+                    kolicina = sn.Kolicina
+                }).ToList(),
+            };
+
+            return Ok(getNarudzbaVM);
+        }
     }
 }

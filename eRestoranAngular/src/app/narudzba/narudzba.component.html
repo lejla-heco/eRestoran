@@ -6,7 +6,7 @@
     </div>
   </div>
 </header>
-<section class="page-section bg-light py-5">
+<section class="animate__animated animate__fadeIn page-section bg-light py-5">
   <div class="container px-4 px-lg-5 mt-5">
     <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
       <div *ngFor="let stavka of narudzba.stavke" class="animate__animated animate__fadeIn col mb-5">
@@ -36,7 +36,7 @@
               </div>
               <input type="number" class="form-control" min=1 [(ngModel)]="stavka.kolicina">
             </div>
-            <div class="text-center"><a class="btn btn-outline-dark"><i class="bi bi-trash-fill"></i> Ukloni iz korpe</a></div>
+            <div class="text-center"><a class="btn btn-outline-dark" (click)="ukloni(stavka)"><i class="bi bi-trash-fill"></i> Ukloni iz korpe</a></div>
           </div>
         </div>
       </div>
