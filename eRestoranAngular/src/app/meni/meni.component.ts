@@ -10,6 +10,7 @@ import {PosebnaPonudaStavka} from "../posebna-ponuda/view-models/posebna-ponuda-
 import {Uloga} from "../helper/uloga";
 import {StavkaNarudzbe} from "../narudzba/view-models/stavka-narudzbe-vm";
 
+
 @Component({
   selector: 'app-meni',
   templateUrl: './meni.component.html',
@@ -24,6 +25,35 @@ export class MeniComponent implements OnInit {
   novaStavkaNarudzbe : StavkaNarudzbe = new StavkaNarudzbe();
 
   odabranaStavkaMenija: MeniStavka = null;
+  odabranaOcjena: MeniStavka = null;
+
+  title = "star-angular";
+  stars = [1, 2, 3, 4, 5];
+  rating = 0;
+  hoverState = 0;
+
+  prikaziOcjenjivanje(id:number) {
+    this.id=id;
+  }
+  enter(i:any) {
+
+    this.hoverState = i;
+
+  }
+
+  leave($event: number) {
+
+    this.hoverState = 0;
+
+
+  }
+
+  updateRating(i:any) {
+
+    this.rating = i;
+    //alert("Uspješno ste ocijenili stavku "+this.id+" sa "+i+" zvjezdice");
+
+  }
 
 
   constructor(private httpKlijent : HttpClient, private router : Router) {
@@ -89,4 +119,7 @@ export class MeniComponent implements OnInit {
       document.getElementById('kolicina').innerHTML = response;
     });
   }
+
+
+
 }

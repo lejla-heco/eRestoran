@@ -23,10 +23,10 @@
       </ul>
     </div>
   </div>
-  <div class="container px-4 px-lg-5 mt-5">
+  <div    class="container px-4 px-lg-5 mt-5">
     <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
       <div *ngFor="let stavka of meniStavke" class="animate__animated animate__fadeIn col mb-5">
-        <div class="card h-100">
+        <div  class="card h-100">
           <!-- Sale badge-->
           <div *ngIf="stavka.izdvojeno==true" class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Izdvojeno</div>
           <!-- Product image-->
@@ -39,7 +39,20 @@
               <span class="text-muted">{{stavka.opis}}</span>
               <!-- Product reviews-->
               <div class="d-flex justify-content-center small text-warning mb-2">
-                <div *ngFor = "let item of createRange(stavka.ocjena)"class="bi-star-fill"></div>
+                <div *ngFor = "let item of createRange(stavka.ocjena)"class="bi-star-fill" ></div>
+                <!--zvjezdice-->
+                <div   class="App">
+
+                  <div (mouseenter)="prikaziOcjenjivanje(stavka.id)" class="flex-container">
+
+                    <ng-container  *ngFor="let star of stars">
+                      <app-star [odabranaId]="id" [odabrana]="stavka" [starId]="star" [rating]="hoverState || rating" (enter)="enter($event)" (leave)="leave($event)"
+                                (bigClick)="updateRating(star)">
+                      </app-star>
+                    </ng-container>
+
+                  </div>
+                </div>
               </div>
               <!-- Product price-->
               <span *ngIf="stavka.izdvojeno==true" class="text-muted text-decoration-line-through">{{stavka.cijena}} KM </span>
@@ -52,6 +65,8 @@
             <div class="text-center"><a *ngIf = "uloga == 'Korisnik'" class="btn btn-outline-dark mt-auto" (click)="dodajUKorpu(stavka)">Dodaj u korpu</a>
               <a *ngIf="uloga == 'Admin' && stavka.izdvojeno==false" class="btn btn-outline-dark mt-auto mx-1" (click)="izdvoji(stavka)">Izdvoji</a>
             </div>
+
+
             <i *ngIf="uloga == 'Korisnik'" class="omiljeno bi bi-heart"></i>
             <i *ngIf="uloga == 'Korisnik'" class="bi bi-three-dots"  >    </i>
             <i *ngIf="uloga == 'Admin'" class="bi bi-pencil-square" (click)="detalji(stavka.id)" style="margin-left: 10px"> </i>

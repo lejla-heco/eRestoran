@@ -11,6 +11,7 @@ import { NovaStavkaComponent } from './meni/nova-stavka/nova-stavka.component';
 import { EditStavkaComponent } from './meni/edit-stavka/edit-stavka.component';
 import { LoginComponent } from './login/login.component';
 import { NarudzbaComponent } from './narudzba/narudzba.component';
+import { StarComponent } from './meni/star/star.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { NarudzbaComponent } from './narudzba/narudzba.component';
     NovaStavkaComponent,
     EditStavkaComponent,
     LoginComponent,
-    NarudzbaComponent
+    NarudzbaComponent,
+    StarComponent
 
   ],
   imports: [
