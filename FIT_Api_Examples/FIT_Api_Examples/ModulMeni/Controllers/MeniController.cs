@@ -103,6 +103,25 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
                 return BadRequest(ex.Message + ex.InnerException);
             }
         }
+        [HttpPost("{id}")]
+        public ActionResult AddOcjena(int id, [FromBody] MeniAddOcjenaVM meniAddOcjenaVM)
+        {
+             MeniStavka meniStavka = _dbContext.MeniStavka.Find(id);
+            //int ocjena = 0;
+                //int brojac = 0;
+                if ( meniStavka != null)
+                {
+                     
+                    meniStavka.Ocjena += meniAddOcjenaVM.ocjena;
+                  if(meniStavka.Ocjena>5)
+                    meniStavka.Ocjena =meniStavka.Ocjena/2;
+                     
+                    _dbContext.SaveChanges();
+                }
+
+                return Ok(meniStavka);
+            }
+            
 
         [HttpGet]
         public List<MeniGetAllPagedVM> GetAllPaged(string nazivKategorije)
