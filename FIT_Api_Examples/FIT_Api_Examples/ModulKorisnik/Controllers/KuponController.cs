@@ -24,7 +24,7 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
         }
 
         [HttpPost]
-        public IActionResult GenerisiKupon(KuponGenerisiKuponVM kuponGenerisiKuponVM)
+        public IActionResult GenerisiKupon([FromBody] KuponGenerisiKuponVM kuponGenerisiKuponVM)
         {
             Kupon kupon = new Kupon()
             {
@@ -52,7 +52,7 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
                 _dbContext.SaveChanges();
             }
 
-            return Ok(kupon.Kod);   
+            return Ok(kupon);   
         }
     }
 }

@@ -11828,12 +11828,12 @@ section#kontakt form#kontaktForm :-ms-input-placeholder {
   margin-right: 8px;
 }
 
-header.masthead-login {
-  padding-top: 11rem;
+header.masthead-kupon {
+  padding-top: 10.5rem;
   padding-bottom: 6rem;
   text-align: center;
   color: #fff;
-  background-image: url("../img/header-bg1.jpg");
+  background-image: url("../img/kupon.jpg");
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-position: center center;

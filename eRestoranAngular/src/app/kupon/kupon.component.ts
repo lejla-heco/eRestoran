@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {Kupon} from "./view-models/kupon";
+import {MyConfig} from "../my-config";
 
 @Component({
   selector: 'app-kupon',
@@ -6,10 +9,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./kupon.component.css']
 })
 export class KuponComponent implements OnInit {
-
-  constructor() { }
+  popusniKupon : Kupon = new Kupon();
+  constructor(private httpKlijent : HttpClient) { }
 
   ngOnInit(): void {
   }
 
+  posaljiPodatke() {
+    this.httpKlijent.post(MyConfig.adresaServera + "/Kupon/GenerisiKupon", this.popusniKupon).subscribe((response : any) => {
+      alert("Uspješno generisan kupon " + response.kod);
+      this.ocistiFormu();
+    });
+  }
+
+  private ocistiFormu() {
+    this.popusniKupon.popust = null;
+    this.popusniKupon.maksimalniBrojKorisnika = null;
+  }
 }
