@@ -1,0 +1,41 @@
+<header class="py-5 bg-image-full" style="background-image: url('/assets/img/cover/kupon.png')">
+  <div class="text-center my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">Popusni kuponi</h1>
+      <p class="lead fw-normal text-white mb-0">Ovdje možete generisati popusne kupone za nasumično odabrane korisnike</p>
+    </div>
+  </div>
+</header>
+<section class="page-section bg-light py-5">
+  <div class="container px-4 px-lg-5 my-2">
+    <div class="row gx-4 gx-lg-5 align-items-center">
+      <div class="col-md-6 mx-auto">
+        <div class="small mb-1 text-center">Unesite podatke o novom kuponu</div>
+        <h3 class="display-5 fw-bolder text-center mb-5">Novi kupon</h3>
+        <div class="fs-6 mb-5">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Iznos</span>
+            </div>
+            <input type="number" min="5" max="95" step="5" class="form-control">
+            <div class="input-group-append">
+              <span class="input-group-text">%</span>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Broj korisnika</span>
+            </div>
+            <input type="number" min="1" class="form-control">
+          </div>
+        </div>
+        <div class="text-center">
+          <button class="btn btn-dark flex-shrink-0" type="button">
+            <i class="bi bi-receipt"></i>
+            Generiši kupon
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
