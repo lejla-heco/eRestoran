@@ -17,8 +17,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="ModulKorisnik\Controllers\" />
-	  <Folder Include="ModulKorisnik\ViewModels\" />
 	  <Folder Include="wwwroot\uploads\" />
 	</ItemGroup>
 </Project>
