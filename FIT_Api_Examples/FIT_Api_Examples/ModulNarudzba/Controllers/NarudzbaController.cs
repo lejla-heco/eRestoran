@@ -112,7 +112,7 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
                 return BadRequest("Nepostojeca narudzba");
 
             _dbContext.StavkaNarudzbe.Remove(stavkaNarudzbe);
-            narudzba.Cijena -= stavkaNarudzbe.Iznos * stavkaNarudzbe.Kolicina;
+            narudzba.Cijena -= stavkaNarudzbe.Iznos;
             narudzba.BrojStavki -= stavkaNarudzbe.Kolicina;
             _dbContext.SaveChanges();
 
@@ -147,6 +147,7 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
 
             Narudzba narudzba = _dbContext.Narudzba.Find(stavkaNarudzbe.NarudzbaID);
             narudzba.Cijena -= stavkaNarudzbe.Iznos;
+            narudzba.BrojStavki -= stavkaNarudzbe.Kolicina;
 
             stavkaNarudzbe.Kolicina = narudzbaUpdateKolicinaVM.kolicina;
 
@@ -156,6 +157,8 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
                 stavkaNarudzbe.Iznos = stavkaNarudzbe.MeniStavka.SnizenaCijena * narudzbaUpdateKolicinaVM.kolicina;
 
             narudzba.Cijena += stavkaNarudzbe.Iznos;
+            narudzba.BrojStavki += stavkaNarudzbe.Kolicina;
+
             _dbContext.SaveChanges();
 
             return Ok(narudzba.Cijena);

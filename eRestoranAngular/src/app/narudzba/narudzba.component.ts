@@ -53,6 +53,7 @@ export class NarudzbaComponent implements OnInit {
      this.updateKolicina.kolicina = stavka.kolicina;
     this.httpKlijent.post(MyConfig.adresaServera + "/Narudzba/UpdateKolicina", this.updateKolicina).subscribe((response : any)=>{
       this.narudzba.cijena = response;
+      document.getElementById('kolicina').innerHTML = (parseInt(document.getElementById('kolicina').innerText) + 1).toString();
     });
   }
 }
