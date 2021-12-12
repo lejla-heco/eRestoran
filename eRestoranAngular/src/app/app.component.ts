@@ -32,4 +32,12 @@ export class AppComponent {
     router.navigateByUrl('home-page');
   }
 
+  odjava() {
+    if (sessionStorage.getItem("autentifikacija-token")) {
+      sessionStorage.removeItem("autentifikacija-token");
+    }
+    else if (localStorage.getItem("autentifikacija-token")){
+      localStorage.removeItem("autentifikacija-token");
+    };
+  }
 }

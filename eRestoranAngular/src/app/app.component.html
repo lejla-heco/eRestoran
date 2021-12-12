@@ -12,7 +12,7 @@
         <li class="nav-item"><a class="nav-link" routerLink="posebna-ponuda">Posebna ponuda</a></li>
         <li class="nav-item"><a class="nav-link" href="#">Rezervacija</a></li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Omiljeno</a>
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Omiljeno</a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="#">Najdraže stavke</a></li>
             <li><hr class="dropdown-divider" /></li>
@@ -26,9 +26,19 @@
           Korpa
           <span class="badge bg-light text-black ms-1 rounded-pill" id="kolicina">0</span>
         </li>
-        <li class="nav-item btn btn-outline-light">
-          <i class="bi bi-person-lines-fill"></i>
-          Moj profil
+        <li class="nav-item">
+        <div class="dropdown">
+          <button class=" btn btn-outline-light dropdown-toggle" role="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person-lines-fill"></i>
+            Moj profil
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="" (click)="odjava()">
+              <i class="bi bi-door-closed-fill"></i>
+              Odjavi se
+            </a>
+          </div>
+        </div>
         </li>
       </ul>
     </div>
@@ -71,10 +81,10 @@
         <li class="nav-item"><a class="nav-link" routerLink="posebna-ponuda">Posebna ponuda</a></li>
       </ul>
       <ul class="navbar-nav d-flex">
-        <li class="nav-item btn btn-outline-light">
+        <a class="nav-item btn btn-outline-light" href="" (click)="odjava()">
            <i class="bi bi-door-closed-fill"></i>
           Odjava
-        </li>
+        </a>
       </ul>
     </div>
   </div>
