@@ -38,6 +38,7 @@ export class NovaStavkaComponent implements OnInit {
   }
 
   posaljiPodatke() {
+    this.validirajFormu();
     // @ts-ignore
     var file = document.getElementById("fajl-input").files[0];
     this.novaStavka.meniGrupaId = parseInt(this.novaStavka.meniGrupaId.toString());
@@ -45,7 +46,7 @@ export class NovaStavkaComponent implements OnInit {
     data.append("slikaMeniStavke", file);
     this.httpKlijent.post(MyConfig.adresaServera + "/Meni/Add", this.novaStavka).subscribe((result : any)=>{
       this.httpKlijent.post(MyConfig.adresaServera + "/Meni/AddSlika/" + result, data).subscribe((result:any)=>{
-        alert("uspjesno?");
+        alert("Uspjesno dodana nova stavka");
         this.ocistiFormu();
       });
     });
@@ -58,5 +59,9 @@ export class NovaStavkaComponent implements OnInit {
     this.novaStavka.snizenaCijena = null;
     this.novaStavka.meniGrupaId = null;
     document.getElementById("preview-slika").setAttribute("src","");
+  }
+
+  private validirajFormu() {
+
   }
 }
