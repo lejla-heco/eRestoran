@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FIT_Api_Examples.ModulNarudzba.ViewModels
 {
-    public class GetNarudzbaVM
+    public class NarudzbaGetNarudzbaVM
     {
         public int id { get; set; }
         public float cijena { get; set; }

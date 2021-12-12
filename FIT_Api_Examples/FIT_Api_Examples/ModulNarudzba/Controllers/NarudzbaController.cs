@@ -4,6 +4,7 @@ using FIT_Api_Examples.ModulMeni.Models;
 using FIT_Api_Examples.ModulNarudzba.Models;
 using FIT_Api_Examples.ModulNarudzba.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddStavka([FromBody] StavkaAddVM stavkaAddVM)
+        public IActionResult AddStavka([FromBody] NarudzbaAddStavkaVM stavkaAddVM)
         {
             Korisnik korisnik = _dbContext.Korisnik.Find(stavkaAddVM.korisnikId);
             if (korisnik == null)
@@ -63,16 +64,16 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
         }
 
         [HttpGet("{id}")]
-        public GetNarudzbaVM GetNarudzba(int id)
+        public NarudzbaGetNarudzbaVM GetNarudzba(int id)
         {
             Narudzba narudzba = _dbContext.Narudzba.Where(n => n.KorisnikID == id && n.Zakljucena == false).FirstOrDefault();
             if (narudzba == null) return null;
 
-            GetNarudzbaVM getNarudzbaVM = new GetNarudzbaVM()
+            NarudzbaGetNarudzbaVM getNarudzbaVM = new NarudzbaGetNarudzbaVM()
             {
                 id = narudzba.ID,
                 cijena = narudzba.Cijena,
-                stavke = _dbContext.StavkaNarudzbe.Where(sn => sn.NarudzbaID == narudzba.ID).Select(sn => new GetNarudzbaVM.Stavka()
+                stavke = _dbContext.StavkaNarudzbe.Where(sn => sn.NarudzbaID == narudzba.ID).Select(sn => new NarudzbaGetNarudzbaVM.Stavka()
                 {
                     id = sn.ID,
                     naziv = sn.MeniStavka.Naziv,
@@ -115,11 +116,11 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
             narudzba.BrojStavki -= stavkaNarudzbe.Kolicina;
             _dbContext.SaveChanges();
 
-            GetNarudzbaVM getNarudzbaVM = new GetNarudzbaVM()
+            NarudzbaGetNarudzbaVM getNarudzbaVM = new NarudzbaGetNarudzbaVM()
             {
                 id = narudzba.ID,
                 cijena = narudzba.Cijena,
-                stavke = _dbContext.StavkaNarudzbe.Where(sn => sn.NarudzbaID == narudzba.ID).Select(sn => new GetNarudzbaVM.Stavka()
+                stavke = _dbContext.StavkaNarudzbe.Where(sn => sn.NarudzbaID == narudzba.ID).Select(sn => new NarudzbaGetNarudzbaVM.Stavka()
                 {
                     id = sn.ID,
                     naziv = sn.MeniStavka.Naziv,
@@ -134,6 +135,25 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
             };
 
             return Ok(getNarudzbaVM);
+        }
+    
+        [HttpPost]
+        public IActionResult UpdateKolicina(NarudzbaUpdateKolicinaVM narudzbaUpdateKolicinaVM)
+        {
+            StavkaNarudzbe stavkaNarudzbe = _dbContext.StavkaNarudzbe.Include(sn => sn.MeniStavka)
+                                            .Where(sn => sn.ID == narudzbaUpdateKolicinaVM.id).SingleOrDefault();
+            if (stavkaNarudzbe == null)
+                return BadRequest("Nepostojeca stavka narudzbe");
+
+            Narudzba narudzba = _dbContext.Narudzba.Find(stavkaNarudzbe.NarudzbaID);
+            narudzba.Cijena -= stavkaNarudzbe.Iznos;
+
+            stavkaNarudzbe.Kolicina = narudzbaUpdateKolicinaVM.kolicina;
+            stavkaNarudzbe.Iznos = stavkaNarudzbe.MeniStavka.Cijena * narudzbaUpdateKolicinaVM.kolicina;
+
+            narudzba.Cijena += stavkaNarudzbe.Iznos;
+
+            return Ok(narudzba.Cijena);
         }
     }
 }

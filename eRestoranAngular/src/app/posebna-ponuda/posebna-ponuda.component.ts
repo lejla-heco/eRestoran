@@ -15,7 +15,7 @@ export class PosebnaPonudaComponent implements OnInit {
   posebnaPonuda : PosebnaPonudaStavka[] = null;
   odabranaStavka: PosebnaPonudaStavka = null;
   uloga: string;
-  id : number;
+  korisnikId : number;
   novaStavkaNarudzbe : StavkaNarudzbe = new StavkaNarudzbe();
 
   constructor(private httpKlijent : HttpClient, private router : Router) {
@@ -23,7 +23,7 @@ export class PosebnaPonudaComponent implements OnInit {
       var korisnik = JSON.parse(sessionStorage.getItem("autentifikacija-token"));
       if (korisnik == null) korisnik = JSON.parse(localStorage.getItem("autentifikacija-token"));
       this.uloga = korisnik.korisnickiNalog.uloga.naziv;
-      this.id = korisnik.korisnickiNalog.id;
+      this.korisnikId = korisnik.korisnickiNalog.id;
     }
     else this.uloga = Uloga.GOST;
   }
@@ -55,7 +55,7 @@ export class PosebnaPonudaComponent implements OnInit {
   }
 
   dodajUKorpu(stavka: PosebnaPonudaStavka) {
-    this.novaStavkaNarudzbe.korisnikId = this.id;
+    this.novaStavkaNarudzbe.korisnikId = this.korisnikId;
     this.novaStavkaNarudzbe.meniStavkaId = stavka.id;
     this.httpKlijent.post(MyConfig.adresaServera+"/Narudzba/AddStavka",this.novaStavkaNarudzbe).subscribe((response : any)=>{
       document.getElementById('kolicina').innerHTML = response;

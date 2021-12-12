@@ -3,10 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {MeniStavka} from "./view-models/meni-stavka-vm";
 import {MyConfig} from "../my-config";
 import {MeniGrupa} from "./view-models/meni-grupa-vm";
-import {NovaMeniStavka} from "./view-models/nova-meni-stavka-vm";
 import {Router} from "@angular/router";
-import {askConfirmation} from "@angular/cli/utilities/prompt";
-import {PosebnaPonudaStavka} from "../posebna-ponuda/view-models/posebna-ponuda-stavka-vm";
 import {Uloga} from "../helper/uloga";
 import {StavkaNarudzbe} from "../narudzba/view-models/stavka-narudzbe-vm";
 
@@ -19,49 +16,24 @@ import {StavkaNarudzbe} from "../narudzba/view-models/stavka-narudzbe-vm";
 export class MeniComponent implements OnInit {
   meniStavke : MeniStavka[] = null;
   meniGrupe : MeniGrupa[] = null;
-  odabranaStavka: NovaMeniStavka = new NovaMeniStavka();
   uloga : string = null;
-  id : number = null;
+  korisnikId : number = null;
   novaStavkaNarudzbe : StavkaNarudzbe = new StavkaNarudzbe();
+  id : number = null;
 
   odabranaStavkaMenija: MeniStavka = null;
-  odabranaOcjena: MeniStavka = null;
 
   title = "star-angular";
   stars = [1, 2, 3, 4, 5];
   rating = 0;
   hoverState = 0;
 
-  prikaziOcjenjivanje(id:number) {
-    this.id=id;
-  }
-  enter(i:any) {
-
-    this.hoverState = i;
-
-  }
-
-  leave($event: number) {
-
-    this.hoverState = 0;
-
-
-  }
-
-  updateRating(i:any) {
-
-    this.rating = i;
-    //alert("Uspješno ste ocijenili stavku "+this.id+" sa "+i+" zvjezdice");
-
-  }
-
-
   constructor(private httpKlijent : HttpClient, private router : Router) {
     if (sessionStorage.getItem("autentifikacija-token") || localStorage.getItem("autentifikacija-token")) {
       var korisnik = JSON.parse(sessionStorage.getItem("autentifikacija-token"));
       if(korisnik == null) korisnik = JSON.parse(localStorage.getItem("autentifikacija-token"));
       this.uloga = korisnik.korisnickiNalog.uloga.naziv;
-      this.id = korisnik.korisnickiNalog.id;
+      this.korisnikId = korisnik.korisnickiNalog.id;
     }
     else this.uloga = Uloga.GOST;
   }
@@ -95,32 +67,39 @@ export class MeniComponent implements OnInit {
 
   detalji(id : number) {
     this.router.navigate(['/edit-stavka', id]);
-
   }
 
   brisanje(s :MeniStavka) {
-
   this.httpKlijent.post(MyConfig.adresaServera+"/Meni/Delete/"+s.id, s).subscribe((x:any)=>{
     alert("Stavka "+ s.naziv+ " je uspješno obrisana");
     this.ucitajMeniStavke(s.nazivGrupe);
-
   });
 
   }
-
 
   public prikazi_brisanje(stavka : MeniStavka){
     this.odabranaStavkaMenija = stavka;
   }
 
   dodajUKorpu(stavka : MeniStavka) {
-    this.novaStavkaNarudzbe.korisnikId = this.id;
+    this.novaStavkaNarudzbe.korisnikId = this.korisnikId;
     this.novaStavkaNarudzbe.meniStavkaId = stavka.id;
     this.httpKlijent.post(MyConfig.adresaServera+"/Narudzba/AddStavka",this.novaStavkaNarudzbe).subscribe((response : any)=>{
       document.getElementById('kolicina').innerHTML = response;
     });
   }
 
-
-
+  prikaziOcjenjivanje(id:number) {
+    this.id=id;
+  }
+  enter(i:any) {
+    this.hoverState = i;
+  }
+  leave($event: number) {
+    this.hoverState = 0;
+  }
+  updateRating(i:any) {
+    this.rating = i;
+    //alert("Uspješno ste ocijenili stavku "+this.id+" sa "+i+" zvjezdice");
+  }
 }
