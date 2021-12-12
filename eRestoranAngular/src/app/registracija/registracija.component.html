@@ -1,0 +1,84 @@
+<p>registracija works!</p>
+<header class="masthead" style="padding-top: 11rem;">
+  <div class="container">
+    <div class="row d-flex justify-content-center align-items-center">
+      <div class="animate__animated animate__fadeIn col col-xl-10">
+        <div class="card" style="border: none">
+          <div class="row g-0">
+            <div class="col-md-6 col-lg-5 d-none d-md-block">
+              <img
+                src="/assets/img/login.jpg"
+                alt="login form"
+                class="img-fluid"
+              />
+            </div>
+            <div class="col-md-6 col-lg-7 d-flex align-items-center">
+              <div class="card-body p-4 p-lg-5 text-black">
+                <form>
+
+                  <h3 class="display-6 fw-bolder">Registracija</h3>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Ime</span>
+                    </div>
+                    <input type="text" class="form-control" [(ngModel)]="registracija.ime" [ngModelOptions]="{standalone: true}">
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Prezime</span>
+                    </div>
+                    <input type="text" class="form-control" [(ngModel)]="registracija.prezime" [ngModelOptions]="{standalone: true}">
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Email</span>
+                    </div>
+                    <input type="text" class="form-control" [(ngModel)]="registracija.email" [ngModelOptions]="{standalone: true}">
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Broj telefona</span>
+                    </div>
+                    <input type="text" class="form-control" [(ngModel)]="registracija.brojTelefona" [ngModelOptions]="{standalone: true}">
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Adresa stanovanja</span>
+                    </div>
+                    <input type="text" class="form-control" [(ngModel)]="registracija.adresaStanovanja" [ngModelOptions]="{standalone: true}">
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Korisničko ime</span>
+                    </div>
+                    <input type="text" class="form-control" [(ngModel)]="registracija.username" [ngModelOptions]="{standalone: true}">
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Lozinka</span>
+                    </div>
+                    <input type="password" class="form-control" [(ngModel)]="registracija.password" [ngModelOptions]="{standalone: true}">
+                  </div>
+                  <!-- <div class="input-group">
+                     <div class="form-check form-switch">
+                       <input [(ngModel)]="zapamtiMe" class="form-check-input" type="checkbox" name="RememberMe" id="RememberMe">
+                       <label class="form-check-label" for="RememberMe">Zapamti me?</label>
+                     </div>
+                   </div>-->
+                  <button class="btn btn-dark flex-shrink-0">Registruj se</button>
+                 <!-- <button class="btn btn-dark flex-shrink-0" (click)="posaljiPodatke()">
+                    <i class="bi bi-box-arrow-in-right"></i>
+                    Prijavi se
+                  </button>-->
+
+
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+

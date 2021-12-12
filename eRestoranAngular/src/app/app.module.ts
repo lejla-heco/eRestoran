@@ -12,6 +12,7 @@ import { EditStavkaComponent } from './meni/edit-stavka/edit-stavka.component';
 import { LoginComponent } from './login/login.component';
 import { NarudzbaComponent } from './narudzba/narudzba.component';
 import { StarComponent } from './meni/star/star.component';
+import { RegistracijaComponent } from './registracija/registracija.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { StarComponent } from './meni/star/star.component';
     EditStavkaComponent,
     LoginComponent,
     NarudzbaComponent,
-    StarComponent
+    StarComponent,
+    RegistracijaComponent
 
   ],
   imports: [
@@ -38,7 +40,8 @@ import { StarComponent } from './meni/star/star.component';
       {path:"nova-stavka", component:NovaStavkaComponent},
       {path:"edit-stavka/:id", component:EditStavkaComponent},
       {path:"login", component:LoginComponent},
-      {path:"narudzba", component:NarudzbaComponent}
+      {path:"narudzba", component:NarudzbaComponent},
+      {path:"registracija", component:RegistracijaComponent}
 
     ],{
       anchorScrolling : 'enabled',
