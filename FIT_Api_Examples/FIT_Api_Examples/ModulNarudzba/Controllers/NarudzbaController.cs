@@ -161,7 +161,12 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
 
             _dbContext.SaveChanges();
 
-            return Ok(narudzba.Cijena);
+            var response = new { 
+                cijena = narudzba.Cijena,
+                kolicina = narudzba.BrojStavki
+            };
+
+            return Ok(response);
         }
     }
 }
