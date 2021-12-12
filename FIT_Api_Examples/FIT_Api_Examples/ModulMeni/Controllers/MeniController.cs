@@ -104,7 +104,7 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
             }
         }
         [HttpPost("{id}")]
-        public ActionResult AddOcjena(int id, [FromBody] MeniAddOcjenaVM meniAddOcjenaVM)
+        public ActionResult AddOcjena(int id,[FromBody] MeniAddOcjenaVM meniAddOcjenaVM)
         {
              MeniStavka meniStavka = _dbContext.MeniStavka.Find(id);
             //int ocjena = 0;
@@ -115,7 +115,7 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
                     meniStavka.Ocjena += meniAddOcjenaVM.ocjena;
                   if(meniStavka.Ocjena>5)
                     meniStavka.Ocjena =meniStavka.Ocjena/2;
-                     
+                Console.WriteLine(meniAddOcjenaVM.ocjena.ToString());
                     _dbContext.SaveChanges();
                 }
 

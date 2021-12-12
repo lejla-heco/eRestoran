@@ -102,6 +102,7 @@ export class MeniComponent implements OnInit {
 
   this.httpKlijent.post(MyConfig.adresaServera+"/Meni/Delete/"+s.id, s).subscribe((x:any)=>{
     alert("Stavka "+ s.naziv+ " je uspješno obrisana");
+    this.ucitajMeniStavke(s.nazivGrupe);
 
   });
 

@@ -40,18 +40,19 @@
               <!-- Product reviews-->
               <div class="d-flex justify-content-center small text-warning mb-2">
                 <div *ngFor = "let item of createRange(stavka.ocjena)"class="bi-star-fill" ></div>
-                <!--zvjezdice-->
-                <div   class="App">
 
-                  <div (mouseenter)="prikaziOcjenjivanje(stavka.id)" class="flex-container">
+              </div>
+              <!--zvjezdice-->
+              <div *ngIf="uloga == 'Korisnik'"  class="App">
 
-                    <ng-container  *ngFor="let star of stars">
-                      <app-star [odabranaId]="id" [odabrana]="stavka" [starId]="star" [rating]="hoverState || rating" (enter)="enter($event)" (leave)="leave($event)"
-                                (bigClick)="updateRating(star)">
-                      </app-star>
-                    </ng-container>
+                <div (mouseenter)="prikaziOcjenjivanje(stavka.id)" class="flex-container">
 
-                  </div>
+                  <ng-container  *ngFor="let star of stars">
+                    <app-star [odabranaId]="id" [odabrana]="stavka" [starId]="star" [rating]="hoverState || rating" (enter)="enter($event)" (leave)="leave($event)"
+                              (bigClick)="updateRating(star)">
+                    </app-star>
+                  </ng-container>
+
                 </div>
               </div>
               <!-- Product price-->

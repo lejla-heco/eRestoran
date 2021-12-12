@@ -1,5 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MeniStavka} from "../view-models/meni-stavka-vm";
+import {MyConfig} from "../../my-config";
+import {HttpClient} from "@angular/common/http";
+import {Ocjena} from "../view-models/ocjena-vm";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-star',
@@ -17,7 +21,10 @@ export class StarComponent implements OnInit {
   @Output() enter: EventEmitter<number> = new EventEmitter();
   @Output() bigClick: EventEmitter<number> = new EventEmitter();
 
-  constructor() { }
+
+    ocjenaPoslata: Ocjena= new Ocjena();
+  constructor(private httpKlijent : HttpClient, private router : Router) {}
+
 
   ngOnInit(): void {
     console.log(this.starId);
@@ -41,7 +48,16 @@ export class StarComponent implements OnInit {
   starClicked() {
 
     this.bigClick.emit(this.starId);
-    alert("Uspješno ste ocijenili stavku "+this.odabrana.naziv+" sa "+this.rating+" zvjezdice");
+    this.ocjenaPoslata.ocjena=this.rating;
+    console.log(this.ocjenaPoslata.ocjena);
+
+    this.httpKlijent.post("https://localhost:44325"+"/Meni/AddOcjena/"+this.odabrana.id,this.ocjenaPoslata).subscribe((result : any)=>{
+      alert("Uspješno ste ocijenili stavku "+this.odabrana.naziv+" sa "+this.rating+" zvjezdice");
+      //this.router.navigate(['/meni']);
+      //window.location.replace('https://erestoran-api.p2102.app.fit.ba/meni')
+
+    });
+
   }
 
 }
