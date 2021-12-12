@@ -34,7 +34,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">Količina</span>
               </div>
-              <input type="number" class="form-control" min=1 [(ngModel)]="stavka.kolicina">
+              <input type="number" class="form-control" min=1 [(ngModel)]="stavka.kolicina" (change)="novaKolicina(stavka)">
             </div>
             <div class="text-center"><a class="btn btn-outline-dark" (click)="ukloni(stavka)"><i class="bi bi-trash-fill"></i> Ukloni iz korpe</a></div>
           </div>

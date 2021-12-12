@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {MyConfig} from "../my-config";
 import {StavkaNarudzbe} from "./view-models/stavka-narudzbe-vm";
 import {NarudzbaStavka} from "./view-models/narudzba-stavka";
+import {NovaKolicina} from "./view-models/update-kolicina-vm";
 
 @Component({
   selector: 'app-narudzba',
@@ -14,6 +15,7 @@ export class NarudzbaComponent implements OnInit {
   narudzba : Narudzba = null;
   id : number;
   podaci : StavkaNarudzbe = new StavkaNarudzbe();
+  updateKolicina : NovaKolicina = new NovaKolicina();
 
   constructor(private httpKlijent : HttpClient) {
     if (sessionStorage.getItem("autentifikacija-token") || localStorage.getItem("autentifikacija-token")) {
@@ -43,6 +45,14 @@ export class NarudzbaComponent implements OnInit {
   private ucitajBrojStavki(id : number) {
     this.httpKlijent.get(MyConfig.adresaServera + "/Narudzba/GetBrojStavki/" + id).subscribe((response : any) => {
       document.getElementById('kolicina').innerHTML = response;
+    });
+  }
+
+  public novaKolicina(stavka : NarudzbaStavka){
+     this.updateKolicina.id = stavka.id;
+     this.updateKolicina.kolicina = stavka.kolicina;
+    this.httpKlijent.post(MyConfig.adresaServera + "/Narudzba/UpdateKolicina", this.updateKolicina).subscribe((response : any)=>{
+      this.narudzba.cijena = response;
     });
   }
 }

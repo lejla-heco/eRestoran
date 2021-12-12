@@ -149,9 +149,14 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
             narudzba.Cijena -= stavkaNarudzbe.Iznos;
 
             stavkaNarudzbe.Kolicina = narudzbaUpdateKolicinaVM.kolicina;
-            stavkaNarudzbe.Iznos = stavkaNarudzbe.MeniStavka.Cijena * narudzbaUpdateKolicinaVM.kolicina;
+
+            if (!stavkaNarudzbe.MeniStavka.Izdvojeno)
+                stavkaNarudzbe.Iznos = stavkaNarudzbe.MeniStavka.Cijena * narudzbaUpdateKolicinaVM.kolicina;
+            else
+                stavkaNarudzbe.Iznos = stavkaNarudzbe.MeniStavka.SnizenaCijena * narudzbaUpdateKolicinaVM.kolicina;
 
             narudzba.Cijena += stavkaNarudzbe.Iznos;
+            _dbContext.SaveChanges();
 
             return Ok(narudzba.Cijena);
         }
