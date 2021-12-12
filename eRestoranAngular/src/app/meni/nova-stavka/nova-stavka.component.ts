@@ -46,7 +46,17 @@ export class NovaStavkaComponent implements OnInit {
     this.httpKlijent.post(MyConfig.adresaServera + "/Meni/Add", this.novaStavka).subscribe((result : any)=>{
       this.httpKlijent.post(MyConfig.adresaServera + "/Meni/AddSlika/" + result, data).subscribe((result:any)=>{
         alert("uspjesno?");
+        this.ocistiFormu();
       });
     });
+  }
+
+  ocistiFormu(){
+    this.novaStavka.naziv = null;
+    this.novaStavka.opis = null;
+    this.novaStavka.cijena = null;
+    this.novaStavka.snizenaCijena = null;
+    this.novaStavka.meniGrupaId = null;
+    document.getElementById("preview-slika").setAttribute("src","");
   }
 }
