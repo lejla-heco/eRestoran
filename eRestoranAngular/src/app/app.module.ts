@@ -14,6 +14,8 @@ import { NarudzbaComponent } from './narudzba/narudzba.component';
 import { StarComponent } from './meni/star/star.component';
 import { RegistracijaComponent } from './registracija/registracija.component';
 import { KuponComponent } from './kupon/kupon.component';
+import { ZaposlenikComponent } from './zaposlenik/zaposlenik.component';
+import { NoviZaposlenikComponent } from './zaposlenik/novi-zaposlenik/novi-zaposlenik.component';
 
 
 @NgModule({
@@ -28,7 +30,9 @@ import { KuponComponent } from './kupon/kupon.component';
     NarudzbaComponent,
     StarComponent,
     RegistracijaComponent,
-    KuponComponent
+    KuponComponent,
+    ZaposlenikComponent,
+    NoviZaposlenikComponent
 
   ],
   imports: [
@@ -45,6 +49,11 @@ import { KuponComponent } from './kupon/kupon.component';
       {path:"narudzba", component:NarudzbaComponent},
       {path:"registracija", component:RegistracijaComponent},
       {path:"kupon", component:KuponComponent},
+      {path:"zaposlenik", component:ZaposlenikComponent},
+      {path:"novi-zaposlenik", component:NoviZaposlenikComponent}
+
+
+
 
     ],{
       anchorScrolling : 'enabled',
