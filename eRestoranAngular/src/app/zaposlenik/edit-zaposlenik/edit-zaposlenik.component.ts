@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {EditMeniStavka} from "../../meni/view-models/edit-meni-stavka-vm";
 import {EditZaposlenik} from "../view-models/edit-zaposlenik-vm";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {MyConfig} from "../../my-config";
 
@@ -13,7 +13,7 @@ import {MyConfig} from "../../my-config";
 export class EditZaposlenikComponent implements OnInit {
   id : number;
   urediZaposlenik : EditZaposlenik =null;
-  constructor( private httpKlijent :HttpClient ,private route: ActivatedRoute) { }
+  constructor( private httpKlijent :HttpClient ,private route: ActivatedRoute,private router:Router) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -39,4 +39,17 @@ export class EditZaposlenikComponent implements OnInit {
     })
   }
 
+  posaljiPodatke() {
+    // @ts-ignore
+    var file = document.getElementById("fajl-input").files[0];
+
+    var data = new FormData();
+    data.append("slikaZaposlenika", file);
+    this.httpKlijent.post("https://localhost:44325" + "/Zaposlenik/Update/"+ this.id, this.urediZaposlenik).subscribe((result :any)=>{
+      this.httpKlijent.post("https://localhost:44325" + "/Zaposlenik/AddSlika/" + result, data).subscribe((result: any)=>{
+        alert("Uspješno uređen zaposlenik "+ this.urediZaposlenik.ime+" "+this.urediZaposlenik.prezime);
+        this.router.navigate(['/zaposlenik']);
+      });
+    });
+  }
 }

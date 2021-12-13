@@ -124,5 +124,24 @@ namespace FIT_Api_Examples.ModulZaposleni.Controllers
             }
             return null;
         }
+        [HttpPost("{id}")]
+        public ActionResult Update(int id, [FromBody] ZaposlenikUpdateVM zaposlenikUpdateVM)
+        {
+
+            Zaposlenik zaposlenik = _dbContext.Zaposlenik.Find(id);
+
+            if (zaposlenik == null)
+                return BadRequest("pogresan ID");
+
+            zaposlenik.Ime = zaposlenikUpdateVM.ime.RemoveTags();
+            zaposlenik.Prezime = zaposlenikUpdateVM.prezime.RemoveTags();
+            zaposlenik.Email = zaposlenikUpdateVM.email.RemoveTags();
+            zaposlenik.Username = zaposlenikUpdateVM.username.RemoveTags();
+            zaposlenik.Password = zaposlenikUpdateVM.password.RemoveTags();
+           
+            //Console.WriteLine(5);
+            _dbContext.SaveChanges();
+            return Ok(zaposlenik.ID);
+        }
     }
 }
