@@ -14,6 +14,7 @@ export class NoviZaposlenikComponent implements OnInit {
   constructor(private httpKlijent : HttpClient) { }
 
   ngOnInit(): void {
+
   }
   generisiPreview() {
     // @ts-ignore

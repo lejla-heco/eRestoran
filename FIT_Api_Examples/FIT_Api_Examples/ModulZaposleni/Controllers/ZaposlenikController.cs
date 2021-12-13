@@ -103,5 +103,26 @@ namespace FIT_Api_Examples.ModulZaposleni.Controllers
             _dbContext.SaveChanges();
             return Ok(zaposlenik);
         }
+
+        [HttpGet("{id}")]
+        public ZaposlenikUpdateVM GetById(int id)
+        {
+            Zaposlenik zaposlenik = _dbContext.Zaposlenik.Find(id);
+            if (zaposlenik != null)
+            {
+                ZaposlenikUpdateVM odabraniZaposlenik = new ZaposlenikUpdateVM()
+                {
+                    id = zaposlenik.ID,
+                    ime = zaposlenik.Ime,
+                    prezime = zaposlenik.Prezime,
+                    email = zaposlenik.Email,
+                    username = zaposlenik.Username,
+                    password = zaposlenik.Password,
+                    slika = zaposlenik.Slika
+                };
+                return odabraniZaposlenik;
+            }
+            return null;
+        }
     }
 }

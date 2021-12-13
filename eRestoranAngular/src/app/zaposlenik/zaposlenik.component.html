@@ -36,7 +36,7 @@
               <h6 class="fw-bolder"> Broj obavljenih narudžbi:{{zaposlenik.obavljeneNarudzbe}}</h6>-->
 
 
-            <i  class="bi bi-pencil-square"  style="margin-left: 10px"> </i>
+            <i  class="bi bi-pencil-square"  style="margin-left: 10px" (click)="detalji(zaposlenik.id)" > </i>
             <i  class="bi bi-trash"  style="margin-left: 10px" (click)="prikazi_brisanje(zaposlenik)"></i>
 
           </div>

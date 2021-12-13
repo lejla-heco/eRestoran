@@ -6,3 +6,4 @@ export class NoviZaposlenik{
   email:string;
 
 }
+

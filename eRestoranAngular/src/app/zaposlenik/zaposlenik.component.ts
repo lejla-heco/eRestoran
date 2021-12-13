@@ -3,6 +3,7 @@ import {MeniStavka} from "../meni/view-models/meni-stavka-vm";
 import {Zaposlenik} from "./view-models/zaposlenik-vm";
 import {MyConfig} from "../my-config";
 import {HttpClient} from "@angular/common/http";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-zaposlenik',
@@ -13,7 +14,8 @@ export class ZaposlenikComponent implements OnInit {
   zaposlenici : Zaposlenik[] = null;
   odabraniZaposlenik: Zaposlenik = null;//brisanje
   obrisan:boolean=false;
-  constructor(private httpKlijent:HttpClient) { }
+  id : number = null;//edit?
+  constructor(private httpKlijent:HttpClient,private router : Router) { }
 
   ngOnInit(): void {
     this.ucitajZaposlenike();
@@ -35,4 +37,10 @@ export class ZaposlenikComponent implements OnInit {
       this.ucitajZaposlenike();
     });
   }
+
+  detalji(id:number) {
+    this.router.navigate(['/edit-zaposlenik', id]);
+  }
+
+
 }

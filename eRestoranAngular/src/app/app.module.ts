@@ -16,6 +16,8 @@ import { RegistracijaComponent } from './registracija/registracija.component';
 import { KuponComponent } from './kupon/kupon.component';
 import { ZaposlenikComponent } from './zaposlenik/zaposlenik.component';
 import { NoviZaposlenikComponent } from './zaposlenik/novi-zaposlenik/novi-zaposlenik.component';
+import { EditZaposlenikComponent } from './zaposlenik/edit-zaposlenik/edit-zaposlenik.component';
+import {EditZaposlenik} from "./zaposlenik/view-models/edit-zaposlenik-vm";
 
 
 @NgModule({
@@ -32,7 +34,8 @@ import { NoviZaposlenikComponent } from './zaposlenik/novi-zaposlenik/novi-zapos
     RegistracijaComponent,
     KuponComponent,
     ZaposlenikComponent,
-    NoviZaposlenikComponent
+    NoviZaposlenikComponent,
+    EditZaposlenikComponent
 
   ],
   imports: [
@@ -50,7 +53,8 @@ import { NoviZaposlenikComponent } from './zaposlenik/novi-zaposlenik/novi-zapos
       {path:"registracija", component:RegistracijaComponent},
       {path:"kupon", component:KuponComponent},
       {path:"zaposlenik", component:ZaposlenikComponent},
-      {path:"novi-zaposlenik", component:NoviZaposlenikComponent}
+      {path:"novi-zaposlenik", component:NoviZaposlenikComponent},
+      {path:"edit-zaposlenik/:id", component:EditZaposlenikComponent}
 
 
 
