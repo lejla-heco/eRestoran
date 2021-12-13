@@ -90,5 +90,18 @@ namespace FIT_Api_Examples.ModulZaposleni.Controllers
                                             }).ToList();
             return pagedStavke;
         }
+        [HttpPost("{id}")]
+        public ActionResult Delete(int id)
+        {
+            Zaposlenik zaposlenik = _dbContext.Zaposlenik.Find(id);
+
+            if (zaposlenik == null || id == 1)
+                return BadRequest("pogresan ID");
+
+            _dbContext.Remove(zaposlenik);
+
+            _dbContext.SaveChanges();
+            return Ok(zaposlenik);
+        }
     }
 }

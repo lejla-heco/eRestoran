@@ -12,6 +12,7 @@ import {HttpClient} from "@angular/common/http";
 export class ZaposlenikComponent implements OnInit {
   zaposlenici : Zaposlenik[] = null;
   odabraniZaposlenik: Zaposlenik = null;//brisanje
+  obrisan:boolean=false;
   constructor(private httpKlijent:HttpClient) { }
 
   ngOnInit(): void {
@@ -25,5 +26,13 @@ export class ZaposlenikComponent implements OnInit {
 
   prikazi_brisanje(zaposlenik:Zaposlenik) {
     this.odabraniZaposlenik = zaposlenik;
+  }
+
+  brisanje(zaposlenik: Zaposlenik) {
+    this.httpKlijent.post("https://localhost:44325"+"/Zaposlenik/Delete/"+zaposlenik.id, zaposlenik).subscribe((x:any)=>{
+      alert("Zaposlenik "+ zaposlenik.ime+zaposlenik.prezime+ " je uspješno obrisan");
+      this.obrisan=true;
+      this.ucitajZaposlenike();
+    });
   }
 }

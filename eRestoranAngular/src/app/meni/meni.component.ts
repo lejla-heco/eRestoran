@@ -20,6 +20,7 @@ export class MeniComponent implements OnInit {
   korisnikId : number = null;
   novaStavkaNarudzbe : StavkaNarudzbe = new StavkaNarudzbe();
   id : number = null;
+  obrisana:boolean=false; // uklanjanje modala za brisanje nakon obrisane stavke
   idBrisanje : number = null;
 
   idOcjena:number=null;
@@ -76,6 +77,7 @@ export class MeniComponent implements OnInit {
   brisanje(s :MeniStavka) {
   this.httpKlijent.post(MyConfig.adresaServera+"/Meni/Delete/"+s.id, s).subscribe((x:any)=>{
     alert("Stavka "+ s.naziv+ " je uspješno obrisana");
+    this.obrisana=true;
     this.ucitajMeniStavke(s.nazivGrupe);
   });
 

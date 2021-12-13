@@ -81,7 +81,7 @@
 </section>
 
 <!-- Modal za brisanje stavke menija-->
-<div *ngIf="odabranaStavkaMenija != null" class="animate__animated animate__fadeIn portfolio-modal modal" id="portfolioModal" tabindex="-1" aria-labelledby="portfolioModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+<div *ngIf="odabranaStavkaMenija != null && this.obrisana==false" class="animate__animated animate__fadeIn portfolio-modal modal" id="portfolioModal" tabindex="-1" aria-labelledby="portfolioModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
