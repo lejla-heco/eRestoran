@@ -4,6 +4,7 @@ import {OmiljenaStavka} from "./view-models/omiljena-stavka-vm";
 import {HttpClient} from "@angular/common/http";
 import {MyConfig} from "../my-config";
 import {MeniGrupa} from "../meni/view-models/meni-grupa-vm";
+import {StavkaNarudzbe} from "../narudzba/view-models/stavka-narudzbe-vm";
 
 @Component({
   selector: 'app-omiljenje-stavke',
@@ -14,6 +15,7 @@ export class OmiljenjeStavkeComponent implements OnInit {
   omiljeneStavke: OmiljenaStavka[] = null;
   private korisnikId: number;
   public meniGrupe: MeniGrupa[] = null;
+  private novaStavkaNarudzbe : StavkaNarudzbe = new StavkaNarudzbe();
 
   constructor(private httpKlijent : HttpClient) {
     if (sessionStorage.getItem("autentifikacija-token") || localStorage.getItem("autentifikacija-token")) {
@@ -46,5 +48,13 @@ export class OmiljenjeStavkeComponent implements OnInit {
     this.httpKlijent.get(MyConfig.adresaServera + "/MeniGrupa/GetAll").subscribe((result : any)=>{
       this.meniGrupe = result;
     })
+  }
+
+  dodajUKorpu(stavka : OmiljenaStavka) {
+    this.novaStavkaNarudzbe.korisnikId = this.korisnikId;
+    this.novaStavkaNarudzbe.meniStavkaId = stavka.id;
+    this.httpKlijent.post(MyConfig.adresaServera+"/Narudzba/AddStavka",this.novaStavkaNarudzbe).subscribe((response : any)=>{
+      document.getElementById('kolicina').innerHTML = response;
+    });
   }
 }
