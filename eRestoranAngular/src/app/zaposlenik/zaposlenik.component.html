@@ -17,19 +17,23 @@
 
   <div    class="container px-4 px-lg-5 mt-5">
     <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-      <div  class="animate__animated animate__fadeIn col mb-5"><!--*ngFor="let stavka of meniStavke"-->
+      <div  *ngFor="let zaposlenik of zaposlenici"class="animate__animated animate__fadeIn col mb-5"><!--*ngFor="let stavka of meniStavke"-->
         <div  class="card h-100">
 
           <!-- Product image-->
-          <img class="card-img-top" src="/assets/img/cover/meni.jpg"  alt="Nije učitana slika" /><!--src="{{}}"-->
+          <img class="card-img-top" src="/assets/img/cover/meni.jpg" src="{{zaposlenik.slika}}" alt="Nije učitana slika" /><!--src="{{}}"-->
           <!-- Product details-->
           <div class="card-body p-4">
             <div class="text-center">
               <!-- Product name-->
-              <h6 class="fw-bolder">Ime</h6>
-              <h6 class="fw-bolder">Prezime</h6>
-              <h6 class="fw-bolder">Email</h6>
-              <h6 class="fw-bolder">Korisnicko ime</h6>
+              <h6 style="font-size: larger"class="fw-bolder">{{zaposlenik.ime}}</h6>
+              <h6 style="font-size: larger" class="fw-bolder">{{zaposlenik.prezime}}</h6>
+              <p class="text-muted">{{zaposlenik.email}}</p>
+              <p class="text-muted">Korisnicko ime: {{zaposlenik.username}}</p>
+              <p class="text-muted">Broj obavljenih narudžbi: {{zaposlenik.obavljeneNarudzbe}}</p>
+              <!--<h6 class="fw-bolder">{{zaposlenik.email}}</h6>
+              <h6 class="fw-bolder">{{zaposlenik.username}}</h6>
+              <h6 class="fw-bolder"> Broj obavljenih narudžbi:{{zaposlenik.obavljeneNarudzbe}}</h6>-->
 
 
             <i  class="bi bi-pencil-square"  style="margin-left: 10px"> </i>
