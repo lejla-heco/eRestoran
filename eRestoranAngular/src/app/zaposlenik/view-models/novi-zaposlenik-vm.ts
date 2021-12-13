@@ -4,7 +4,5 @@ export class NoviZaposlenik{
   username:string;
   password:string;
   email:string;
-  slika:string;
-
 
 }
