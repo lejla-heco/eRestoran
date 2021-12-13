@@ -11,6 +11,7 @@ import {HttpClient} from "@angular/common/http";
 })
 export class ZaposlenikComponent implements OnInit {
   zaposlenici : Zaposlenik[] = null;
+  odabraniZaposlenik: Zaposlenik = null;//brisanje
   constructor(private httpKlijent:HttpClient) { }
 
   ngOnInit(): void {
@@ -22,4 +23,7 @@ export class ZaposlenikComponent implements OnInit {
     })
   }
 
+  prikazi_brisanje(zaposlenik:Zaposlenik) {
+    this.odabraniZaposlenik = zaposlenik;
+  }
 }
