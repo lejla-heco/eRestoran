@@ -7,26 +7,41 @@
   </div>
 </header>
 
-<section class="animate__animated animate__fadeIn page-section bg-light py-5">
-  <div class="container px-4 px-lg-5 mt-5">
+<section class="page-section bg-light py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <ul class="nav site-tab-nav">
+        <li *ngFor ="let grupa of meniGrupe" class="nav-item">
+          <a class="nav-link active" (click)="ucitajOmiljeneStavke(grupa.naziv)">{{grupa.naziv}}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div    class="container px-4 px-lg-5 mt-5">
+    <h3 *ngIf ="omiljeneStavke.length == 0 || omiljeneStavke == null" class="display-7 fw-bolder text-center" style="color:gray">Nemate omiljenih stavki u ovoj kategoriji</h3>
     <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-      <div class="animate__animated animate__fadeIn col mb-5">
+      <div *ngFor="let stavka of omiljeneStavke" class="animate__animated animate__fadeIn col mb-5">
         <div class="card h-100">
           <!-- Sale badge-->
-          <div  class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Izdvojeno</div>
+          <div  *ngIf="stavka.izdvojeno" class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Izdvojeno</div>
           <!-- Product image-->
-          <img class="card-img-top" src="..." alt="Nije učitana slika" />
+          <img class="card-img-top" src="{{stavka.slika}}" alt="Nije učitana slika" />
           <!-- Product details-->
           <div class="card-body p-4" style="padding-bottom: 5px !important;">
             <div class="text-center">
               <!-- Product name-->
-              <h5 class="fw-bolder">Naziv</h5>
-              <span class="text-muted">Opis</span>
+              <h5 class="fw-bolder">{{stavka.naziv}}</h5>
+              <span class="text-muted">{{stavka.opis}}</span>
               <br/>
+              <!-- Product reviews-->
+              <div class="d-flex justify-content-center small text-warning mb-2">
+                <div *ngFor = "let item of createRange(stavka.ocjena)"class="bi-star-fill" ></div>
+
+              </div>
               <!-- Product price-->
-              <span class="text-muted text-decoration-line-through"> KM </span>
-              <span >snizeno KM</span>
-              <span >normalno KM</span>
+              <span *ngIf="stavka.izdvojeno" class="text-muted text-decoration-line-through">{{stavka.cijena}} KM </span>
+              <span *ngIf="stavka.izdvojeno">{{stavka.snizenaCijena}} KM</span>
+              <span *ngIf="!stavka.izdvojeno">{{stavka.cijena}} KM</span>
             </div>
           </div>
           <ul class="list-group list-group-flush">

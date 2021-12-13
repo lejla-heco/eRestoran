@@ -43,13 +43,13 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
             return Ok();
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetAll(int id)
+        [HttpPost]
+        public IActionResult GetAllPaged([FromBody] OmiljenaStavkaInfoVM omiljenaStavkaInfoVM)
         {
-            if (_dbContext.Korisnik.Find(id) == null)
+            if (_dbContext.Korisnik.Find(omiljenaStavkaInfoVM.id) == null)
                 return BadRequest("Nemate ovlasti za trazenu akciju!");
 
-            List<OmiljenaStavkaGetAllVM> omiljeneStavke = _dbContext.OmiljenaStavka.Where(os => os.KorisnikID == id)
+            List<OmiljenaStavkaGetAllVM> omiljeneStavke = _dbContext.OmiljenaStavka.Where(os => os.KorisnikID == omiljenaStavkaInfoVM.id)
                                                             .Select(os => new OmiljenaStavkaGetAllVM()
                                                             {
                                                                 id = os.MeniStavkaID,
@@ -61,7 +61,7 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
                                                                 snizenaCijena = os.MeniStavka.SnizenaCijena,
                                                                 ocjena = os.MeniStavka.Ocjena,
                                                                 nazivGrupe = os.MeniStavka.MeniGrupa.Naziv
-                                                            }).ToList();
+                                                            }).Where(os => os.nazivGrupe == omiljenaStavkaInfoVM.kategorija).ToList();
             return Ok(omiljeneStavke);
         }
     }

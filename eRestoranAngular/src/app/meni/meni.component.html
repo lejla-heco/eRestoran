@@ -92,7 +92,7 @@
                 </div>
               </div>
               <!-- Product price-->
-              <span *ngIf="stavka.izdvojeno==true" class="text-muted text-decoration-line-through">{{stavka.cijena}} KM </span>
+              <span *ngIf="stavka.izdvojeno" class="text-muted text-decoration-line-through">{{stavka.cijena}} KM </span>
               <span *ngIf="stavka.izdvojeno">{{stavka.snizenaCijena}} KM</span>
               <span *ngIf="!stavka.izdvojeno">{{stavka.cijena}} KM</span>
             </div>
