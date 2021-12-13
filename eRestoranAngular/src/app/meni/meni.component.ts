@@ -6,6 +6,7 @@ import {MeniGrupa} from "./view-models/meni-grupa-vm";
 import {Router} from "@angular/router";
 import {Uloga} from "../helper/uloga";
 import {StavkaNarudzbe} from "../narudzba/view-models/stavka-narudzbe-vm";
+import {MeniKorisnik} from "./view-models/meni-korisnik-vm";
 
 
 @Component({
@@ -15,18 +16,17 @@ import {StavkaNarudzbe} from "../narudzba/view-models/stavka-narudzbe-vm";
 })
 export class MeniComponent implements OnInit {
   meniStavke : MeniStavka[] = null;
+  meniStavkeKorisnik : MeniKorisnik[] = null;
   meniGrupe : MeniGrupa[] = null;
   uloga : string = null;
   korisnikId : number = null;
   novaStavkaNarudzbe : StavkaNarudzbe = new StavkaNarudzbe();
   id : number = null;
   obrisana:boolean=false; // uklanjanje modala za brisanje nakon obrisane stavke
-  idBrisanje : number = null;
 
-  idOcjena:number=null;
   odabranaStavkaMenija: MeniStavka = null;
 
-  ocijenjenaStavkaMenija:MeniStavka=new MeniStavka();//ocjenjivanje
+  ocijenjenaStavkaMenija:MeniKorisnik=new MeniKorisnik();//ocjenjivanje
 
   title = "star-angular";
   stars = [1, 2, 3, 4, 5];
@@ -45,12 +45,22 @@ export class MeniComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMeniGrupe();
-    this.ucitajMeniStavke();
+    if (this.uloga == Uloga.KORISNIK) this.ucitajMeniStavkeKorisnik();
+    else this.ucitajMeniStavke();
   }
   public ucitajMeniStavke(kategorija : string = "Doručak") {
     this.httpKlijent.get(MyConfig.adresaServera + "/Meni/GetAllPaged?nazivKategorije=" + kategorija).subscribe((result : any)=>{
       this.meniStavke = result;
     })
+  }
+
+  public ucitajMeniStavkeKorisnik(kategorija : string = "Doručak") {
+    var podaci : any = new Object();
+    podaci.korisnikId = this.korisnikId;
+    podaci.nazivKategorije = kategorija;
+    this.httpKlijent.post(MyConfig.adresaServera + "/Meni/GetAllPagedLog", podaci).subscribe((result : any)=>{
+      this.meniStavkeKorisnik = result;
+    });
   }
 
   createRange(ocjena: number) {
@@ -87,7 +97,7 @@ export class MeniComponent implements OnInit {
     this.odabranaStavkaMenija = stavka;
   }
 
-  dodajUKorpu(stavka : MeniStavka) {
+  dodajUKorpu(stavka : MeniKorisnik) {
     this.novaStavkaNarudzbe.korisnikId = this.korisnikId;
     this.novaStavkaNarudzbe.meniStavkaId = stavka.id;
     this.httpKlijent.post(MyConfig.adresaServera+"/Narudzba/AddStavka",this.novaStavkaNarudzbe).subscribe((response : any)=>{
@@ -99,7 +109,7 @@ export class MeniComponent implements OnInit {
     //this.idOcjena=this.id;
     this.idOcjena=id;
   }*/
-  prikaziOcjenjivanje(stavka:MeniStavka) {
+  prikaziOcjenjivanje(stavka:MeniKorisnik) {
     //this.idOcjena=this.id;
     this.ocijenjenaStavkaMenija=stavka;
   }

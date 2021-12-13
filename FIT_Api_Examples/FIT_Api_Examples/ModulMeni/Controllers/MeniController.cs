@@ -1,5 +1,6 @@
 ﻿using FIT_Api_Examples.Data;
 using FIT_Api_Examples.Helper;
+using FIT_Api_Examples.ModulKorisnik.Models;
 using FIT_Api_Examples.ModulMeni.Models;
 using FIT_Api_Examples.ModulMeni.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -138,6 +139,32 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
                                                 snizenaCijena = ms.SnizenaCijena,
                                                 ocjena = ms.Ocjena,
                                                 nazivGrupe = ms.MeniGrupa.Naziv
+                                            }).ToList();
+            return pagedStavke;
+        }
+
+        [HttpPost]
+        public List<MeniGetAllPagedLogVM> GetAllPagedLog([FromBody] MeniGAPLogInfoVM meniGAPLogInfoVM)
+        {
+            Korisnik korisnik = _dbContext.Korisnik.Find(meniGAPLogInfoVM.korisnikId);
+            if (korisnik == null)
+                return null;
+            List<MeniGetAllPagedLogVM> pagedStavke = _dbContext.MeniStavka
+                                            .Where(ms => ms.MeniGrupa.Naziv == meniGAPLogInfoVM.nazivKategorije)
+                                            .Select(ms => new MeniGetAllPagedLogVM()
+                                            {
+                                                id = ms.ID,
+                                                naziv = ms.Naziv,
+                                                opis = ms.Opis,
+                                                cijena = ms.Cijena,
+                                                slika = ms.Slika,
+                                                izdvojeno = ms.Izdvojeno,
+                                                snizenaCijena = ms.SnizenaCijena,
+                                                ocjena = ms.Ocjena,
+                                                nazivGrupe = ms.MeniGrupa.Naziv,
+                                                omiljeno =  _dbContext.OmiljenaStavka
+                                                            .Where(os => os.KorisnikID == korisnik.ID && os.MeniStavkaID == ms.ID)
+                                                            .SingleOrDefault() != null ? true : false
                                             }).ToList();
             return pagedStavke;
         }
