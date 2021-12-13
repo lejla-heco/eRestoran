@@ -38,7 +38,7 @@ export class RegistracijaComponent implements OnInit {
     if(this.registracija.password==this.sifra){
 
     this.registracija.opstinaId = parseInt(this.registracija.opstinaId.toString());
-this.httpKlijent.post("https://localhost:44325/Korisnik/Add",this.registracija).subscribe((result:any)=>{
+  this.httpKlijent.post("https://localhost:44325/Korisnik/Add",this.registracija).subscribe((result:any)=>{
   alert("Uspješno registrovan korisnik "+ this.registracija.username);
   this.prijava.korisnickoIme=this.registracija.username;
   this.prijava.lozinka=this.registracija.password;

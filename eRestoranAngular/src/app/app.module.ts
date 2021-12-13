@@ -18,6 +18,7 @@ import { ZaposlenikComponent } from './zaposlenik/zaposlenik.component';
 import { NoviZaposlenikComponent } from './zaposlenik/novi-zaposlenik/novi-zaposlenik.component';
 import { EditZaposlenikComponent } from './zaposlenik/edit-zaposlenik/edit-zaposlenik.component';
 import {EditZaposlenik} from "./zaposlenik/view-models/edit-zaposlenik-vm";
+import { OmiljenjeStavkeComponent } from './omiljenje-stavke/omiljenje-stavke.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import {EditZaposlenik} from "./zaposlenik/view-models/edit-zaposlenik-vm";
     KuponComponent,
     ZaposlenikComponent,
     NoviZaposlenikComponent,
-    EditZaposlenikComponent
+    EditZaposlenikComponent,
+    OmiljenjeStavkeComponent
 
   ],
   imports: [
@@ -54,10 +56,8 @@ import {EditZaposlenik} from "./zaposlenik/view-models/edit-zaposlenik-vm";
       {path:"kupon", component:KuponComponent},
       {path:"zaposlenik", component:ZaposlenikComponent},
       {path:"novi-zaposlenik", component:NoviZaposlenikComponent},
-      {path:"edit-zaposlenik/:id", component:EditZaposlenikComponent}
-
-
-
+      {path:"edit-zaposlenik/:id", component:EditZaposlenikComponent},
+      {path:"omiljene-stavke", component:OmiljenjeStavkeComponent}
 
     ],{
       anchorScrolling : 'enabled',
