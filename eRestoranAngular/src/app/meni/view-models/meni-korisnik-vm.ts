@@ -1,4 +1,4 @@
-export class MeniKorisnik {
+export class MeniStavkaKorisnik {
   id: number;
   naziv: string;
   opis: string;

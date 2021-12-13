@@ -40,7 +40,7 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
 
             _dbContext.OmiljenaStavka.Add(omiljenaStavka);
             _dbContext.SaveChanges();
-            return Ok(omiljenaStavka);
+            return Ok();
         }
     }
 }

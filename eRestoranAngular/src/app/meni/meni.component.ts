@@ -6,7 +6,7 @@ import {MeniGrupa} from "./view-models/meni-grupa-vm";
 import {Router} from "@angular/router";
 import {Uloga} from "../helper/uloga";
 import {StavkaNarudzbe} from "../narudzba/view-models/stavka-narudzbe-vm";
-import {MeniKorisnik} from "./view-models/meni-korisnik-vm";
+import {MeniStavkaKorisnik} from "./view-models/meni-korisnik-vm";
 
 
 @Component({
@@ -16,7 +16,7 @@ import {MeniKorisnik} from "./view-models/meni-korisnik-vm";
 })
 export class MeniComponent implements OnInit {
   meniStavke : MeniStavka[] = null;
-  meniStavkeKorisnik : MeniKorisnik[] = null;
+  meniStavkeKorisnik : MeniStavkaKorisnik[] = null;
   meniGrupe : MeniGrupa[] = null;
   uloga : string = null;
   korisnikId : number = null;
@@ -26,7 +26,7 @@ export class MeniComponent implements OnInit {
 
   odabranaStavkaMenija: MeniStavka = null;
 
-  ocijenjenaStavkaMenija:MeniKorisnik=new MeniKorisnik();//ocjenjivanje
+  ocijenjenaStavkaMenija:MeniStavkaKorisnik=new MeniStavkaKorisnik();//ocjenjivanje
 
   title = "star-angular";
   stars = [1, 2, 3, 4, 5];
@@ -97,20 +97,14 @@ export class MeniComponent implements OnInit {
     this.odabranaStavkaMenija = stavka;
   }
 
-  dodajUKorpu(stavka : MeniKorisnik) {
+  dodajUKorpu(stavka : MeniStavkaKorisnik) {
     this.novaStavkaNarudzbe.korisnikId = this.korisnikId;
     this.novaStavkaNarudzbe.meniStavkaId = stavka.id;
     this.httpKlijent.post(MyConfig.adresaServera+"/Narudzba/AddStavka",this.novaStavkaNarudzbe).subscribe((response : any)=>{
       document.getElementById('kolicina').innerHTML = response;
     });
   }
-
- /* prikaziOcjenjivanje(id:number) {
-    //this.idOcjena=this.id;
-    this.idOcjena=id;
-  }*/
-  prikaziOcjenjivanje(stavka:MeniKorisnik) {
-    //this.idOcjena=this.id;
+  prikaziOcjenjivanje(stavka : MeniStavkaKorisnik) {
     this.ocijenjenaStavkaMenija=stavka;
   }
   enter(i:any) {
@@ -122,5 +116,28 @@ export class MeniComponent implements OnInit {
   updateRating(i:any) {
     this.rating = i;
     //alert("Uspješno ste ocijenili stavku "+this.id+" sa "+i+" zvjezdice");
+  }
+  upravljajOmiljenomStavkom(stavka : MeniStavkaKorisnik) {
+    if (stavka.omiljeno){
+      stavka.omiljeno = false;
+      this.ukloniOmiljenuStavku(stavka);
+    }
+    else {
+      stavka.omiljeno = true;
+      this.dodajOmiljenuStavku(stavka);
+    }
+  }
+
+  private ukloniOmiljenuStavku(stavka: MeniStavkaKorisnik) {
+
+  }
+
+  private dodajOmiljenuStavku(stavka: MeniStavkaKorisnik) {
+    var podaci : any = new Object();
+    podaci.korisnikId = this.korisnikId;
+    podaci.meniStavkaId = stavka.id;
+    this.httpKlijent.post(MyConfig.adresaServera + '/OmiljenaStavka/Add', podaci).subscribe((response : any)=>{
+      alert("Dodano u omiljeno");
+    });
   }
 }

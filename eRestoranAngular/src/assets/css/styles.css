@@ -11827,6 +11827,12 @@ section#kontakt form#kontaktForm :-ms-input-placeholder {
   font-size: 20px;
   margin-right: 8px;
 }
+.crveno{
+  color: red;
+}
+.crno{
+  color: default;
+}
 
 header.masthead-kupon {
   padding-top: 10.5rem;
