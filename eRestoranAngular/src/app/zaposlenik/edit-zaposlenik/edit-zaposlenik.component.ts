@@ -34,7 +34,7 @@ export class EditZaposlenikComponent implements OnInit {
     }
   }
   private dohvatiZaposlenika() {
-    this.httpKlijent.get("https://localhost:44325" + "/Zaposlenik/GetById/"+this.id).subscribe((result : any) =>{
+    this.httpKlijent.get(MyConfig.adresaServera + "/Zaposlenik/GetById/"+this.id).subscribe((result : any) =>{
       this.urediZaposlenik = result;
     })
   }
@@ -45,8 +45,8 @@ export class EditZaposlenikComponent implements OnInit {
 
     var data = new FormData();
     data.append("slikaZaposlenika", file);
-    this.httpKlijent.post("https://localhost:44325" + "/Zaposlenik/Update/"+ this.id, this.urediZaposlenik).subscribe((result :any)=>{
-      this.httpKlijent.post("https://localhost:44325" + "/Zaposlenik/AddSlika/" + result, data).subscribe((result: any)=>{
+    this.httpKlijent.post(MyConfig.adresaServera + "/Zaposlenik/Update/"+ this.id, this.urediZaposlenik).subscribe((result :any)=>{
+      this.httpKlijent.post(MyConfig.adresaServera + "/Zaposlenik/AddSlika/" + result, data).subscribe((result: any)=>{
         alert("Uspješno uređen zaposlenik "+ this.urediZaposlenik.ime+" "+this.urediZaposlenik.prezime);
         this.router.navigate(['/zaposlenik']);
       });

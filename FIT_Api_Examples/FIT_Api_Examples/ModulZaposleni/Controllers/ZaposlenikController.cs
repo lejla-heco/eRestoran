@@ -39,11 +39,6 @@ namespace FIT_Api_Examples.ModulZaposleni.Controllers
             _dbContext.SaveChanges();
             return Ok(noviZaposlenik.ID);
         }
-        [HttpGet]
-        public List<Zaposlenik> GetAll()
-        {
-            return _dbContext.Zaposlenik.ToList();
-        }
         [HttpPost("{id}")]
         public ActionResult AddSlika(int id, [FromForm] ZaposlenikAddSlikaVM zaposlenikAddSlikaVM)
         {
@@ -73,7 +68,7 @@ namespace FIT_Api_Examples.ModulZaposleni.Controllers
             }
         }
         [HttpGet]
-        public List<ZaposlenikGetAllPagedVM> GetAllPaged()
+        public List<ZaposlenikGetAllPagedVM> GetAll()
         {
             List<ZaposlenikGetAllPagedVM> pagedStavke = _dbContext.Zaposlenik
                                           .Select(z => new ZaposlenikGetAllPagedVM()

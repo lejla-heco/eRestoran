@@ -21,7 +21,7 @@ export class ZaposlenikComponent implements OnInit {
     this.ucitajZaposlenike();
   }
   public ucitajZaposlenike() {
-    this.httpKlijent.get("https://localhost:44325"+"/Zaposlenik/GetAllPaged").subscribe((result : any)=>{
+    this.httpKlijent.get(MyConfig.adresaServera+"/Zaposlenik/GetAll").subscribe((result : any)=>{
       this.zaposlenici = result;
     })
   }
@@ -31,7 +31,7 @@ export class ZaposlenikComponent implements OnInit {
   }
 
   brisanje(zaposlenik: Zaposlenik) {
-    this.httpKlijent.post("https://localhost:44325"+"/Zaposlenik/Delete/"+zaposlenik.id, zaposlenik).subscribe((x:any)=>{
+    this.httpKlijent.post(MyConfig.adresaServera+"/Zaposlenik/Delete/"+zaposlenik.id, zaposlenik).subscribe((x:any)=>{
       alert("Zaposlenik "+ zaposlenik.ime+zaposlenik.prezime+ " je uspješno obrisan");
       this.obrisan=true;
       this.ucitajZaposlenike();

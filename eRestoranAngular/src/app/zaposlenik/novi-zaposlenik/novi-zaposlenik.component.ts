@@ -35,8 +35,8 @@ export class NoviZaposlenikComponent implements OnInit {
     var data = new FormData();
 
     data.append("slikaZaposlenika", file);
-    this.httpKlijent.post("https://localhost:44325" + "/Zaposlenik/Add", this.noviZaposlenik).subscribe((result : any)=>{
-      this.httpKlijent.post("https://localhost:44325" + "/Zaposlenik/AddSlika/" + result, data).subscribe((result:any)=>{
+    this.httpKlijent.post(MyConfig.adresaServera + "/Zaposlenik/Add", this.noviZaposlenik).subscribe((result : any)=>{
+      this.httpKlijent.post(MyConfig.adresaServera + "/Zaposlenik/AddSlika/" + result, data).subscribe((result:any)=>{
         alert("Uspjesno dodan novi zaposlenik");
         this.ocistiFormu();
       });

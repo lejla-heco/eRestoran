@@ -28,7 +28,7 @@ export class RegistracijaComponent implements OnInit {
 
   }
   private getAllOpstine() {
-    this.httpKlijent.get( "https://localhost:44325"+ "/Opstina/GetAll").subscribe((result:any)=>{
+    this.httpKlijent.get( MyConfig.adresaServera + "/Opstina/GetAll").subscribe((result:any)=>{
       this.opstine = result;
     });
     //MyConfig.adresaServera
@@ -38,7 +38,7 @@ export class RegistracijaComponent implements OnInit {
     if(this.registracija.password==this.sifra){
 
     this.registracija.opstinaId = parseInt(this.registracija.opstinaId.toString());
-  this.httpKlijent.post("https://localhost:44325/Korisnik/Add",this.registracija).subscribe((result:any)=>{
+  this.httpKlijent.post(MyConfig.adresaServera + "/Korisnik/Add",this.registracija).subscribe((result:any)=>{
   alert("Uspješno registrovan korisnik "+ this.registracija.username);
   this.prijava.korisnickoIme=this.registracija.username;
   this.prijava.lozinka=this.registracija.password;
