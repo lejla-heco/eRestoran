@@ -25,7 +25,7 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
         [HttpPost]
         public IActionResult Add([FromBody] OmiljenaStavkaAddVM omiljenaStavkaAddVM)
         {
-            if (_dbContext.Korisnik.Find(omiljenaStavkaAddVM.korisnikId) == null) 
+            if (_dbContext.Korisnik.Find(omiljenaStavkaAddVM.korisnikId) == null)
                 return BadRequest("Nemate ovlasti za trazenu akciju!");
 
             MeniStavka meniStavka = _dbContext.MeniStavka.Find(omiljenaStavkaAddVM.meniStavkaId);
@@ -52,6 +52,7 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
             List<OmiljenaStavkaGetAllVM> omiljeneStavke = _dbContext.OmiljenaStavka.Where(os => os.KorisnikID == omiljenaStavkaInfoVM.id)
                                                             .Select(os => new OmiljenaStavkaGetAllVM()
                                                             {
+                                                                omiljenaStavkaId = os.ID,
                                                                 id = os.MeniStavkaID,
                                                                 naziv = os.MeniStavka.Naziv,
                                                                 opis = os.MeniStavka.Opis,
@@ -63,6 +64,18 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
                                                                 nazivGrupe = os.MeniStavka.MeniGrupa.Naziv
                                                             }).Where(os => os.nazivGrupe == omiljenaStavkaInfoVM.kategorija).ToList();
             return Ok(omiljeneStavke);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult Delete(int id)
+        {
+            OmiljenaStavka omiljenaStavka = _dbContext.OmiljenaStavka.Find(id);
+            if (omiljenaStavka == null)
+                return BadRequest("Nepostojeca omiljena stavka!");
+
+            _dbContext.OmiljenaStavka.Remove(omiljenaStavka);
+            _dbContext.SaveChanges();
+            return Ok(omiljenaStavka.MeniStavka.Naziv);
         }
     }
 }

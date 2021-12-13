@@ -7,6 +7,7 @@ namespace FIT_Api_Examples.ModulKorisnik.ViewModels
 {
     public class OmiljenaStavkaGetAllVM
     {
+        public int omiljenaStavkaId { get; set; }
         public int id { get; set; }
         public string naziv { get; set; }
         public string opis { get; set; }
