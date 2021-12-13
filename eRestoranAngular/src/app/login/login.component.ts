@@ -30,4 +30,8 @@ export class LoginComponent implements OnInit {
       }
     )
   }
+
+  prikaziRegistraciju() {
+    this.router.navigate(['/registracija']);
+  }
 }
