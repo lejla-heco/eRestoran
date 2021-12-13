@@ -51,7 +51,7 @@ export class StarComponent implements OnInit {
     this.ocjenaPoslata.ocjena=this.rating;
     console.log(this.ocjenaPoslata.ocjena);
 
-    this.httpKlijent.post("https://localhost:44325"+"/Meni/AddOcjena/"+this.odabrana.id,this.ocjenaPoslata).subscribe((result : any)=>{
+    this.httpKlijent.post(MyConfig.adresaServera+"/Meni/AddOcjena/"+this.odabrana.id,this.ocjenaPoslata).subscribe((result : any)=>{
       alert("Uspješno ste ocijenili stavku "+this.odabrana.naziv+" sa "+this.rating+" zvjezdice");
       //this.router.navigate(['/meni']);
       //window.location.replace('https://erestoran-api.p2102.app.fit.ba/meni')

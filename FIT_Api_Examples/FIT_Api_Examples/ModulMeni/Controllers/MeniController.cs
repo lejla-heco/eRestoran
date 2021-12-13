@@ -58,7 +58,7 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
             meniStavka.Cijena = meniUpdateVM.cijena;
             meniStavka.SnizenaCijena = meniUpdateVM.snizenaCijena;
            meniStavka.MeniGrupaID = meniUpdateVM.meniGrupaId;
-
+            //Console.WriteLine(5);
             _dbContext.SaveChanges();
             return Ok(meniStavka.ID);
         }

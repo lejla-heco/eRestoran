@@ -26,7 +26,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text">Prezime</span>
                     </div>
-                    <input type="text" class="form-control" [(ngModel)]="registracija.prezime" [ngModelOptions]="{standalone: true}">
+                    <input type="text" class="form-control" [(ngModel)]="registracija.prezime" [ngModelOptions]="{standalone: true}" >
                   </div>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -46,18 +46,36 @@
                     </div>
                     <input type="text" class="form-control" [(ngModel)]="registracija.adresaStanovanja" [ngModelOptions]="{standalone: true}">
                   </div>
-                  <div class="input-group mb-3">
+                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Korisničko ime</span>
                     </div>
-                    <input type="text" class="form-control" [(ngModel)]="registracija.username" [ngModelOptions]="{standalone: true}">
+                    <input type="text" class="form-control" placeholder="Korisnicko ime" [(ngModel)]="registracija.username" [ngModelOptions]="{standalone: true}">
                   </div>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Lozinka</span>
                     </div>
-                    <input type="password" class="form-control" [(ngModel)]="registracija.password" [ngModelOptions]="{standalone: true}">
+                    <input type="password" class="form-control" placeholder="Lozinka"[(ngModel)]="registracija.password" [ngModelOptions]="{standalone: true}" >
                   </div>
+
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Ponovite lozinku</span>
+                    </div>
+                    <input type="password" class="form-control"  [(ngModel)]="registracija.password2" [ngModelOptions]="{standalone: true}">
+                  </div>
+
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Opstina</span>
+                    </div>
+                    <select class="form-control mb-3" [(ngModel)]="registracija.opstinaId" [ngModelOptions]="{standalone: true}">
+                      <option *ngFor = "let opstina of opstine" [value]=opstina.id>{{opstina.naziv}}</option>
+                    </select>
+                  </div>
+
+
                   <!-- <div class="input-group">
                      <div class="form-check form-switch">
                        <input [(ngModel)]="zapamtiMe" class="form-check-input" type="checkbox" name="RememberMe" id="RememberMe">

@@ -25,7 +25,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text">Naziv</span>
             </div>
-            <input type="text" class="form-control" [(ngModel)]="urediStavka.naziv">
+           <input type="text" class="form-control" [(ngModel)]="urediStavka.naziv">
           </div>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -51,6 +51,7 @@
               <span class="input-group-text">KM</span>
             </div>
           </div>
+
           <label>Meni kategorija:</label>
           <select class="form-control mb-3" [(ngModel)]="urediStavka.meniGrupaId">
             <option *ngFor = "let grupa of meniGrupe" [value]=grupa.id>{{grupa.naziv}}</option>

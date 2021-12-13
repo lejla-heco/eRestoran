@@ -20,8 +20,12 @@ export class MeniComponent implements OnInit {
   korisnikId : number = null;
   novaStavkaNarudzbe : StavkaNarudzbe = new StavkaNarudzbe();
   id : number = null;
+  idBrisanje : number = null;
 
+  idOcjena:number=null;
   odabranaStavkaMenija: MeniStavka = null;
+
+  ocijenjenaStavkaMenija:MeniStavka=new MeniStavka();//ocjenjivanje
 
   title = "star-angular";
   stars = [1, 2, 3, 4, 5];
@@ -89,8 +93,13 @@ export class MeniComponent implements OnInit {
     });
   }
 
-  prikaziOcjenjivanje(id:number) {
-    this.id=id;
+ /* prikaziOcjenjivanje(id:number) {
+    //this.idOcjena=this.id;
+    this.idOcjena=id;
+  }*/
+  prikaziOcjenjivanje(stavka:MeniStavka) {
+    //this.idOcjena=this.id;
+    this.ocijenjenaStavkaMenija=stavka;
   }
   enter(i:any) {
     this.hoverState = i;

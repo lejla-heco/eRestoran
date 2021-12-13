@@ -4,6 +4,7 @@ import {MeniGrupa} from "../view-models/meni-grupa-vm";
 import {MyConfig} from "../../my-config";
 import {ActivatedRoute} from "@angular/router";
 import {EditMeniStavka} from "../view-models/edit-meni-stavka-vm";
+import {MeniStavka} from "../view-models/meni-stavka-vm";
 
 @Component({
   selector: 'app-edit-stavka',
@@ -12,7 +13,7 @@ import {EditMeniStavka} from "../view-models/edit-meni-stavka-vm";
 })
 export class EditStavkaComponent implements OnInit {
   id : number;
-  urediStavka : EditMeniStavka = null;
+  urediStavka : EditMeniStavka =null;
   meniGrupe : MeniGrupa[] = null;
 
   constructor(private httpKlijent : HttpClient, private route: ActivatedRoute) { }
@@ -46,9 +47,10 @@ export class EditStavkaComponent implements OnInit {
      // @ts-ignore
     var file = document.getElementById("fajl-input").files[0];
     this.urediStavka.meniGrupaId = parseInt(this.urediStavka.meniGrupaId.toString());
+console.log(this.urediStavka.naziv);
     var data = new FormData();
     data.append("slikaMeniStavke", file);
-    this.httpKlijent.post(MyConfig.adresaServera + "/Meni/Update/"+ this.urediStavka.id, this.urediStavka).subscribe((result :any)=>{
+    this.httpKlijent.post(MyConfig.adresaServera + "/Meni/Update/"+ this.id, this.urediStavka).subscribe((result :any)=>{
       this.httpKlijent.post(MyConfig.adresaServera + "/Meni/AddSlika/" + result, data).subscribe((result: any)=>{
         alert("Uspješno uređena stavka menija "+ this.urediStavka.naziv);
       });

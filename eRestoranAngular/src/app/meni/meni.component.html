@@ -45,10 +45,10 @@
               <!--zvjezdice-->
               <div *ngIf="uloga == 'Korisnik'"  class="App">
 
-                <div (mouseenter)="prikaziOcjenjivanje(stavka.id)" class="flex-container">
+                <div (mouseenter)="prikaziOcjenjivanje(stavka)" class="flex-container">
 
                   <ng-container  *ngFor="let star of stars">
-                    <app-star [odabranaId]="id" [odabrana]="stavka" [starId]="star" [rating]="hoverState || rating" (enter)="enter($event)" (leave)="leave($event)"
+                    <app-star [odabranaId]="stavka.id" [odabrana]="ocijenjenaStavkaMenija" [starId]="star" [rating]="hoverState || rating" (enter)="enter($event)" (leave)="leave($event)"
                               (bigClick)="updateRating(star)">
                     </app-star>
                   </ng-container>
