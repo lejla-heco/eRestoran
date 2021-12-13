@@ -16,20 +16,32 @@ export class RegistracijaComponent implements OnInit {
 
   registracija : Registracija = new Registracija();
   opstine : Opstina[] = null;
+  sifra:string;
 
   constructor(private httpKlijent : HttpClient, private router : Router) { }
 
 
 
   ngOnInit(): void {
-    this.getAllMeniGrupe();
+    this.getAllOpstine();
 
   }
-  private getAllMeniGrupe() {
+  private getAllOpstine() {
     this.httpKlijent.get( "https://localhost:44325"+ "/Opstina/GetAll").subscribe((result:any)=>{
       this.opstine = result;
     });
     //MyConfig.adresaServera
   }
 
+  registracijaPodataka() {
+    if(this.registracija.password==this.sifra){
+
+    this.registracija.opstinaId = parseInt(this.registracija.opstinaId.toString());
+this.httpKlijent.post("https://localhost:44325/Korisnik/Add",this.registracija).subscribe((result:any)=>{
+  alert("Uspješno registrovan korisnik "+ this.registracija.username);
+  this.router.navigateByUrl("/login");
+    });}
+    else alert("Neispravna lozinka");
+
+  }
 }

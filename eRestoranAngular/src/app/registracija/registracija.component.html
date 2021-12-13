@@ -63,14 +63,14 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text">Ponovite lozinku</span>
                     </div>
-                    <input type="password" class="form-control"  [(ngModel)]="registracija.password2" [ngModelOptions]="{standalone: true}">
+                    <input type="password" class="form-control"  [(ngModel)]="sifra" [ngModelOptions]="{standalone: true}">
                   </div>
 
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Opstina</span>
                     </div>
-                    <select class="form-control mb-3" [(ngModel)]="registracija.opstinaId" [ngModelOptions]="{standalone: true}">
+                    <select class="form-control mb-3" [(ngModel)]="registracija.opstinaId"  [ngModelOptions]="{standalone: true}">
                       <option *ngFor = "let opstina of opstine" [value]=opstina.id>{{opstina.naziv}}</option>
                     </select>
                   </div>
@@ -82,8 +82,8 @@
                        <label class="form-check-label" for="RememberMe">Zapamti me?</label>
                      </div>
                    </div>-->
-                  <button class="btn btn-dark flex-shrink-0">Registruj se</button>
-                 <!-- <button class="btn btn-dark flex-shrink-0" (click)="posaljiPodatke()">
+                  <button class="btn btn-dark flex-shrink-0" (click)="registracijaPodataka()"> <i class="bi bi-person-plus-fill"></i>Registruj se</button>
+                 <!--<button class="btn btn-dark flex-shrink-0" (click)="posaljiPodatke()">
                     <i class="bi bi-box-arrow-in-right"></i>
                     Prijavi se
                   </button>-->

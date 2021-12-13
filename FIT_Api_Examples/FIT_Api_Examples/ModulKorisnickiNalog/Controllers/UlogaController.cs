@@ -49,5 +49,7 @@ namespace FIT_Api_Examples.ModulKorisnickiNalog.Controllers
             _dbContext.SaveChanges();
             return Ok(uloga);
         }
+
+       
     }
 }
