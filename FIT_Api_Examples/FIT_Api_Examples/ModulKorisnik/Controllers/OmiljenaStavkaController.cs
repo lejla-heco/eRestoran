@@ -42,5 +42,27 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
             _dbContext.SaveChanges();
             return Ok();
         }
+
+        [HttpGet("{id}")]
+        public IActionResult GetAll(int id)
+        {
+            if (_dbContext.Korisnik.Find(id) == null)
+                return BadRequest("Nemate ovlasti za trazenu akciju!");
+
+            List<OmiljenaStavkaGetAllVM> omiljeneStavke = _dbContext.OmiljenaStavka.Where(os => os.KorisnikID == id)
+                                                            .Select(os => new OmiljenaStavkaGetAllVM()
+                                                            {
+                                                                id = os.MeniStavkaID,
+                                                                naziv = os.MeniStavka.Naziv,
+                                                                opis = os.MeniStavka.Opis,
+                                                                cijena = os.MeniStavka.Cijena,
+                                                                slika = os.MeniStavka.Slika,
+                                                                izdvojeno = os.MeniStavka.Izdvojeno,
+                                                                snizenaCijena = os.MeniStavka.SnizenaCijena,
+                                                                ocjena = os.MeniStavka.Ocjena,
+                                                                nazivGrupe = os.MeniStavka.MeniGrupa.Naziv
+                                                            }).ToList();
+            return Ok(omiljeneStavke);
+        }
     }
 }
