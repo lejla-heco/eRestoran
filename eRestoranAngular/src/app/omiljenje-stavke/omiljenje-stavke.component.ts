@@ -57,4 +57,11 @@ export class OmiljenjeStavkeComponent implements OnInit {
       document.getElementById('kolicina').innerHTML = response;
     });
   }
+
+  obrisiStavku(stavka : OmiljenaStavka) {
+    this.httpKlijent.get(MyConfig.adresaServera+"/OmiljenaStavka/Delete/" + stavka.omiljenaStavkaId).subscribe((response : any)=>{
+      alert("Uspjesno uklonjena stavka");
+      this.ucitajOmiljeneStavke(stavka.nazivGrupe);
+    });
+  }
 }

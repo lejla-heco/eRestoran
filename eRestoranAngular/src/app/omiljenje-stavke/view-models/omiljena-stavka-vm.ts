@@ -1,4 +1,5 @@
 export class OmiljenaStavka {
+  omiljenaStavkaId : number;
   id: number;
   naziv: string;
   opis: string;

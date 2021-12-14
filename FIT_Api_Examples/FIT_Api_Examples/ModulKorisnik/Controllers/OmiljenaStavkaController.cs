@@ -75,7 +75,19 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
 
             _dbContext.OmiljenaStavka.Remove(omiljenaStavka);
             _dbContext.SaveChanges();
-            return Ok(omiljenaStavka.MeniStavka.Naziv);
+            return Ok(omiljenaStavka);
+        }
+
+        [HttpGet]
+        public IActionResult DeleteById(int id, int stavkaId)
+        {
+            OmiljenaStavka omiljenaStavka = _dbContext.OmiljenaStavka.Where(os => os.KorisnikID == id && os.MeniStavkaID == stavkaId).SingleOrDefault();
+            if (omiljenaStavka == null)
+                return BadRequest("Nepostojeca omiljena stavka!");
+
+            _dbContext.OmiljenaStavka.Remove(omiljenaStavka);
+            _dbContext.SaveChanges();
+            return Ok(omiljenaStavka);
         }
     }
 }
