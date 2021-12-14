@@ -78,10 +78,10 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
             return Ok(omiljenaStavka);
         }
 
-        [HttpGet]
-        public IActionResult DeleteById(int id, int stavkaId)
+        [HttpPost]
+        public IActionResult DeleteById([FromBody] OmiljenaStavkaInfoVM omiljenaStavkaInfoVM)
         {
-            OmiljenaStavka omiljenaStavka = _dbContext.OmiljenaStavka.Where(os => os.KorisnikID == id && os.MeniStavkaID == stavkaId).SingleOrDefault();
+            OmiljenaStavka omiljenaStavka = _dbContext.OmiljenaStavka.Where(os => os.KorisnikID == omiljenaStavkaInfoVM.id && os.MeniStavkaID == omiljenaStavkaInfoVM.stavkaId).SingleOrDefault();
             if (omiljenaStavka == null)
                 return BadRequest("Nepostojeca omiljena stavka!");
 

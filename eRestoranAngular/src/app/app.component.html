@@ -80,8 +80,15 @@
         <li class="nav-item"><a class="nav-link" routerLink="meni">Meni</a></li>
         <li class="nav-item"><a class="nav-link" routerLink="posebna-ponuda">Posebna ponuda</a></li>
         <li class="nav-item"><a class="nav-link" routerLink="kupon">Kuponi</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="zaposlenik">Zaposlenici</a></li>
-        <li class="nav-item"><a class="nav-link" >Dobavljači</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdownAdmin" role="button" data-bs-toggle="dropdown" aria-expanded="false">Osoblje</a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownAdmin">
+            <li><a class="dropdown-item" href="#" routerLink="zaposlenik">Zaposlenici</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item" href="#">Dobavljači</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link" routerLink="poslovnica">Poslovnice</a></li>
       </ul>
       <ul class="navbar-nav d-flex">
         <a class="nav-item btn btn-outline-light" href="" (click)="odjava()">

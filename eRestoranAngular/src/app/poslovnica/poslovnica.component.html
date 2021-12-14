@@ -1,0 +1,57 @@
+<header class="masthead-kupon" style="padding-top: 9rem;">
+  <div class="container">
+    <div class="row d-flex justify-content-center align-items-center mb-4">
+      <div class="animate__animated animate__fadeIn col col-xl-6">
+        <div class="card mb-5" style="border: none">
+          <div class="row g-0">
+            <div class="col d-flex align-items-center">
+              <div class="card-body p-4 p-lg-5 text-black">
+                <form>
+
+                  <div class="small mb-1 text-center">Unesite podatke o novoj poslovnici</div>
+                  <h3 class="display-5 fw-bolder text-center mb-5">Nova poslovnica</h3>
+                  <div class="fs-6 mb-5">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Adresa</span>
+                      </div>
+                      <input type="text" class="form-control" [(ngModel)]="poslovnica.adresa" [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Broj telefona</span>
+                      </div>
+                      <input type="tel" class="form-control" [(ngModel)]="poslovnica.brojTelefona" [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Radno vrijeme</span>
+                      </div>
+                      <input type="text" class="form-control" [(ngModel)]="poslovnica.radnoVrijeme" [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Opština</span>
+                      </div>
+                    <select class="form-control mb-3" [(ngModel)]="poslovnica.opstinaId" [ngModelOptions]="{standalone: true}">
+                      <option *ngFor = "let opstina of opstine" [value]=opstina.id>{{opstina.naziv}}</option>
+                    </select>
+                    </div>
+                  </div>
+                  <div class="text-center">
+                    <button class="btn btn-dark flex-shrink-0" type="button" (click)="posaljiPodatke()">
+                      <i class="bi bi-briefcase-fill"></i>
+                      Dodaj novu poslovnicu
+                    </button>
+                  </div>
+
+
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

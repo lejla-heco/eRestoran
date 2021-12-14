@@ -9,5 +9,6 @@ namespace FIT_Api_Examples.ModulKorisnik.ViewModels
     {
         public int id { get; set; }
         public string kategorija { get; set; }
+        public int stavkaId { get; set; }
     }
 }

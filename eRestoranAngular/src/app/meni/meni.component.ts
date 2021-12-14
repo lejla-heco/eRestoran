@@ -129,7 +129,10 @@ export class MeniComponent implements OnInit {
   }
 
   private ukloniOmiljenuStavku(stavka: MeniStavkaKorisnik) {
-      this.httpKlijent.get(MyConfig.adresaServera + '/OmiljenaStavka/DeleteById?id='+this.korisnikId+'&stavkaId='+stavka.id).subscribe((response : any)=>{
+    var podaci : any = new Object();
+    podaci.id = this.korisnikId;
+    podaci.stavkaId = stavka.id;
+      this.httpKlijent.post(MyConfig.adresaServera + '/OmiljenaStavka/DeleteById', podaci).subscribe((response : any)=>{
         alert("Uspjesno uklonjena omiljena stavka menija!");
       })
   }
