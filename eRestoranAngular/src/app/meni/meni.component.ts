@@ -7,6 +7,8 @@ import {Router} from "@angular/router";
 import {Uloga} from "../helper/uloga";
 import {StavkaNarudzbe} from "../narudzba/view-models/stavka-narudzbe-vm";
 import {MeniStavkaKorisnik} from "./view-models/meni-korisnik-vm";
+import {LoginInformacije} from "../helper/login-informacije";
+import {AutentifikacijaHelper} from "../helper/autentifikacija-helper";
 
 
 @Component({
@@ -18,11 +20,10 @@ export class MeniComponent implements OnInit {
   meniStavke : MeniStavka[] = null;
   meniStavkeKorisnik : MeniStavkaKorisnik[] = null;
   meniGrupe : MeniGrupa[] = null;
-  uloga : string = null;
-  korisnikId : number = null;
   novaStavkaNarudzbe : StavkaNarudzbe = new StavkaNarudzbe();
   id : number = null;
   obrisana:boolean=false; // uklanjanje modala za brisanje nakon obrisane stavke
+  loginInformacije : LoginInformacije = null;
 
   odabranaStavkaMenija: MeniStavka = null;
 
@@ -34,18 +35,12 @@ export class MeniComponent implements OnInit {
   hoverState = 0;
 
   constructor(private httpKlijent : HttpClient, private router : Router) {
-    if (sessionStorage.getItem("autentifikacija-token") || localStorage.getItem("autentifikacija-token")) {
-      var korisnik = JSON.parse(sessionStorage.getItem("autentifikacija-token"));
-      if(korisnik == null) korisnik = JSON.parse(localStorage.getItem("autentifikacija-token"));
-      this.uloga = korisnik.korisnickiNalog.uloga.naziv;
-      this.korisnikId = korisnik.korisnickiNalog.id;
-    }
-    else this.uloga = Uloga.GOST;
+    this.loginInformacije = AutentifikacijaHelper.getLoginInfo();
   }
 
   ngOnInit(): void {
     this.getMeniGrupe();
-    if (this.uloga == Uloga.KORISNIK) this.ucitajMeniStavkeKorisnik();
+    if (this.loginInformacije.isPermisijaKorisnik) this.ucitajMeniStavkeKorisnik();
     else this.ucitajMeniStavke();
   }
   public ucitajMeniStavke(kategorija : string = "Doručak") {
@@ -56,7 +51,7 @@ export class MeniComponent implements OnInit {
 
   public ucitajMeniStavkeKorisnik(kategorija : string = "Doručak") {
     var podaci : any = new Object();
-    podaci.korisnikId = this.korisnikId;
+    podaci.korisnikId = this.loginInformacije.autentifikacijaToken.korisnickiNalog.id;
     podaci.nazivKategorije = kategorija;
     this.httpKlijent.post(MyConfig.adresaServera + "/Meni/GetAllPagedLog", podaci).subscribe((result : any)=>{
       this.meniStavkeKorisnik = result;
@@ -98,7 +93,7 @@ export class MeniComponent implements OnInit {
   }
 
   dodajUKorpu(stavka : MeniStavkaKorisnik) {
-    this.novaStavkaNarudzbe.korisnikId = this.korisnikId;
+    this.novaStavkaNarudzbe.korisnikId = this.loginInformacije.autentifikacijaToken.korisnickiNalog.id;
     this.novaStavkaNarudzbe.meniStavkaId = stavka.id;
     this.httpKlijent.post(MyConfig.adresaServera+"/Narudzba/AddStavka",this.novaStavkaNarudzbe).subscribe((response : any)=>{
       document.getElementById('kolicina').innerHTML = response;
@@ -130,7 +125,7 @@ export class MeniComponent implements OnInit {
 
   private ukloniOmiljenuStavku(stavka: MeniStavkaKorisnik) {
     var podaci : any = new Object();
-    podaci.id = this.korisnikId;
+    podaci.id = this.loginInformacije.autentifikacijaToken.korisnickiNalog.id;
     podaci.stavkaId = stavka.id;
       this.httpKlijent.post(MyConfig.adresaServera + '/OmiljenaStavka/DeleteById', podaci).subscribe((response : any)=>{
         alert("Uspjesno uklonjena omiljena stavka menija!");
@@ -139,7 +134,7 @@ export class MeniComponent implements OnInit {
 
   private dodajOmiljenuStavku(stavka: MeniStavkaKorisnik) {
     var podaci : any = new Object();
-    podaci.korisnikId = this.korisnikId;
+    podaci.korisnikId = this.loginInformacije.autentifikacijaToken.korisnickiNalog.id;
     podaci.meniStavkaId = stavka.id;
     this.httpKlijent.post(MyConfig.adresaServera + '/OmiljenaStavka/Add', podaci).subscribe((response : any)=>{
       alert("Dodano u omiljeno");

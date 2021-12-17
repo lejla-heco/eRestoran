@@ -24,15 +24,13 @@ namespace FIT_Api_Examples.ModulZaposleni.Controllers
         [HttpPost]
         public ActionResult Add([FromBody] ZaposlenikAddVM zaposlenikAddVM)
         {
-            int ulogaid = _dbContext.Uloga.Where(u => u.Naziv == "Zaposlenik").SingleOrDefault().ID;
             Zaposlenik noviZaposlenik = new Zaposlenik()
             {
                 Ime=zaposlenikAddVM.ime,
                 Prezime=zaposlenikAddVM.prezime,
                 Email=zaposlenikAddVM.email,
-                Username=zaposlenikAddVM.username,
-                Password=zaposlenikAddVM.password,
-                UlogaID=ulogaid
+                KorisnickoIme=zaposlenikAddVM.username,
+                Lozinka=zaposlenikAddVM.password
                 
             };
             _dbContext.Zaposlenik.Add(noviZaposlenik);
@@ -78,8 +76,8 @@ namespace FIT_Api_Examples.ModulZaposleni.Controllers
                                                 prezime = z.Prezime,
                                                 email = z.Email,
                                                 slika = z.Slika,
-                                                username = z.Username,
-                                                password = z.Password,
+                                                username = z.KorisnickoIme,
+                                                password = z.Lozinka,
                                                 obavljeneNarudzbe = z.ObavljeneNarudzbe,
                                                 
                                             }).ToList();
@@ -111,8 +109,8 @@ namespace FIT_Api_Examples.ModulZaposleni.Controllers
                     ime = zaposlenik.Ime,
                     prezime = zaposlenik.Prezime,
                     email = zaposlenik.Email,
-                    username = zaposlenik.Username,
-                    password = zaposlenik.Password,
+                    username = zaposlenik.KorisnickoIme,
+                    password = zaposlenik.Lozinka,
                     slika = zaposlenik.Slika
                 };
                 return odabraniZaposlenik;
@@ -131,8 +129,8 @@ namespace FIT_Api_Examples.ModulZaposleni.Controllers
             zaposlenik.Ime = zaposlenikUpdateVM.ime.RemoveTags();
             zaposlenik.Prezime = zaposlenikUpdateVM.prezime.RemoveTags();
             zaposlenik.Email = zaposlenikUpdateVM.email.RemoveTags();
-            zaposlenik.Username = zaposlenikUpdateVM.username.RemoveTags();
-            zaposlenik.Password = zaposlenikUpdateVM.password.RemoveTags();
+            zaposlenik.KorisnickoIme = zaposlenikUpdateVM.username.RemoveTags();
+            zaposlenik.Lozinka = zaposlenikUpdateVM.password.RemoveTags();
            
             //Console.WriteLine(5);
             _dbContext.SaveChanges();

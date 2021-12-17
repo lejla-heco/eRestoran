@@ -5,6 +5,8 @@ import {HttpClient} from "@angular/common/http";
 import {MyConfig} from "../my-config";
 import {MeniGrupa} from "../meni/view-models/meni-grupa-vm";
 import {StavkaNarudzbe} from "../narudzba/view-models/stavka-narudzbe-vm";
+import {AutentifikacijaHelper} from "../helper/autentifikacija-helper";
+import {LoginInformacije} from "../helper/login-informacije";
 
 @Component({
   selector: 'app-omiljenje-stavke',
@@ -13,16 +15,12 @@ import {StavkaNarudzbe} from "../narudzba/view-models/stavka-narudzbe-vm";
 })
 export class OmiljenjeStavkeComponent implements OnInit {
   omiljeneStavke: OmiljenaStavka[] = null;
-  private korisnikId: number;
   public meniGrupe: MeniGrupa[] = null;
   private novaStavkaNarudzbe : StavkaNarudzbe = new StavkaNarudzbe();
+  loginInformacije : LoginInformacije = null;
 
   constructor(private httpKlijent : HttpClient) {
-    if (sessionStorage.getItem("autentifikacija-token") || localStorage.getItem("autentifikacija-token")) {
-      var korisnik = JSON.parse(sessionStorage.getItem("autentifikacija-token"));
-      if (korisnik == null) korisnik = JSON.parse(localStorage.getItem("autentifikacija-token"));
-      this.korisnikId = korisnik.korisnickiNalog.id;
-    }
+    this.loginInformacije = AutentifikacijaHelper.getLoginInfo();
   }
 
   ngOnInit(): void {
@@ -32,7 +30,7 @@ export class OmiljenjeStavkeComponent implements OnInit {
 
   ucitajOmiljeneStavke(kategorija : string = "Doručak") {
     var podaci : any = new Object();
-    podaci.id = this.korisnikId;
+    podaci.id = this.loginInformacije.autentifikacijaToken.korisnickiNalog.id;
     podaci.kategorija = kategorija;
     this.httpKlijent.post(MyConfig.adresaServera + '/OmiljenaStavka/GetAllPaged/', podaci).subscribe((response : any)=> {
       this.omiljeneStavke = response;
@@ -51,7 +49,7 @@ export class OmiljenjeStavkeComponent implements OnInit {
   }
 
   dodajUKorpu(stavka : OmiljenaStavka) {
-    this.novaStavkaNarudzbe.korisnikId = this.korisnikId;
+    this.novaStavkaNarudzbe.korisnikId = this.loginInformacije.autentifikacijaToken.korisnickiNalog.id;
     this.novaStavkaNarudzbe.meniStavkaId = stavka.id;
     this.httpKlijent.post(MyConfig.adresaServera+"/Narudzba/AddStavka",this.novaStavkaNarudzbe).subscribe((response : any)=>{
       document.getElementById('kolicina').innerHTML = response;

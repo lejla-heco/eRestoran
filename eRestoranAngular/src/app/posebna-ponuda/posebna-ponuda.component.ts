@@ -5,6 +5,8 @@ import { MyConfig } from '../my-config';
 import {Router} from "@angular/router";
 import {Uloga} from "../helper/uloga";
 import {StavkaNarudzbe} from "../narudzba/view-models/stavka-narudzbe-vm";
+import {AutentifikacijaHelper} from "../helper/autentifikacija-helper";
+import {LoginInformacije} from "../helper/login-informacije";
 
 @Component({
   selector: 'app-posebna-ponuda',
@@ -14,18 +16,11 @@ import {StavkaNarudzbe} from "../narudzba/view-models/stavka-narudzbe-vm";
 export class PosebnaPonudaComponent implements OnInit {
   posebnaPonuda : PosebnaPonudaStavka[] = null;
   odabranaStavka: PosebnaPonudaStavka = null;
-  uloga: string;
-  korisnikId : number;
+  loginInformacije : LoginInformacije = null;
   novaStavkaNarudzbe : StavkaNarudzbe = new StavkaNarudzbe();
 
   constructor(private httpKlijent : HttpClient, private router : Router) {
-    if (sessionStorage.getItem("autentifikacija-token") || localStorage.getItem("autentifikacija-token")) {
-      var korisnik = JSON.parse(sessionStorage.getItem("autentifikacija-token"));
-      if (korisnik == null) korisnik = JSON.parse(localStorage.getItem("autentifikacija-token"));
-      this.uloga = korisnik.korisnickiNalog.uloga.naziv;
-      this.korisnikId = korisnik.korisnickiNalog.id;
-    }
-    else this.uloga = Uloga.GOST;
+    this.loginInformacije = AutentifikacijaHelper.getLoginInfo();
   }
 
   ngOnInit(): void {
@@ -55,7 +50,7 @@ export class PosebnaPonudaComponent implements OnInit {
   }
 
   dodajUKorpu(stavka: PosebnaPonudaStavka) {
-    this.novaStavkaNarudzbe.korisnikId = this.korisnikId;
+    this.novaStavkaNarudzbe.korisnikId = this.loginInformacije.autentifikacijaToken.korisnickiNalog.id;
     this.novaStavkaNarudzbe.meniStavkaId = stavka.id;
     this.httpKlijent.post(MyConfig.adresaServera+"/Narudzba/AddStavka",this.novaStavkaNarudzbe).subscribe((response : any)=>{
       document.getElementById('kolicina').innerHTML = response;

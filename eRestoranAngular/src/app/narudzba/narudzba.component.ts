@@ -5,6 +5,9 @@ import {MyConfig} from "../my-config";
 import {StavkaNarudzbe} from "./view-models/stavka-narudzbe-vm";
 import {NarudzbaStavka} from "./view-models/narudzba-stavka";
 import {NovaKolicina} from "./view-models/update-kolicina-vm";
+import {AutentifikacijaHelper} from "../helper/autentifikacija-helper";
+import {Login} from "../login/view-models/login-vm";
+import {LoginInformacije} from "../helper/login-informacije";
 
 @Component({
   selector: 'app-narudzba',
@@ -13,16 +16,12 @@ import {NovaKolicina} from "./view-models/update-kolicina-vm";
 })
 export class NarudzbaComponent implements OnInit {
   narudzba : Narudzba = null;
-  id : number;
   podaci : StavkaNarudzbe = new StavkaNarudzbe();
   updateKolicina : NovaKolicina = new NovaKolicina();
+  loginInformacije : LoginInformacije = null;
 
   constructor(private httpKlijent : HttpClient) {
-    if (sessionStorage.getItem("autentifikacija-token") || localStorage.getItem("autentifikacija-token")) {
-      var korisnik = JSON.parse(sessionStorage.getItem("autentifikacija-token"));
-      if (korisnik == null) korisnik = JSON.parse(localStorage.getItem("autentifikacija-token"));
-      this.id = korisnik.korisnickiNalog.id;
-    }
+    this.loginInformacije = AutentifikacijaHelper.getLoginInfo();
   }
 
   ngOnInit(): void {
@@ -30,7 +29,7 @@ export class NarudzbaComponent implements OnInit {
   }
 
   private ucitajNarudzbu() {
-    this.httpKlijent.get(MyConfig.adresaServera + "/Narudzba/GetNarudzba/" + this.id).subscribe((response : any)=>{
+    this.httpKlijent.get(MyConfig.adresaServera + "/Narudzba/GetNarudzba/" + this.loginInformacije.autentifikacijaToken.korisnickiNalog.id).subscribe((response : any)=>{
       this.narudzba = response;
     });
   }
@@ -38,7 +37,7 @@ export class NarudzbaComponent implements OnInit {
   ukloni(stavka : NarudzbaStavka) {
     this.httpKlijent.get(MyConfig.adresaServera+"/Narudzba/UkloniStavku/" + stavka.id).subscribe((response : any)=>{
       this.narudzba = response;
-      this.ucitajBrojStavki(this.id);
+      this.ucitajBrojStavki(this.loginInformacije.autentifikacijaToken.korisnickiNalog.id);
     });
   }
 

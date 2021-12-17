@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace FIT_Api_Examples.ModulZaposleni.Models
 {
+    [Table("Zaposlenik")]
     public class Zaposlenik : KorisnickiNalog
     {
         public string Slika { get; set; }

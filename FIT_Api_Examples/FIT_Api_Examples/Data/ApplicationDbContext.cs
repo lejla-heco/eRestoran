@@ -21,7 +21,6 @@ namespace FIT_Api_Examples.Data
         }
         public DbSet<KorisnickiNalog> KorisnickiNalog { get; set; }
         public DbSet<Poslovnica> Poslovnica { get; set; }
-        public DbSet<Uloga> Uloga { get; set; }
         public DbSet<Korisnik> Korisnik { get; set; }
         public DbSet<Kupon> Kupon { get; set; }
         public DbSet<KorisnikKupon> KorisnikKupon { get; set; }

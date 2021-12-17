@@ -1,5 +1,5 @@
 <!-- Navigation-->
-<nav *ngIf="uloga == 'Korisnik'" class="mainNav navbar navbar-expand-lg navbar-light fixed-top">
+<nav class="mainNav navbar navbar-expand-lg navbar-light fixed-top">
   <div class="container">
     <a class="navbar-brand">eRestoran</a>
     <button style="color:white" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -9,9 +9,19 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
         <li class="nav-item"><a class="nav-link active" routerLink="home-page">Home</a></li>
         <li class="nav-item"><a class="nav-link" routerLink="meni">Meni</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="posebna-ponuda">Posebna ponuda</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Rezervacija</a></li>
-        <li class="nav-item dropdown">
+        <li *ngIf="loginInformacije.isPermisijaKorisnik || loginInformacije.isPermisijaAdministrator" class="nav-item"><a class="nav-link" routerLink="posebna-ponuda">Posebna ponuda</a></li>
+        <li *ngIf="loginInformacije.isPermisijaKorisnik" class="nav-item"><a class="nav-link" href="#">Rezervacija</a></li>
+        <li *ngIf="loginInformacije.isPermisijaAdministrator" class="nav-item"><a class="nav-link" routerLink="kupon">Kuponi</a></li>
+        <li *ngIf="loginInformacije.isPermisijaAdministrator" class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdownAdmin" role="button" data-bs-toggle="dropdown" aria-expanded="false">Osoblje</a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownAdmin">
+            <li><a class="dropdown-item" href="#" routerLink="zaposlenik">Zaposlenici</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item" href="#">Dobavljači</a></li>
+          </ul>
+        </li>
+        <li *ngIf="loginInformacije.isPermisijaAdministrator" class="nav-item"><a class="nav-link" routerLink="poslovnica">Poslovnice</a></li>
+        <li *ngIf="loginInformacije.isPermisijaKorisnik" class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Omiljeno</a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="#" routerLink="omiljene-stavke">Najdraže stavke</a></li>
@@ -20,7 +30,7 @@
           </ul>
         </li>
       </ul>
-      <ul class="navbar-nav d-flex">
+      <ul *ngIf="loginInformacije.isPermisijaKorisnik" class="navbar-nav d-flex">
         <li class="nav-item btn btn-outline-light" routerLink="narudzba">
           <i class="bi-cart-fill me-1"></i>
           Korpa
@@ -33,6 +43,18 @@
             Moj profil
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="">
+              <i class="bi bi-basket-fill"></i>
+              Historija narudžbi
+            </a>
+            <a class="dropdown-item" href="">
+              <i class="bi bi-clock-history"></i>
+              Historija rezervacija
+            </a>
+            <a class="dropdown-item" href="">
+              <i class="bi bi-gear-fill"></i>
+              Postavke profila
+            </a>
             <a class="dropdown-item" href="" (click)="odjava()">
               <i class="bi bi-door-closed-fill"></i>
               Odjavi se
@@ -41,21 +63,13 @@
         </div>
         </li>
       </ul>
-    </div>
-  </div>
-</nav>
-<nav *ngIf="uloga == 'Gost'" class="mainNav navbar navbar-expand-lg navbar-light fixed-top">
-  <div class="container">
-    <a class="navbar-brand">eRestoran</a>
-    <button style="color:white" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-      <i class="fas fa-bars ms-1"></i>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsiveGost">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-        <li class="nav-item"><a class="nav-link active" routerLink="home-page" >Home</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="meni">Meni</a></li>
+      <ul *ngIf="loginInformacije.isPermisijaAdministrator" class="navbar-nav d-flex">
+        <a class="nav-item btn btn-outline-light" href="" (click)="odjava()">
+          <i class="bi bi-door-closed-fill"></i>
+          Odjava
+        </a>
       </ul>
-      <ul class="navbar-nav d-flex">
+      <ul *ngIf="loginInformacije.isPermisijaGost" class="navbar-nav d-flex">
         <li class="nav-item btn btn-outline-light" routerLink="login">
           <i class="bi bi-box-arrow-in-right"></i>
           Prijava
@@ -68,37 +82,7 @@
     </div>
   </div>
 </nav>
-<nav *ngIf="uloga == 'Admin'" class="mainNav navbar navbar-expand-lg navbar-light fixed-top">
-  <div class="container">
-    <a class="navbar-brand">eRestoran</a>
-    <button style="color:white" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-      <i class="fas fa-bars ms-1"></i>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsiveAdmin">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-        <li class="nav-item"><a class="nav-link active" routerLink="home-page">Home</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="meni">Meni</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="posebna-ponuda">Posebna ponuda</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="kupon">Kuponi</a></li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdownAdmin" role="button" data-bs-toggle="dropdown" aria-expanded="false">Osoblje</a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdownAdmin">
-            <li><a class="dropdown-item" href="#" routerLink="zaposlenik">Zaposlenici</a></li>
-            <li><hr class="dropdown-divider" /></li>
-            <li><a class="dropdown-item" href="#">Dobavljači</a></li>
-          </ul>
-        </li>
-        <li class="nav-item"><a class="nav-link" routerLink="poslovnica">Poslovnice</a></li>
-      </ul>
-      <ul class="navbar-nav d-flex">
-        <a class="nav-item btn btn-outline-light" href="" (click)="odjava()">
-           <i class="bi bi-door-closed-fill"></i>
-          Odjava
-        </a>
-      </ul>
-    </div>
-  </div>
-</nav>
+
 <router-outlet></router-outlet>
 <!-- Footer-->
 <footer class="footer py-5">

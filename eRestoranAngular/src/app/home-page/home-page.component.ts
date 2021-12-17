@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {MyConfig} from "../my-config";
 import {HttpClient} from "@angular/common/http";
 import {PosebnaPonudaStavka} from "../posebna-ponuda/view-models/posebna-ponuda-stavka-vm";
-import {Uloga} from "../helper/uloga";
+import {AutentifikacijaHelper} from "../helper/autentifikacija-helper";
+import {LoginInformacije} from "../helper/login-informacije";
 
 @Component({
   selector: 'app-home-page',
@@ -11,13 +12,13 @@ import {Uloga} from "../helper/uloga";
 })
 export class HomePageComponent implements OnInit {
   public posebnaPonuda: PosebnaPonudaStavka[] = null;
+  loginInformacije : LoginInformacije = null;
 
   constructor(private httpKlijent : HttpClient) {
-    if (sessionStorage.getItem("autentifikacija-token") || localStorage.getItem("autentifikacija-token")) {
-      var korisnik = JSON.parse(sessionStorage.getItem("autentifikacija-token"));
-      if(korisnik == null) korisnik = JSON.parse(localStorage.getItem("autentifikacija-token"));
-      if (korisnik.korisnickiNalog.uloga.naziv == Uloga.KORISNIK) this.ucitajBrojStavki(korisnik.korisnickiNalog.id);
-    }
+    this.loginInformacije = AutentifikacijaHelper.getLoginInfo();
+      if (AutentifikacijaHelper.getLoginInfo().isPermisijaKorisnik) {
+        this.ucitajBrojStavki(this.loginInformacije.autentifikacijaToken.korisnickiNalog.id);
+      }
   }
 
   ngOnInit(): void {

@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 using FIT_Api_Examples.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
-using FIT_Api_Examples.SignalR;
 
 namespace FIT_Api_Examples
 {
@@ -38,7 +37,6 @@ namespace FIT_Api_Examples
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen();
-            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,7 +76,6 @@ namespace FIT_Api_Examples
                .AllowCredentials()
            ); //This needs to set everything allowed
 
-
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
@@ -86,7 +83,6 @@ namespace FIT_Api_Examples
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
-                endpoints.MapHub<NotificationHub>("/notificationHub");
             });
         }
     }

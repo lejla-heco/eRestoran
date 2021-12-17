@@ -23,7 +23,7 @@
           <div class="portfolio-caption">
             <div class="portfolio-caption-heading">{{stavka.naziv}}</div>
             <div class="portfolio-caption-subheading text-muted">{{stavka.opis}}</div>
-            <button *ngIf="uloga == 'Admin'" class="btn btn-outline-dark mt-3" (click)="ukloni(stavka.id)"><i class="bi bi-x">  Ukloni iz posebne ponude</i></button>
+            <button *ngIf="this.loginInformacije.isPermisijaAdministrator" class="btn btn-outline-dark mt-3" (click)="ukloni(stavka.id)"><i class="bi bi-x">  Ukloni iz posebne ponude</i></button>
           </div>
         </div>
       </div>
@@ -61,7 +61,7 @@
                   {{odabranaStavka.snizenaCijena}} KM
                 </li>
               </ul>
-              <button *ngIf="uloga == 'Korisnik'" class="btn btn-outline-dark mb-3" (click)="dodajUKorpu(odabranaStavka)">
+              <button *ngIf="this.loginInformacije.isPermisijaKorisnik" class="btn btn-outline-dark mb-3" (click)="dodajUKorpu(odabranaStavka)">
                 <i class="bi bi-cart-plus-fill"></i>
                 Dodaj u korpu
               </button>

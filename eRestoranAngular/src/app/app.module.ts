@@ -19,6 +19,8 @@ import { NoviZaposlenikComponent } from './zaposlenik/novi-zaposlenik/novi-zapos
 import { EditZaposlenikComponent } from './zaposlenik/edit-zaposlenik/edit-zaposlenik.component';
 import { OmiljenjeStavkeComponent } from './omiljenje-stavke/omiljenje-stavke.component';
 import { PoslovnicaComponent } from './poslovnica/poslovnica.component';
+import { AutorizacijaAdminProvjera } from "./guards/autorizacija-admin-provjera.service";
+import { AutorizacijaKorisnikProvjera } from "./guards/autorizacija-korisnik-provjera.service";
 
 
 @NgModule({
@@ -49,18 +51,17 @@ import { PoslovnicaComponent } from './poslovnica/poslovnica.component';
       {path:"home-page", component:HomePageComponent},
       {path:"posebna-ponuda", component:PosebnaPonudaComponent},
       {path:"meni", component:MeniComponent},
-      {path:"nova-stavka", component:NovaStavkaComponent},
-      {path:"edit-stavka/:id", component:EditStavkaComponent},
+      {path:"nova-stavka", component:NovaStavkaComponent, canActivate:[AutorizacijaAdminProvjera]},
+      {path:"edit-stavka/:id", component:EditStavkaComponent, canActivate:[AutorizacijaAdminProvjera]},
+      {path:"narudzba", component:NarudzbaComponent, canActivate:[AutorizacijaKorisnikProvjera]},
+      {path:"kupon", component:KuponComponent, canActivate:[AutorizacijaAdminProvjera]},
+      {path:"zaposlenik", component:ZaposlenikComponent, canActivate:[AutorizacijaAdminProvjera]},
+      {path:"novi-zaposlenik", component:NoviZaposlenikComponent, canActivate:[AutorizacijaAdminProvjera]},
+      {path:"edit-zaposlenik/:id", component:EditZaposlenikComponent, canActivate:[AutorizacijaAdminProvjera]},
+      {path:"omiljene-stavke", component:OmiljenjeStavkeComponent, canActivate:[AutorizacijaKorisnikProvjera]},
+      {path:"poslovnica", component:PoslovnicaComponent, canActivate:[AutorizacijaAdminProvjera]},
       {path:"login", component:LoginComponent},
-      {path:"narudzba", component:NarudzbaComponent},
-      {path:"registracija", component:RegistracijaComponent},
-      {path:"kupon", component:KuponComponent},
-      {path:"zaposlenik", component:ZaposlenikComponent},
-      {path:"novi-zaposlenik", component:NoviZaposlenikComponent},
-      {path:"edit-zaposlenik/:id", component:EditZaposlenikComponent},
-      {path:"omiljene-stavke", component:OmiljenjeStavkeComponent},
-      {path:"poslovnica", component:PoslovnicaComponent}
-
+      {path:"registracija", component:RegistracijaComponent}
     ],{
       anchorScrolling : 'enabled',
       scrollPositionRestoration : 'enabled',

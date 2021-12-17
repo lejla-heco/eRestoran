@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static FIT_Api_Examples.Helper.AutentifikacijaAutorizacija.MyAuthTokenExtension;
 
 namespace FIT_Api_Examples.ModulAutentifikacija.Controllers
 {
@@ -16,43 +17,57 @@ namespace FIT_Api_Examples.ModulAutentifikacija.Controllers
     [Route("[controller]/[action]")]
     public class AutentifikacijaController : ControllerBase
     {
-        private readonly ApplicationDbContext _dbContext;
+        private ApplicationDbContext _dbContext;
 
         public AutentifikacijaController(ApplicationDbContext dbContext)
         {
-            this._dbContext = dbContext;
+            _dbContext = dbContext;
         }
 
         [HttpPost]
-        public AutentifikacijaToken Login([FromBody] LoginVM x)
+        public ActionResult<LoginInformacije> Login([FromBody] LoginVM loginVM)
         {
-            //1- provjera logina
-            KorisnickiNalog logiraniKorisnik = _dbContext.KorisnickiNalog.Include(k => k.Uloga).SingleOrDefault(k => k.Username != null && k.Username == x.korisnickoIme && k.Password == x.lozinka);
-
+            KorisnickiNalog logiraniKorisnik = _dbContext.KorisnickiNalog
+                .FirstOrDefault(k => k.KorisnickoIme != null && k.KorisnickoIme == loginVM.korisnickoIme && k.Lozinka == loginVM.lozinka);
+            
             if (logiraniKorisnik == null)
             {
-                //pogresan username i password
-                return null;
+                return new LoginInformacije(null);
             }
 
-
-            //2- generisati random string
             string randomString = TokenGenerator.Generate(10);
 
-            //3- dodati novi zapis u tabelu AutentifikacijaToken za logiraniKorisnikId i randomString
             var noviToken = new AutentifikacijaToken()
             {
-                ipAdresa = "1.2.3.4",
+                ipAdresa = Request.HttpContext.Connection.RemoteIpAddress?.ToString(),
                 vrijednost = randomString,
                 korisnickiNalog = logiraniKorisnik,
                 vrijemeEvidentiranja = DateTime.Now
             };
 
-            _dbContext.AutentifikacijaToken.Add(noviToken);
+            _dbContext.Add(noviToken);
             _dbContext.SaveChanges();
 
-            //4- vratiti token string
-            return noviToken;
+            return new LoginInformacije(noviToken);
+        }
+
+        [HttpPost]
+        public ActionResult Logout()
+        {
+            AutentifikacijaToken autentifikacijaToken = HttpContext.GetAuthToken();
+            if (autentifikacijaToken == null)
+                return Ok();
+
+            _dbContext.Remove(autentifikacijaToken);
+            _dbContext.SaveChanges();
+            return Ok();
+        }
+
+        [HttpGet]
+        public ActionResult<AutentifikacijaToken> Get()
+        {
+            AutentifikacijaToken autentifikacijaToken = HttpContext.GetAuthToken();
+            return autentifikacijaToken;
         }
 
         [HttpGet("{id}")]

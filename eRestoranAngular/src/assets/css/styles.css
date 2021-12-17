@@ -11827,6 +11827,9 @@ section#kontakt form#kontaktForm :-ms-input-placeholder {
   font-size: 20px;
   margin-right: 8px;
 }
+.omiljeno:hover{
+  color:red;
+}
 .crveno{
   color: red;
 }

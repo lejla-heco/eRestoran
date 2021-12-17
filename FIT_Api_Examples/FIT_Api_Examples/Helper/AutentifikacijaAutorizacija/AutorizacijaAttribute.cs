@@ -30,26 +30,7 @@ namespace FIT_Api_Examples.Helper.AutentifikacijaAutorizacija
 
         public void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            HttpContext httpContext = filterContext.HttpContext;
-
-            KorisnickiNalog k = httpContext.GetKorisnikOfAuthToken();
-
-            if (k == null)
-            {
-                filterContext.Result = new UnauthorizedResult();
-                return;
-            }
-
-            KretanjePoSistemu.Save(httpContext);
-
-            //studenti mogu pristupiti 
-            if (k.Username.StartsWith("a"))
-            {
-                return;//ok - ima pravo pristupa
-            }
-
-            //else nema pravo pristupa
-            filterContext.Result = new UnauthorizedResult();
+            
         }
     }
 }

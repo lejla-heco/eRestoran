@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {MyConfig} from "../my-config";
 import {Login} from "./view-models/login-vm";
 import {Router} from "@angular/router";
+import {AutentifikacijaHelper} from "../helper/autentifikacija-helper";
 
 @Component({
   selector: 'app-login',
@@ -20,11 +21,12 @@ export class LoginComponent implements OnInit {
   posaljiPodatke() {
     this.httpKlijent.post(MyConfig.adresaServera+'/Autentifikacija/Login',this.prijava).subscribe((response : any)=>{
       if (response!=null) {
-        if (this.zapamtiMe) localStorage.setItem("autentifikacija-token", JSON.stringify(response));
-        else sessionStorage.setItem("autentifikacija-token", JSON.stringify(response));
-        this.router.navigateByUrl("/home-page");
+        response.isPermisijaGost = false;
+        AutentifikacijaHelper.setLoginInfo(response, this.zapamtiMe);
+        this.router.navigateByUrl("home-page");
       }
       else {
+        AutentifikacijaHelper.setLoginInfo(null);
         alert("Neispravno korisničko ime i lozinka");
       }
       }

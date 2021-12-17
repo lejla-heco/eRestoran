@@ -1,5 +1,6 @@
 ﻿using FIT_Api_Examples.Data;
 using FIT_Api_Examples.ModulAutentifikacija.Models;
+using FIT_Api_Examples.ModulKorisnickiNalog.Models;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -15,7 +16,7 @@ namespace FIT_Api_Examples.Helper.AutentifikacijaAutorizacija
     {
         public static int Save(HttpContext httpContext, IExceptionHandlerPathFeature exceptionMessage = null)
         {
-            var korisnik = httpContext.GetKorisnikOfAuthToken();
+            KorisnickiNalog korisnik = httpContext.GetLoginInfo().korisnickiNalog;
 
             var request = httpContext.Request;
 
@@ -40,7 +41,7 @@ namespace FIT_Api_Examples.Helper.AutentifikacijaAutorizacija
                 vrijeme = DateTime.Now,
                 queryPath = request.GetEncodedPathAndQuery(),
                 postData = detalji,
-                ipAdresa = request.HttpContext.Connection.RemoteIpAddress.ToString(),
+                ipAdresa = request.HttpContext.Connection.RemoteIpAddress?.ToString(),
             };
 
             if (exceptionMessage != null)
@@ -56,7 +57,6 @@ namespace FIT_Api_Examples.Helper.AutentifikacijaAutorizacija
 
             return x.id;
         }
-
 
 
 
