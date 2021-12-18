@@ -1,4 +1,5 @@
 ﻿using FIT_Api_Examples.Data;
+using FIT_Api_Examples.Helper;
 using FIT_Api_Examples.Helper.AutentifikacijaAutorizacija;
 using FIT_Api_Examples.ModulKorisnik.Models;
 using FIT_Api_Examples.ModulKorisnik.ViewModels;
@@ -50,7 +51,7 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
         }
 
         [HttpPost]
-        public IActionResult GetAllPaged([FromBody] OmiljenaStavkaInfoVM omiljenaStavkaInfoVM)
+        public ActionResult<PagedList<OmiljenaStavkaGetAllVM>> GetAllPaged([FromBody] OmiljenaStavkaGetAllPagedVM omiljenaStavkaGetAllPagedVM)
         {
             if (!HttpContext.GetLoginInfo().isPermisijaKorisnik)
                 return BadRequest("nije logiran");
@@ -60,7 +61,7 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
             if (korisnik == null)
                 return BadRequest("Nemate ovlasti za trazenu akciju!");
 
-            List<OmiljenaStavkaGetAllVM> omiljeneStavke = _dbContext.OmiljenaStavka.Where(os => os.KorisnikID == korisnik.ID)
+            var data = _dbContext.OmiljenaStavka.Where(os => os.KorisnikID == korisnik.ID)
                                                             .Select(os => new OmiljenaStavkaGetAllVM()
                                                             {
                                                                 omiljenaStavkaId = os.ID,
@@ -73,7 +74,9 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
                                                                 snizenaCijena = os.MeniStavka.SnizenaCijena,
                                                                 ocjena = os.MeniStavka.Ocjena,
                                                                 nazivGrupe = os.MeniStavka.MeniGrupa.Naziv
-                                                            }).Where(os => os.nazivGrupe == omiljenaStavkaInfoVM.kategorija).ToList();
+                                                            }).Where(os => os.nazivGrupe == omiljenaStavkaGetAllPagedVM.kategorija).AsQueryable();
+
+            var omiljeneStavke = PagedList<OmiljenaStavkaGetAllVM>.Create(data, omiljenaStavkaGetAllPagedVM.pageNumber, omiljenaStavkaGetAllPagedVM.itemsPerPage);
             return Ok(omiljeneStavke);
         }
 

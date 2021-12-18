@@ -17,6 +17,11 @@ export class OmiljenjeStavkeComponent implements OnInit {
   omiljeneStavke: OmiljenaStavka[] = null;
   public meniGrupe: MeniGrupa[] = null;
   private novaStavkaNarudzbe : StavkaNarudzbe = new StavkaNarudzbe();
+  totalPages : number;
+  trenutnaKategorija : string;
+  currentPage : number;
+  itemsPerPage : number = 4;
+  pageNumber : number = 1;
 
   constructor(private httpKlijent : HttpClient) {
   }
@@ -26,18 +31,32 @@ export class OmiljenjeStavkeComponent implements OnInit {
     this.ucitajOmiljeneStavke();
   }
 
-  ucitajOmiljeneStavke(kategorija : string = "Doručak") {
+  ucitajOmiljeneStavke(kategorija : string = "Doručak", pageNumber : number = 1) {
+    this.trenutnaKategorija = kategorija;
     var podaci : any = {
-      kategorija : kategorija
+      kategorija : kategorija,
+      itemsPerPage : this.itemsPerPage,
+      pageNumber : pageNumber
     };
     this.httpKlijent.post(MyConfig.adresaServera + '/OmiljenaStavka/GetAllPaged', podaci, MyConfig.httpOpcije()).subscribe((response : any)=> {
-      this.omiljeneStavke = response;
+      //console.log(response);
+      this.omiljeneStavke = response.dataItems;
+      this.totalPages = response.totalPages;
+      this.currentPage = response.currentPage;
     })
   }
 
   createRange(ocjena: number) {
     let velicina = Math.round(ocjena);
     return new Array(velicina);
+  }
+
+  createRangeStranica() {
+    var niz = new Array(this.totalPages);
+    for(let i : number = 0; i < this.totalPages; i++){
+      niz[i] = i + 1;
+    }
+    return niz;
   }
 
   private getMeniGrupe() {
@@ -58,5 +77,13 @@ export class OmiljenjeStavkeComponent implements OnInit {
       alert("Uspjesno uklonjena stavka");
       this.ucitajOmiljeneStavke(stavka.nazivGrupe);
     });
+  }
+
+  ucitajStranicu(page : number) {
+    this.ucitajOmiljeneStavke(this.trenutnaKategorija, page);
+  }
+
+  ucitajStavke() {
+    this.ucitajOmiljeneStavke(this.trenutnaKategorija);
   }
 }

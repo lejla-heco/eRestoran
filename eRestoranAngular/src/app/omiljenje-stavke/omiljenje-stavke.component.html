@@ -1,8 +1,11 @@
-<header class="py-5 bg-image-full" style="background-image: url('/assets/img/cover/omiljene-stavke.jpg')">
+<header class="pt-5 pb-3 bg-image-full" style="background-image: url('/assets/img/cover/omiljene-stavke.jpg')">
   <div class="text-center my-5">
     <div class="text-center text-white">
       <h1 class="display-4 fw-bolder">Moja najdraža jela</h1>
       <p class="lead fw-normal text-white mb-0">Sve Vaše omiljene stavke menija</p>
+      <p class="lead fw-normal text-white mb-0 mx-1">Maksimalan broj stavki po stranici:
+        <input type="number" class="form-control" min=1 max=8 [(ngModel)]="itemsPerPage" style="width: 55px ; display: inline-block; background-color: transparent; color: white" (change)="ucitajStavke()">
+      </p>
     </div>
   </div>
 </header>
@@ -12,15 +15,15 @@
     <div class="col-md-8">
       <ul class="nav site-tab-nav">
         <li *ngFor ="let grupa of meniGrupe" class="nav-item">
-          <a class="nav-link active" (click)="ucitajOmiljeneStavke(grupa.naziv)">{{grupa.naziv}}</a>
+          <a class="nav-link" (click)="ucitajOmiljeneStavke(grupa.naziv)" [ngClass]="this.trenutnaKategorija == grupa.naziv ? 'active' : ''">{{grupa.naziv}}</a>
         </li>
       </ul>
     </div>
   </div>
   <div    class="container px-4 px-lg-5 mt-5">
-    <h3 *ngIf ="omiljeneStavke == null || omiljeneStavke?.length == 0" class="display-7 fw-bolder text-center" style="color:gray">Nemate omiljenih stavki u ovoj kategoriji</h3>
+    <h3 *ngIf ="omiljeneStavke == null || omiljeneStavke?.length == 0" class="animate__animated animate__fadeIn display-7 fw-bolder text-center" style="color:gray">Nemate omiljenih stavki u ovoj kategoriji</h3>
     <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-      <div *ngFor="let stavka of omiljeneStavke" class="animate__animated animate__fadeIn col mb-5">
+      <div *ngFor="let stavka of omiljeneStavke" class="animate__animated animate__fadeIn col mb-4">
         <div class="card h-100">
           <!-- Sale badge-->
           <div  *ngIf="stavka.izdvojeno" class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Izdvojeno</div>
@@ -39,18 +42,26 @@
 
               </div>
               <!-- Product price-->
-              <span *ngIf="stavka.izdvojeno" class="text-muted text-decoration-line-through">{{stavka.cijena}} KM </span>
-              <span *ngIf="stavka.izdvojeno">{{stavka.snizenaCijena}} KM</span>
+              <span *ngIf="stavka.izdvojeno" class="text-muted text-decoration-line-through">{{stavka.cijena}} KM</span>
+              <span *ngIf="stavka.izdvojeno"> {{stavka.snizenaCijena}} KM</span>
               <span *ngIf="!stavka.izdvojeno">{{stavka.cijena}} KM</span>
             </div>
           </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item text-center" style="border: none"><a class="btn btn-outline-dark mt-auto" (click)="dodajUKorpu(stavka)">Dodaj u korpu</a></li>
+          <ul class="list-group list-group-flush" style="border: none">
+            <li class="list-group-item text-center" style="border: none"><a class="btn btn-outline-dark mt-auto" (click)="dodajUKorpu(stavka)">
+              <i class="bi bi-cart-plus-fill"></i>
+              Dodaj u korpu</a></li>
             <li class="list-group-item text-center" style="border: none"><a class="btn btn-outline-dark mt-auto" (click)="obrisiStavku(stavka)"><i class="bi bi-trash-fill"></i>  Ukloni iz omiljenog</a></li>
           </ul>
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="pagination p5">
+    <ul class="mx-auto">
+      <a *ngFor="let page of createRangeStranica()" (click)="ucitajStranicu(page)" [ngClass]="this.currentPage == page ? 'is-active' : ''"><li></li></a>
+    </ul>
   </div>
 </section>
 

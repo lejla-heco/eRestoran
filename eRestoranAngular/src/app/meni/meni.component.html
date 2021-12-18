@@ -92,14 +92,16 @@
                 </div>
               </div>
               <!-- Product price-->
-              <span *ngIf="stavka.izdvojeno" class="text-muted text-decoration-line-through">{{stavka.cijena}} KM </span>
-              <span *ngIf="stavka.izdvojeno">{{stavka.snizenaCijena}} KM</span>
+              <span *ngIf="stavka.izdvojeno" class="text-muted text-decoration-line-through">{{stavka.cijena}} KM</span>
+              <span *ngIf="stavka.izdvojeno"> {{stavka.snizenaCijena}} KM</span>
               <span *ngIf="!stavka.izdvojeno">{{stavka.cijena}} KM</span>
             </div>
           </div>
           <!-- Product actions-->
           <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-            <div class="text-center"><a class="btn btn-outline-dark mt-auto" (click)="dodajUKorpu(stavka)">Dodaj u korpu</a>
+            <div class="text-center"><a class="btn btn-outline-dark mt-auto" (click)="dodajUKorpu(stavka)">
+              <i class="bi bi-cart-plus-fill"></i>
+              Dodaj u korpu</a>
             </div>
             <i class="omiljeno bi bi-heart-fill" [ngClass]="stavka.omiljeno ? 'crveno' : 'crno'" (click)="upravljajOmiljenomStavkom(stavka)"></i>
             <i class="bi bi-three-dots"  >    </i>
