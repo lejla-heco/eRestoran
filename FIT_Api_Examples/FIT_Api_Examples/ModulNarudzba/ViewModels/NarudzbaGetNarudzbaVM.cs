@@ -9,6 +9,7 @@ namespace FIT_Api_Examples.ModulNarudzba.ViewModels
     {
         public int id { get; set; }
         public float cijena { get; set; }
+        public bool omiljeno { get; set; }
 
         public class Stavka
         {

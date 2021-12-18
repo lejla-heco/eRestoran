@@ -52,4 +52,23 @@ export class NarudzbaComponent implements OnInit {
       document.getElementById('kolicina').innerHTML = response.kolicina;
     });
   }
+
+  upravljajOmiljenomNarudzbom(narudzba: Narudzba) {
+    if (narudzba.omiljeno){
+      narudzba.omiljeno = false;
+      this.ukloniOmiljeno(narudzba);
+    }
+    else {
+      narudzba.omiljeno = true;
+      this.dodajOmiljeno(narudzba);
+    }
+  }
+
+  private ukloniOmiljeno(narudzba: Narudzba) {
+
+  }
+
+  private dodajOmiljeno(narudzba: Narudzba){
+
+  }
 }

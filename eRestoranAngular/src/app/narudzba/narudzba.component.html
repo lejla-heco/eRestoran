@@ -45,11 +45,21 @@
       </div>
     </div>
   </div>
-  <div *ngIf ="narudzba.cijena != 0" style="text-align: center">
+  <div *ngIf ="narudzba.cijena != 0" class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+    <div class="col-sm text-center">
+    </div>
+    <div class="col-sm text-center">
     <div class="mb-2"><b>Cijena narudžbe: {{narudzba.cijena}} KM</b></div>
     <button class="btn btn-outline-dark">
       <i class="bi bi-check-circle-fill"></i>
       Zaključi narudžbu
     </button>
+    </div>
+    <div class="col-sm text-center mt-3">
+      <i class="omiljeno bi bi-heart-fill" [ngClass]="narudzba.omiljeno? 'crveno' : 'crno'" (click)="upravljajOmiljenomNarudzbom(narudzba)">
+      <i *ngIf="narudzba.omiljeno" style="font-size:medium"> Omiljena narudžba</i>
+      <i *ngIf="!narudzba.omiljeno" style="font-size:medium"> Dodajte narudžbu u omiljene?</i>
+      </i>
+    </div>
   </div>
 </section>

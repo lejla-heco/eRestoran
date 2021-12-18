@@ -83,6 +83,7 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
             {
                 id = narudzba.ID,
                 cijena = narudzba.Cijena,
+                omiljeno = narudzba.Omiljeno,
                 stavke = _dbContext.StavkaNarudzbe.Where(sn => sn.NarudzbaID == narudzba.ID).Select(sn => new NarudzbaGetNarudzbaVM.Stavka()
                 {
                     id = sn.ID,
