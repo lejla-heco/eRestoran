@@ -27,7 +27,7 @@ export class PoslovnicaComponent implements OnInit {
 
   posaljiPodatke() {
     this.poslovnica.opstinaId = parseInt(this.poslovnica.opstinaId.toString());
-      this.httpKlijent.post(MyConfig.adresaServera + '/Poslovnica/Add', this.poslovnica).subscribe((response : any)=>{
+      this.httpKlijent.post(MyConfig.adresaServera + '/Poslovnica/Add', this.poslovnica, MyConfig.httpOpcije()).subscribe((response : any)=>{
         alert("Uspješno dodana nova poslovnica!");
       });
   }

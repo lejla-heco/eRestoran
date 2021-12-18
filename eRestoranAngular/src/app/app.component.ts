@@ -24,11 +24,10 @@ export class AppComponent {
   }
 
   odjava() {
-    this.httpKlijent.post(MyConfig.adresaServera + "/Autentifikacija/Logout/", null, MyConfig.httpOpcije())
+    this.httpKlijent.post(MyConfig.adresaServera + "/Autentifikacija/Logout", null, MyConfig.httpOpcije())
       .subscribe((x: any) => {
-        AutentifikacijaHelper.ocistiMemoriju();
-        this.router.navigateByUrl("/login");
       });
+    AutentifikacijaHelper.ocistiMemoriju();
   }
 
 

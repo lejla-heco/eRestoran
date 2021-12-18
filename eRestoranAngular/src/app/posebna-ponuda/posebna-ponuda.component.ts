@@ -38,7 +38,7 @@ export class PosebnaPonudaComponent implements OnInit {
   }
 
   ukloni(id : number) {
-    this.httpKlijent.post(MyConfig.adresaServera + "/PosebnaPonuda/Ukloni", id).subscribe((result : any)=>{
+    this.httpKlijent.post(MyConfig.adresaServera + "/PosebnaPonuda/Ukloni", id, MyConfig.httpOpcije()).subscribe((result : any)=>{
       alert("Uklonjena stavka posebne ponude");
       this.getPosebnaPonuda();
     });
@@ -50,9 +50,8 @@ export class PosebnaPonudaComponent implements OnInit {
   }
 
   dodajUKorpu(stavka: PosebnaPonudaStavka) {
-    this.novaStavkaNarudzbe.korisnikId = this.loginInformacije.autentifikacijaToken.korisnickiNalog.id;
     this.novaStavkaNarudzbe.meniStavkaId = stavka.id;
-    this.httpKlijent.post(MyConfig.adresaServera+"/Narudzba/AddStavka",this.novaStavkaNarudzbe).subscribe((response : any)=>{
+    this.httpKlijent.post(MyConfig.adresaServera+"/Narudzba/AddStavka",this.novaStavkaNarudzbe, MyConfig.httpOpcije()).subscribe((response : any)=>{
       document.getElementById('kolicina').innerHTML = response;
     });
   }

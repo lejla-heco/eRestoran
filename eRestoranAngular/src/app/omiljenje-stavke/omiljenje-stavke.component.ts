@@ -17,10 +17,8 @@ export class OmiljenjeStavkeComponent implements OnInit {
   omiljeneStavke: OmiljenaStavka[] = null;
   public meniGrupe: MeniGrupa[] = null;
   private novaStavkaNarudzbe : StavkaNarudzbe = new StavkaNarudzbe();
-  loginInformacije : LoginInformacije = null;
 
   constructor(private httpKlijent : HttpClient) {
-    this.loginInformacije = AutentifikacijaHelper.getLoginInfo();
   }
 
   ngOnInit(): void {
@@ -29,10 +27,10 @@ export class OmiljenjeStavkeComponent implements OnInit {
   }
 
   ucitajOmiljeneStavke(kategorija : string = "Doručak") {
-    var podaci : any = new Object();
-    podaci.id = this.loginInformacije.autentifikacijaToken.korisnickiNalog.id;
-    podaci.kategorija = kategorija;
-    this.httpKlijent.post(MyConfig.adresaServera + '/OmiljenaStavka/GetAllPaged/', podaci).subscribe((response : any)=> {
+    var podaci : any = {
+      kategorija : kategorija
+    };
+    this.httpKlijent.post(MyConfig.adresaServera + '/OmiljenaStavka/GetAllPaged', podaci, MyConfig.httpOpcije()).subscribe((response : any)=> {
       this.omiljeneStavke = response;
     })
   }
@@ -49,15 +47,14 @@ export class OmiljenjeStavkeComponent implements OnInit {
   }
 
   dodajUKorpu(stavka : OmiljenaStavka) {
-    this.novaStavkaNarudzbe.korisnikId = this.loginInformacije.autentifikacijaToken.korisnickiNalog.id;
     this.novaStavkaNarudzbe.meniStavkaId = stavka.id;
-    this.httpKlijent.post(MyConfig.adresaServera+"/Narudzba/AddStavka",this.novaStavkaNarudzbe).subscribe((response : any)=>{
+    this.httpKlijent.post(MyConfig.adresaServera+"/Narudzba/AddStavka",this.novaStavkaNarudzbe, MyConfig.httpOpcije()).subscribe((response : any)=>{
       document.getElementById('kolicina').innerHTML = response;
     });
   }
 
   obrisiStavku(stavka : OmiljenaStavka) {
-    this.httpKlijent.get(MyConfig.adresaServera+"/OmiljenaStavka/Delete/" + stavka.omiljenaStavkaId).subscribe((response : any)=>{
+    this.httpKlijent.get(MyConfig.adresaServera+"/OmiljenaStavka/Delete/" + stavka.omiljenaStavkaId, MyConfig.httpOpcije()).subscribe((response : any)=>{
       alert("Uspjesno uklonjena stavka");
       this.ucitajOmiljeneStavke(stavka.nazivGrupe);
     });

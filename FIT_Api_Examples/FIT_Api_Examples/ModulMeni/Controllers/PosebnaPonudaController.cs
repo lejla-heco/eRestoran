@@ -1,4 +1,5 @@
 ﻿using FIT_Api_Examples.Data;
+using FIT_Api_Examples.Helper.AutentifikacijaAutorizacija;
 using FIT_Api_Examples.ModulMeni.Models;
 using FIT_Api_Examples.ModulMeni.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +39,9 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
         [HttpPost]
         public IActionResult Izdvoji([FromBody]int id)
         {
+            if (!HttpContext.GetLoginInfo().isPermisijaAdministrator)
+                return BadRequest("nije logiran");
+
             MeniStavka izdvojenaStavka = _dbContext.MeniStavka.Find(id);
             izdvojenaStavka.Izdvojeno = true;
             _dbContext.SaveChanges();
@@ -47,6 +51,9 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
         [HttpPost]
         public IActionResult Ukloni([FromBody]int id)
         {
+            if (!HttpContext.GetLoginInfo().isPermisijaAdministrator)
+                return BadRequest("nije logiran");
+
             MeniStavka izdvojenaStavka = _dbContext.MeniStavka.Find(id);
             izdvojenaStavka.Izdvojeno = false;
             _dbContext.SaveChanges();

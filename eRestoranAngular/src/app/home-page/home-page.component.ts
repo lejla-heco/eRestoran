@@ -33,7 +33,7 @@ export class HomePageComponent implements OnInit {
   }
 
   private ucitajBrojStavki(id : number) {
-    this.httpKlijent.get(MyConfig.adresaServera + "/Narudzba/GetBrojStavki/" + id).subscribe((response : any) => {
+    this.httpKlijent.get(MyConfig.adresaServera + "/Narudzba/GetBrojStavki", MyConfig.httpOpcije()).subscribe((response : any) => {
       document.getElementById('kolicina').innerHTML = response;
     });
   }

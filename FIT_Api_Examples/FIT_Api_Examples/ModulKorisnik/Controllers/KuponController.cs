@@ -1,9 +1,8 @@
 ﻿using FIT_Api_Examples.Data;
+using FIT_Api_Examples.Helper.AutentifikacijaAutorizacija;
 using FIT_Api_Examples.ModulKorisnik.Models;
 using FIT_Api_Examples.ModulKorisnik.ViewModels;
-using FIT_Api_Examples.SignalR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,16 +15,17 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
     public class KuponController : Controller
     {
         private ApplicationDbContext _dbContext;
-        private IHubContext<NotificationHub> _hubContext;
-        public KuponController(ApplicationDbContext dbContext, IHubContext<NotificationHub> hubContext)
+        public KuponController(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
-            _hubContext = hubContext;
         }
 
         [HttpPost]
         public IActionResult GenerisiKupon([FromBody] KuponGenerisiKuponVM kuponGenerisiKuponVM)
         {
+            if (!HttpContext.GetLoginInfo().isPermisijaAdministrator)
+                return BadRequest("nije logiran");
+
             Kupon kupon = new Kupon()
             {
                 Kod = Guid.NewGuid().ToString().Substring(0,12),

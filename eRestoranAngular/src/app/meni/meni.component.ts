@@ -50,10 +50,10 @@ export class MeniComponent implements OnInit {
   }
 
   public ucitajMeniStavkeKorisnik(kategorija : string = "Doručak") {
-    var podaci : any = new Object();
-    podaci.korisnikId = this.loginInformacije.autentifikacijaToken.korisnickiNalog.id;
-    podaci.nazivKategorije = kategorija;
-    this.httpKlijent.post(MyConfig.adresaServera + "/Meni/GetAllPagedLog", podaci).subscribe((result : any)=>{
+    let podaci : any = {
+      kategorija : kategorija
+    };
+    this.httpKlijent.post(MyConfig.adresaServera + "/Meni/GetAllPagedLog", podaci, MyConfig.httpOpcije()).subscribe((result : any)=>{
       this.meniStavkeKorisnik = result;
     });
   }
@@ -70,7 +70,7 @@ export class MeniComponent implements OnInit {
   }
 
   izdvoji(stavka : MeniStavka) {
-    this.httpKlijent.post(MyConfig.adresaServera + "/PosebnaPonuda/Izdvoji", stavka.id).subscribe((result : any)=>{
+    this.httpKlijent.post(MyConfig.adresaServera + "/PosebnaPonuda/Izdvoji", stavka.id, MyConfig.httpOpcije()).subscribe((result : any)=>{
       this.ucitajMeniStavke(stavka.nazivGrupe);
     });
   }
@@ -93,9 +93,8 @@ export class MeniComponent implements OnInit {
   }
 
   dodajUKorpu(stavka : MeniStavkaKorisnik) {
-    this.novaStavkaNarudzbe.korisnikId = this.loginInformacije.autentifikacijaToken.korisnickiNalog.id;
     this.novaStavkaNarudzbe.meniStavkaId = stavka.id;
-    this.httpKlijent.post(MyConfig.adresaServera+"/Narudzba/AddStavka",this.novaStavkaNarudzbe).subscribe((response : any)=>{
+    this.httpKlijent.post(MyConfig.adresaServera+"/Narudzba/AddStavka",this.novaStavkaNarudzbe, MyConfig.httpOpcije()).subscribe((response : any)=>{
       document.getElementById('kolicina').innerHTML = response;
     });
   }
@@ -124,19 +123,19 @@ export class MeniComponent implements OnInit {
   }
 
   private ukloniOmiljenuStavku(stavka: MeniStavkaKorisnik) {
-    var podaci : any = new Object();
-    podaci.id = this.loginInformacije.autentifikacijaToken.korisnickiNalog.id;
-    podaci.stavkaId = stavka.id;
-      this.httpKlijent.post(MyConfig.adresaServera + '/OmiljenaStavka/DeleteById', podaci).subscribe((response : any)=>{
+    var podaci : any = {
+      stavkaId : stavka.id
+    };
+      this.httpKlijent.post(MyConfig.adresaServera + '/OmiljenaStavka/DeleteById', podaci, MyConfig.httpOpcije()).subscribe((response : any)=>{
         alert("Uspjesno uklonjena omiljena stavka menija!");
       })
   }
 
   private dodajOmiljenuStavku(stavka: MeniStavkaKorisnik) {
-    var podaci : any = new Object();
-    podaci.korisnikId = this.loginInformacije.autentifikacijaToken.korisnickiNalog.id;
-    podaci.meniStavkaId = stavka.id;
-    this.httpKlijent.post(MyConfig.adresaServera + '/OmiljenaStavka/Add', podaci).subscribe((response : any)=>{
+    var podaci : any = {
+      meniStavkaId : stavka.id
+    };
+    this.httpKlijent.post(MyConfig.adresaServera + '/OmiljenaStavka/Add', podaci, MyConfig.httpOpcije()).subscribe((response : any)=>{
       alert("Dodano u omiljeno");
     });
   }

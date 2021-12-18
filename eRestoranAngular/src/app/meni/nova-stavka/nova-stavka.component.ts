@@ -44,8 +44,8 @@ export class NovaStavkaComponent implements OnInit {
     this.novaStavka.meniGrupaId = parseInt(this.novaStavka.meniGrupaId.toString());
     var data = new FormData();
     data.append("slikaMeniStavke", file);
-    this.httpKlijent.post(MyConfig.adresaServera + "/Meni/Add", this.novaStavka).subscribe((result : any)=>{
-      this.httpKlijent.post(MyConfig.adresaServera + "/Meni/AddSlika/" + result, data).subscribe((result:any)=>{
+    this.httpKlijent.post(MyConfig.adresaServera + "/Meni/Add", this.novaStavka, MyConfig.httpOpcije()).subscribe((result : any)=>{
+      this.httpKlijent.post(MyConfig.adresaServera + "/Meni/AddSlika/" + result, data, MyConfig.httpOpcije()).subscribe((result:any)=>{
         alert("Uspjesno dodana nova stavka");
         this.ocistiFormu();
       });

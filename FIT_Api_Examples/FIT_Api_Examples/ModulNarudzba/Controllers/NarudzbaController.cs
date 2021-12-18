@@ -1,4 +1,5 @@
 ﻿using FIT_Api_Examples.Data;
+using FIT_Api_Examples.Helper.AutentifikacijaAutorizacija;
 using FIT_Api_Examples.ModulKorisnik.Models;
 using FIT_Api_Examples.ModulMeni.Models;
 using FIT_Api_Examples.ModulNarudzba.Models;
@@ -26,11 +27,15 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
         [HttpPost]
         public IActionResult AddStavka([FromBody] NarudzbaAddStavkaVM stavkaAddVM)
         {
-            Korisnik korisnik = _dbContext.Korisnik.Find(stavkaAddVM.korisnikId);
+            if (!HttpContext.GetLoginInfo().isPermisijaKorisnik)
+                return BadRequest("nije logiran");
+
+            Korisnik korisnik = HttpContext.GetLoginInfo().korisnickiNalog.Korisnik;
+
             if (korisnik == null)
                 return BadRequest("Nepostojeci korisnik");
 
-            Narudzba narudzba = _dbContext.Narudzba.Where(n => n.KorisnikID == stavkaAddVM.korisnikId && n.Zakljucena == false).SingleOrDefault();
+            Narudzba narudzba = _dbContext.Narudzba.Where(n => n.KorisnikID == korisnik.ID && n.Zakljucena == false).SingleOrDefault();
             if (narudzba == null)
             {
                 narudzba = new Narudzba()
@@ -63,9 +68,14 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
             return Ok(narudzba.BrojStavki);
         }
 
-        [HttpGet("{id}")]
-        public NarudzbaGetNarudzbaVM GetNarudzba(int id)
+        [HttpGet]
+        public IActionResult GetNarudzba()
         {
+            if (!HttpContext.GetLoginInfo().isPermisijaKorisnik)
+                return BadRequest("nije logiran");
+
+            int id = HttpContext.GetLoginInfo().korisnickiNalog.Korisnik.ID;
+
             Narudzba narudzba = _dbContext.Narudzba.Where(n => n.KorisnikID == id && n.Zakljucena == false).FirstOrDefault();
             if (narudzba == null) return null;
 
@@ -87,24 +97,32 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
                 }).ToList(),
             };
 
-            return getNarudzbaVM;
+            return Ok(getNarudzbaVM);
         }
 
-        [HttpGet("{id}")]
-        public int GetBrojStavki(int id)
+        [HttpGet]
+        public IActionResult GetBrojStavki()
         {
+            if (!HttpContext.GetLoginInfo().isPermisijaKorisnik)
+                return BadRequest("nije logiran");
+
+            int id = HttpContext.GetLoginInfo().korisnickiNalog.Korisnik.ID;
+
             Korisnik korisnik = _dbContext.Korisnik.Find(id);
-            if (korisnik == null) return 0;
+            if (korisnik == null) return Ok(0);
 
             Narudzba narudzba = _dbContext.Narudzba.Where(n => n.KorisnikID == id && n.Zakljucena == false).FirstOrDefault();
-            if (narudzba == null) return 0;
+            if (narudzba == null) return Ok(0);
 
-            return narudzba.BrojStavki;
+            return Ok(narudzba.BrojStavki);
         }
 
         [HttpGet("{id}")]
         public IActionResult UkloniStavku(int id)
         {
+            if (!HttpContext.GetLoginInfo().isPermisijaKorisnik)
+                return BadRequest("nije logiran");
+
             StavkaNarudzbe stavkaNarudzbe = _dbContext.StavkaNarudzbe.Where(sn => sn.ID == id).FirstOrDefault();
 
             Narudzba narudzba = _dbContext.Narudzba.Where(n => n.ID == stavkaNarudzbe.NarudzbaID).SingleOrDefault();
@@ -140,6 +158,9 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
         [HttpPost]
         public IActionResult UpdateKolicina(NarudzbaUpdateKolicinaVM narudzbaUpdateKolicinaVM)
         {
+            if (!HttpContext.GetLoginInfo().isPermisijaKorisnik)
+                return BadRequest("nije logiran");
+
             StavkaNarudzbe stavkaNarudzbe = _dbContext.StavkaNarudzbe.Include(sn => sn.MeniStavka)
                                             .Where(sn => sn.ID == narudzbaUpdateKolicinaVM.id).SingleOrDefault();
             if (stavkaNarudzbe == null)

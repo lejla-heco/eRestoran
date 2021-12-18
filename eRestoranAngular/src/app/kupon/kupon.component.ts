@@ -16,7 +16,7 @@ export class KuponComponent implements OnInit {
   }
 
   posaljiPodatke() {
-    this.httpKlijent.post(MyConfig.adresaServera + "/Kupon/GenerisiKupon", this.popusniKupon).subscribe((response : any) => {
+    this.httpKlijent.post(MyConfig.adresaServera + "/Kupon/GenerisiKupon", this.popusniKupon, MyConfig.httpOpcije()).subscribe((response : any) => {
       alert("Uspješno generisan kupon " + response.kod);
       this.ocistiFormu();
     });

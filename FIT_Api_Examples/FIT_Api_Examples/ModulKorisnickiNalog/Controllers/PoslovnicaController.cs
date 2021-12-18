@@ -1,4 +1,5 @@
 ﻿using FIT_Api_Examples.Data;
+using FIT_Api_Examples.Helper.AutentifikacijaAutorizacija;
 using FIT_Api_Examples.ModulKorisnickiNalog.Models;
 using FIT_Api_Examples.ModulKorisnickiNalog.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +24,9 @@ namespace FIT_Api_Examples.ModulKorisnickiNalog.Controllers
         [HttpPost]
         public IActionResult Add([FromBody] PoslovnicaAddVM poslovnicaAddVM)
         {
+            if (!HttpContext.GetLoginInfo().isPermisijaAdministrator)
+                return BadRequest("nije logiran");
+
             Poslovnica poslovnica = new Poslovnica()
             {
                 Adresa = poslovnicaAddVM.adresa,

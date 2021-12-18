@@ -1,5 +1,6 @@
 ﻿using FIT_Api_Examples.Data;
 using FIT_Api_Examples.Helper;
+using FIT_Api_Examples.Helper.AutentifikacijaAutorizacija;
 using FIT_Api_Examples.ModulKorisnik.Models;
 using FIT_Api_Examples.ModulMeni.Models;
 using FIT_Api_Examples.ModulMeni.ViewModels;
@@ -33,6 +34,9 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
         [HttpPost]
         public ActionResult Add([FromBody] MeniAddVM meniAddVM)
         {
+            if (!HttpContext.GetLoginInfo().isPermisijaAdministrator)
+                return BadRequest("nije logiran");
+
             MeniStavka meniStavkaNova = new MeniStavka()
             {
                 Naziv = meniAddVM.naziv,
@@ -58,8 +62,7 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
             meniStavka.Opis =meniUpdateVM.opis.RemoveTags();
             meniStavka.Cijena = meniUpdateVM.cijena;
             meniStavka.SnizenaCijena = meniUpdateVM.snizenaCijena;
-           meniStavka.MeniGrupaID = meniUpdateVM.meniGrupaId;
-            //Console.WriteLine(5);
+            meniStavka.MeniGrupaID = meniUpdateVM.meniGrupaId;
             _dbContext.SaveChanges();
             return Ok(meniStavka.ID);
         }
@@ -68,7 +71,7 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
         {
             MeniStavka meniStavka = _dbContext.MeniStavka.Find(id);
 
-            if (meniStavka == null || id == 1)
+            if (meniStavka == null)
                 return BadRequest("pogresan ID");
 
             _dbContext.Remove(meniStavka);
@@ -79,6 +82,8 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
         [HttpPost("{id}")]
         public ActionResult AddSlika(int id, [FromForm] MeniAddSlikaVM meniAddSlikaVM)
         {
+            if (!HttpContext.GetLoginInfo().isPermisijaAdministrator)
+                return BadRequest("nije logiran");
             try
             {
                 MeniStavka meniStavka = _dbContext.MeniStavka.Find(id);
@@ -108,15 +113,11 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
         public ActionResult AddOcjena(int id,[FromBody] MeniAddOcjenaVM meniAddOcjenaVM)
         {
              MeniStavka meniStavka = _dbContext.MeniStavka.Find(id);
-            //int ocjena = 0;
-                //int brojac = 0;
                 if ( meniStavka != null)
                 {
                      
                     meniStavka.Ocjena += meniAddOcjenaVM.ocjena;
-                  if(meniStavka.Ocjena>5)
-                    meniStavka.Ocjena =meniStavka.Ocjena/2;
-                Console.WriteLine(meniAddOcjenaVM.ocjena.ToString());
+                    meniStavka.Ocjena = (float)Math.Round(meniStavka.Ocjena / 2, 2);
                     _dbContext.SaveChanges();
                 }
 
@@ -144,13 +145,16 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
         }
 
         [HttpPost]
-        public List<MeniGetAllPagedLogVM> GetAllPagedLog([FromBody] MeniGAPLogInfoVM meniGAPLogInfoVM)
+        public IActionResult GetAllPagedLog([FromBody] MeniGAPLogInfoVM meniGAPLogInfoVM)
         {
-            Korisnik korisnik = _dbContext.Korisnik.Find(meniGAPLogInfoVM.korisnikId);
+            if (!HttpContext.GetLoginInfo().isPermisijaKorisnik)
+                return BadRequest("nije logiran");
+
+            Korisnik korisnik = HttpContext.GetLoginInfo().korisnickiNalog.Korisnik;
             if (korisnik == null)
                 return null;
             List<MeniGetAllPagedLogVM> pagedStavke = _dbContext.MeniStavka
-                                            .Where(ms => ms.MeniGrupa.Naziv == meniGAPLogInfoVM.nazivKategorije)
+                                            .Where(ms => ms.MeniGrupa.Naziv == meniGAPLogInfoVM.kategorija)
                                             .Select(ms => new MeniGetAllPagedLogVM()
                                             {
                                                 id = ms.ID,
@@ -166,7 +170,7 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
                                                             .Where(os => os.KorisnikID == korisnik.ID && os.MeniStavkaID == ms.ID)
                                                             .SingleOrDefault() != null ? true : false
                                             }).ToList();
-            return pagedStavke;
+            return Ok(pagedStavke);
         }
 
         [HttpGet("{id}")]

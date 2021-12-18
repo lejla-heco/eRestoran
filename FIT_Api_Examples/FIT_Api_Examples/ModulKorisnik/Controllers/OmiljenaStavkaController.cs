@@ -1,4 +1,5 @@
 ﻿using FIT_Api_Examples.Data;
+using FIT_Api_Examples.Helper.AutentifikacijaAutorizacija;
 using FIT_Api_Examples.ModulKorisnik.Models;
 using FIT_Api_Examples.ModulKorisnik.ViewModels;
 using FIT_Api_Examples.ModulMeni.Models;
@@ -25,7 +26,12 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
         [HttpPost]
         public IActionResult Add([FromBody] OmiljenaStavkaAddVM omiljenaStavkaAddVM)
         {
-            if (_dbContext.Korisnik.Find(omiljenaStavkaAddVM.korisnikId) == null)
+            if (!HttpContext.GetLoginInfo().isPermisijaKorisnik)
+                return BadRequest("nije logiran");
+
+            Korisnik korisnik = HttpContext.GetLoginInfo().korisnickiNalog.Korisnik;
+
+            if (korisnik == null)
                 return BadRequest("Nemate ovlasti za trazenu akciju!");
 
             MeniStavka meniStavka = _dbContext.MeniStavka.Find(omiljenaStavkaAddVM.meniStavkaId);
@@ -34,7 +40,7 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
 
             OmiljenaStavka omiljenaStavka = new OmiljenaStavka()
             {
-                KorisnikID = omiljenaStavkaAddVM.korisnikId,
+                KorisnikID = korisnik.ID,
                 MeniStavkaID = omiljenaStavkaAddVM.meniStavkaId,
             };
 
@@ -46,10 +52,15 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
         [HttpPost]
         public IActionResult GetAllPaged([FromBody] OmiljenaStavkaInfoVM omiljenaStavkaInfoVM)
         {
-            if (_dbContext.Korisnik.Find(omiljenaStavkaInfoVM.id) == null)
+            if (!HttpContext.GetLoginInfo().isPermisijaKorisnik)
+                return BadRequest("nije logiran");
+
+            Korisnik korisnik = HttpContext.GetLoginInfo().korisnickiNalog.Korisnik;
+
+            if (korisnik == null)
                 return BadRequest("Nemate ovlasti za trazenu akciju!");
 
-            List<OmiljenaStavkaGetAllVM> omiljeneStavke = _dbContext.OmiljenaStavka.Where(os => os.KorisnikID == omiljenaStavkaInfoVM.id)
+            List<OmiljenaStavkaGetAllVM> omiljeneStavke = _dbContext.OmiljenaStavka.Where(os => os.KorisnikID == korisnik.ID)
                                                             .Select(os => new OmiljenaStavkaGetAllVM()
                                                             {
                                                                 omiljenaStavkaId = os.ID,
@@ -69,6 +80,9 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
         [HttpGet("{id}")]
         public IActionResult Delete(int id)
         {
+            if (!HttpContext.GetLoginInfo().isPermisijaKorisnik)
+                return BadRequest("nije logiran");
+
             OmiljenaStavka omiljenaStavka = _dbContext.OmiljenaStavka.Find(id);
             if (omiljenaStavka == null)
                 return BadRequest("Nepostojeca omiljena stavka!");
@@ -81,7 +95,12 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
         [HttpPost]
         public IActionResult DeleteById([FromBody] OmiljenaStavkaInfoVM omiljenaStavkaInfoVM)
         {
-            OmiljenaStavka omiljenaStavka = _dbContext.OmiljenaStavka.Where(os => os.KorisnikID == omiljenaStavkaInfoVM.id && os.MeniStavkaID == omiljenaStavkaInfoVM.stavkaId).SingleOrDefault();
+            if (!HttpContext.GetLoginInfo().isPermisijaKorisnik)
+                return BadRequest("nije logiran");
+
+            Korisnik korisnik = HttpContext.GetLoginInfo().korisnickiNalog.Korisnik;
+
+            OmiljenaStavka omiljenaStavka = _dbContext.OmiljenaStavka.Where(os => os.KorisnikID == korisnik.ID && os.MeniStavkaID == omiljenaStavkaInfoVM.stavkaId).SingleOrDefault();
             if (omiljenaStavka == null)
                 return BadRequest("Nepostojeca omiljena stavka!");
 

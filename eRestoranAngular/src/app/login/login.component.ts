@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
 
   posaljiPodatke() {
     this.httpKlijent.post(MyConfig.adresaServera+'/Autentifikacija/Login',this.prijava).subscribe((response : any)=>{
-      if (response!=null) {
+      if (response.isLogiran) {
         response.isPermisijaGost = false;
         AutentifikacijaHelper.setLoginInfo(response, this.zapamtiMe);
         this.router.navigateByUrl("home-page");
