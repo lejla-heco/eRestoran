@@ -22,12 +22,11 @@ export class MeniComponent implements OnInit {
   meniGrupe : MeniGrupa[] = null;
   novaStavkaNarudzbe : StavkaNarudzbe = new StavkaNarudzbe();
   id : number = null;
-  obrisana:boolean=false; // uklanjanje modala za brisanje nakon obrisane stavke
+  obrisana:boolean=false;
   loginInformacije : LoginInformacije = null;
-
   odabranaStavkaMenija: MeniStavka = null;
-
-  ocijenjenaStavkaMenija:MeniStavkaKorisnik=new MeniStavkaKorisnik();//ocjenjivanje
+  ocijenjenaStavkaMenija:MeniStavkaKorisnik=new MeniStavkaKorisnik();
+  trenutnaKategorija: string = "Doručak";
 
   title = "star-angular";
   stars = [1, 2, 3, 4, 5];
@@ -44,12 +43,14 @@ export class MeniComponent implements OnInit {
     else this.ucitajMeniStavke();
   }
   public ucitajMeniStavke(kategorija : string = "Doručak") {
+    this.trenutnaKategorija = kategorija;
     this.httpKlijent.get(MyConfig.adresaServera + "/Meni/GetAllPaged?nazivKategorije=" + kategorija).subscribe((result : any)=>{
       this.meniStavke = result;
     })
   }
 
   public ucitajMeniStavkeKorisnik(kategorija : string = "Doručak") {
+    this.trenutnaKategorija = kategorija;
     let podaci : any = {
       kategorija : kategorija
     };

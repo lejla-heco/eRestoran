@@ -18,8 +18,8 @@
     <div class="col-md-8">
       <ul class="nav site-tab-nav">
         <li *ngFor ="let grupa of meniGrupe" class="nav-item">
-          <a *ngIf="!loginInformacije.isPermisijaKorisnik" class="nav-link active" (click)="ucitajMeniStavke(grupa.naziv)">{{grupa.naziv}}</a>
-          <a *ngIf="loginInformacije.isPermisijaKorisnik" class="nav-link active" (click)="ucitajMeniStavkeKorisnik(grupa.naziv)">{{grupa.naziv}}</a>
+          <a *ngIf="!loginInformacije.isPermisijaKorisnik" class="nav-link" (click)="ucitajMeniStavke(grupa.naziv)" [ngClass]="this.trenutnaKategorija == grupa.naziv ? 'active' : ''">{{grupa.naziv}}</a>
+          <a *ngIf="loginInformacije.isPermisijaKorisnik" class="nav-link" (click)="ucitajMeniStavkeKorisnik(grupa.naziv)" [ngClass]="this.trenutnaKategorija == grupa.naziv ? 'active' : ''">{{grupa.naziv}}</a>
         </li>
       </ul>
     </div>
