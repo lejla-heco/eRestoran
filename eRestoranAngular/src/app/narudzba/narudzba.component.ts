@@ -65,10 +65,14 @@ export class NarudzbaComponent implements OnInit {
   }
 
   private ukloniOmiljeno(narudzba: Narudzba) {
-
+    this.httpKlijent.get(MyConfig.adresaServera + "/Narudzba/UkloniOmiljenu/" + narudzba.id, MyConfig.httpOpcije()).subscribe((response : any)=>{
+      alert("Uklonjena narudzba iz omiljenih");
+    });
   }
 
   private dodajOmiljeno(narudzba: Narudzba){
-
+    this.httpKlijent.get(MyConfig.adresaServera + "/Narudzba/OmiljenaNarudzba/" + narudzba.id, MyConfig.httpOpcije()).subscribe((response : any)=>{
+      alert("Omiljena narudzba");
+    });
   }
 }
