@@ -190,5 +190,38 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
 
             return Ok(response);
         }
+
+        [HttpGet("{id}")]
+        public IActionResult OmiljenaNarudzba(int id)
+        {
+            if (!HttpContext.GetLoginInfo().isPermisijaKorisnik)
+                return BadRequest("nije logiran");
+
+            Narudzba narudzba = _dbContext.Narudzba.Find(id);
+            if (narudzba == null)
+                return BadRequest("Nepostojeca narudzba");
+
+            narudzba.Omiljeno = true;
+            _dbContext.SaveChanges();
+
+            return Ok();
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult UkloniOmiljenu(int id)
+        {
+            if (!HttpContext.GetLoginInfo().isPermisijaKorisnik)
+                return BadRequest("nije logiran");
+
+            Narudzba narudzba = _dbContext.Narudzba.Find(id);
+            if (narudzba == null)
+                return BadRequest("Nepostojeca narudzba");
+
+            narudzba.Omiljeno = false;
+            _dbContext.SaveChanges();
+
+            return Ok();
+        }
+
     }
 }
