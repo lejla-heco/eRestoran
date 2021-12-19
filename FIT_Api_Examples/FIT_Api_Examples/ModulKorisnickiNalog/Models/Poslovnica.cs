@@ -14,6 +14,8 @@ namespace FIT_Api_Examples.ModulKorisnickiNalog.Models
         public string BrojTelefona { get; set; }
         public string RadnoVrijemeRedovno { get; set; }
         public string RadnoVrijemeVikend { get; set; }
+        public double lat { get; set; }
+        public double lng { get; set; }
         [ForeignKey("OpstinaID")]
         public int OpstinaID { get; set; }
         public Opstina Opstina { get; set; }

@@ -3,5 +3,7 @@ export class Poslovnica{
   brojTelefona: string;
   radnoVrijemeRedovno: string;
   radnoVrijemeVikend : string;
+  lat : number;
+  lng : number;
   opstinaId: number;
 }

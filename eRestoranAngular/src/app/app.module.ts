@@ -20,7 +20,7 @@ import { EditZaposlenikComponent } from './zaposlenik/edit-zaposlenik/edit-zapos
 import { OmiljenjeStavkeComponent } from './omiljenje-stavke/omiljenje-stavke.component';
 import { AutorizacijaAdminProvjera } from "./guards/autorizacija-admin-provjera.service";
 import { AutorizacijaKorisnikProvjera } from "./guards/autorizacija-korisnik-provjera.service";
-import { SafePipe }  from './home-page/safe.pipe';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 
 @NgModule({
@@ -40,8 +40,6 @@ import { SafePipe }  from './home-page/safe.pipe';
     NoviZaposlenikComponent,
     EditZaposlenikComponent,
     OmiljenjeStavkeComponent,
-    SafePipe
-
   ],
   imports: [
     BrowserModule,
@@ -65,7 +63,8 @@ import { SafePipe }  from './home-page/safe.pipe';
       anchorScrolling : 'enabled',
       scrollPositionRestoration : 'enabled',
       onSameUrlNavigation: 'reload'
-    })
+    }),
+    GoogleMapsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

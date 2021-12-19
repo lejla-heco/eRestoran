@@ -15,7 +15,6 @@ export class HomePageComponent implements OnInit {
   public posebnaPonuda: PosebnaPonudaStavka[] = null;
   public poslovnice : Poslovnica[] = null;
   loginInformacije : LoginInformacije = null;
-  mapsURL = "https://www.google.com/maps/d/embed?mid=1ZMProtfqXFwQwkAI_mscDbmRo7Bf70cy&ehbc=2E312F";
 
   constructor(private httpKlijent : HttpClient) {
     this.loginInformacije = AutentifikacijaHelper.getLoginInfo();
@@ -24,7 +23,7 @@ export class HomePageComponent implements OnInit {
       }
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.getPosebnaPonuda();
     this.getPoslovnice();
   }
@@ -44,6 +43,46 @@ export class HomePageComponent implements OnInit {
   private getPoslovnice() {
     this.httpKlijent.get(MyConfig.adresaServera + "/Poslovnica/GetAll").subscribe((response : any)=>{
       this.poslovnice = response;
+      this.inicijalizirajGoogleMapu();
+    });
+  }
+
+  inicijalizirajGoogleMapu(): void {
+    const map = new google.maps.Map(
+      document.getElementById("map") as HTMLElement,
+      {
+        zoom: 17,
+        center: { lat: 43.8559, lng: 18.40725 }, //koordinate Sarajeva
+      }
+    );
+    let vrijednost : any = new Array();
+    this.poslovnice.forEach((poslovnica, i)=>{
+      vrijednost.push([{ lat : poslovnica.lat, lng : poslovnica.lng}, poslovnica.adresa]);
+    });
+
+    // lat, lng i naziv svakog markera
+    const tourStops: [google.maps.LatLngLiteral, string][] = vrijednost;
+
+    // Info window koji ce dijeliti svi markeri
+    const infoWindow = new google.maps.InfoWindow();
+
+    // kreiram markere
+    tourStops.forEach(([position, title], i) => {
+      const marker = new google.maps.Marker({
+        position,
+        map,
+        title: `${title}`,
+        optimized: true,
+      });
+
+      // prikazi info window na klik i zumiraj na taj marker event
+      marker.addListener("click", () => {
+        infoWindow.close();
+        infoWindow.setContent(marker.getTitle());
+        infoWindow.open(marker.getMap(), marker);
+        map.setZoom(19);
+        map.setCenter(marker.getPosition());
+      });
     });
   }
 }
