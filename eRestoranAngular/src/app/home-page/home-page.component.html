@@ -32,23 +32,28 @@
 
 <!-- Osnovni podaci o restoranu-->
 
-<section id="kontakt" class="page-section">
+<section id="kontakt" class="page-section pb-0">
   <div class="container">
     <div class="text-center">
       <h2 class="section-heading text-uppercase">O nama</h2>
-
-        <p  class="section-subheading text-muted fw-bold">Lokacija: </p>
-        <p  class="section-subheading text-white"> Vrbanja 1, Sarajevo 71000</p>
-        <p  class="section-subheading text-muted fw-bold">Radno vrijeme: </p>
-        <p  class="section-subheading text-white"> pon-sub: 08:00- 23:00</p>
-        <p  class="section-subheading text-white"> ned: 08:00- 20:00</p>
-      <p  class="section-subheading text-muted fw-bold">Kontakti: </p>
-      <p  class="section-subheading text-white">tel: +38733/123-456, tel: +38733/111-222</p>
-
-
-
-
+      <div *ngIf ="poslovnice != null" class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+        <div *ngFor ="let poslovnica of poslovnice" class="col-sm text-center">
+          <p  class="section-subheading text-muted fw-bold">Lokacija: </p>
+          <p  class="section-subheading text-white"> {{poslovnica.adresa}}</p>
+          <p  class="section-subheading text-muted fw-bold">Radno vrijeme: </p>
+          <p  class="section-subheading text-white">  {{poslovnica.radnoVrijemeRedovno}}</p>
+          <p  class="section-subheading text-white">  {{poslovnica.radnoVrijemeVikend}}</p>
+          <p  class="section-subheading text-muted fw-bold">Kontakt telefon: </p>
+          <p  class="section-subheading text-white"> {{poslovnica.brojTelefona}}</p>
+        </div>
+      </div>
 
     </div>
   </div>
+  <iframe
+    [src]='mapsURL | safe'
+    width="100%" height="500"
+    frameborder="0"
+    allowfullscreen>
+  </iframe>
 </section>

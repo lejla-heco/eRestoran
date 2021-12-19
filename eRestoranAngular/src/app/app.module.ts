@@ -18,9 +18,9 @@ import { ZaposlenikComponent } from './zaposlenik/zaposlenik.component';
 import { NoviZaposlenikComponent } from './zaposlenik/novi-zaposlenik/novi-zaposlenik.component';
 import { EditZaposlenikComponent } from './zaposlenik/edit-zaposlenik/edit-zaposlenik.component';
 import { OmiljenjeStavkeComponent } from './omiljenje-stavke/omiljenje-stavke.component';
-import { PoslovnicaComponent } from './poslovnica/poslovnica.component';
 import { AutorizacijaAdminProvjera } from "./guards/autorizacija-admin-provjera.service";
 import { AutorizacijaKorisnikProvjera } from "./guards/autorizacija-korisnik-provjera.service";
+import { SafePipe }  from './home-page/safe.pipe';
 
 
 @NgModule({
@@ -40,7 +40,7 @@ import { AutorizacijaKorisnikProvjera } from "./guards/autorizacija-korisnik-pro
     NoviZaposlenikComponent,
     EditZaposlenikComponent,
     OmiljenjeStavkeComponent,
-    PoslovnicaComponent
+    SafePipe
 
   ],
   imports: [
@@ -59,7 +59,6 @@ import { AutorizacijaKorisnikProvjera } from "./guards/autorizacija-korisnik-pro
       {path:"novi-zaposlenik", component:NoviZaposlenikComponent, canActivate:[AutorizacijaAdminProvjera]},
       {path:"edit-zaposlenik/:id", component:EditZaposlenikComponent, canActivate:[AutorizacijaAdminProvjera]},
       {path:"omiljene-stavke", component:OmiljenjeStavkeComponent, canActivate:[AutorizacijaKorisnikProvjera]},
-      {path:"poslovnica", component:PoslovnicaComponent, canActivate:[AutorizacijaAdminProvjera]},
       {path:"login", component:LoginComponent},
       {path:"registracija", component:RegistracijaComponent}
     ],{

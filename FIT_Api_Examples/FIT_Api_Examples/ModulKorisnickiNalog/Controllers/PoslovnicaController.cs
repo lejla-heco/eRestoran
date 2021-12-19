@@ -24,14 +24,12 @@ namespace FIT_Api_Examples.ModulKorisnickiNalog.Controllers
         [HttpPost]
         public IActionResult Add([FromBody] PoslovnicaAddVM poslovnicaAddVM)
         {
-            if (!HttpContext.GetLoginInfo().isPermisijaAdministrator)
-                return BadRequest("nije logiran");
-
             Poslovnica poslovnica = new Poslovnica()
             {
                 Adresa = poslovnicaAddVM.adresa,
                 BrojTelefona = poslovnicaAddVM.brojTelefona,
-                RadnoVrijeme = poslovnicaAddVM.radnoVrijeme,
+                RadnoVrijemeRedovno = poslovnicaAddVM.radnoVrijemeRedovno,
+                RadnoVrijemeVikend = poslovnicaAddVM.radnoVrijemeVikend,
                 OpstinaID = poslovnicaAddVM.opstinaId,
             };
             _dbContext.Poslovnica.Add(poslovnica);

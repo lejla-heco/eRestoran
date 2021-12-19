@@ -9,7 +9,8 @@ namespace FIT_Api_Examples.ModulKorisnickiNalog.ViewModels
     {
         public string adresa { get; set; }
         public string brojTelefona { get; set; }
-        public string radnoVrijeme { get; set; }
+        public string radnoVrijemeRedovno { get; set; }
+        public string radnoVrijemeVikend { get; set; }
         public int opstinaId { get; set; }
     }
 }

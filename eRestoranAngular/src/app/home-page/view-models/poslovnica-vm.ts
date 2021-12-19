@@ -1,6 +1,7 @@
 export class Poslovnica{
   adresa: string;
   brojTelefona: string;
-  radnoVrijeme: string;
+  radnoVrijemeRedovno: string;
+  radnoVrijemeVikend : string;
   opstinaId: number;
 }
