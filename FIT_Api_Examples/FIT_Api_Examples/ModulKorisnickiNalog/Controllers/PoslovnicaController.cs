@@ -33,6 +33,8 @@ namespace FIT_Api_Examples.ModulKorisnickiNalog.Controllers
                 BrojTelefona = poslovnicaAddVM.brojTelefona,
                 RadnoVrijemeRedovno = poslovnicaAddVM.radnoVrijemeRedovno,
                 RadnoVrijemeVikend = poslovnicaAddVM.radnoVrijemeVikend,
+                lat = poslovnicaAddVM.lat,
+                lng = poslovnicaAddVM.lng,
                 OpstinaID = poslovnicaAddVM.opstinaId,
             };
             _dbContext.Poslovnica.Add(poslovnica);

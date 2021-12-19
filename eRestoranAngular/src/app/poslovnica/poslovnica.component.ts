@@ -57,4 +57,10 @@ export class PoslovnicaComponent implements OnInit {
       this.opstine = result;
     });
   }
+
+  dodajPoslovnicu() {
+    this.httpKlijent.post(MyConfig.adresaServera + "/Poslovnica/Add",this.poslovnica,MyConfig.httpOpcije()).subscribe((response : any)=>{
+      alert("Uspjesno dodana nova poslovnica!");
+    });
+  }
 }

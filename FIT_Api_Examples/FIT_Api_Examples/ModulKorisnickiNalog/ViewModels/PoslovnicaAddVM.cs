@@ -11,6 +11,8 @@ namespace FIT_Api_Examples.ModulKorisnickiNalog.ViewModels
         public string brojTelefona { get; set; }
         public string radnoVrijemeRedovno { get; set; }
         public string radnoVrijemeVikend { get; set; }
+        public double lat { get; set; }
+        public double lng { get; set; }
         public int opstinaId { get; set; }
     }
 }
