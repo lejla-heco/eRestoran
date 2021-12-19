@@ -31,6 +31,19 @@
         </li>
       </ul>
       <ul *ngIf="loginInformacije.isPermisijaKorisnik" class="navbar-nav d-flex">
+        <li class="nav-item">
+          <div class="dropdown">
+            <button class=" btn btn-outline-light dropdown-toggle" role="button" id="dropdownMenuKuponi" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-bell-fill"></i>
+
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuKuponi">
+              <a class="dropdown-item">
+                Imate kupon sa popusta | kupon kod
+              </a>
+            </div>
+          </div>
+        </li>
         <li class="nav-item btn btn-outline-light" routerLink="narudzba">
           <i class="bi-cart-fill me-1"></i>
           Korpa

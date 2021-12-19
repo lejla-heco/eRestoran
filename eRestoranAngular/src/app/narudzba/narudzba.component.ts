@@ -5,8 +5,7 @@ import {MyConfig} from "../my-config";
 import {StavkaNarudzbe} from "./view-models/stavka-narudzbe-vm";
 import {NarudzbaStavka} from "./view-models/narudzba-stavka";
 import {NovaKolicina} from "./view-models/update-kolicina-vm";
-import {AutentifikacijaHelper} from "../helper/autentifikacija-helper";
-import {LoginInformacije} from "../helper/login-informacije";
+import {Kupon} from "./view-models/kupon-vm";
 
 @Component({
   selector: 'app-narudzba',
@@ -17,6 +16,8 @@ export class NarudzbaComponent implements OnInit {
   narudzba : Narudzba = null;
   podaci : StavkaNarudzbe = new StavkaNarudzbe();
   updateKolicina : NovaKolicina = new NovaKolicina();
+  kuponi : Kupon[] = null;
+  odabraniKupon : Kupon = new Kupon();
 
   constructor(private httpKlijent : HttpClient) {
   }
