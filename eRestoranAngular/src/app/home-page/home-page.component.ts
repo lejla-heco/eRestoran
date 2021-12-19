@@ -85,4 +85,11 @@ export class HomePageComponent implements OnInit {
       });
     });
   }
+
+  obrisi(id : number) {
+    this.httpKlijent.get(MyConfig.adresaServera + "/Poslovnica/Delete/" + id, MyConfig.httpOpcije()).subscribe((response : any)=>{
+      alert("Uspjesno obrisana poslovnica: " + response.adresa);
+      this.getPoslovnice();
+    });
+  }
 }

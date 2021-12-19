@@ -47,5 +47,17 @@ namespace FIT_Api_Examples.ModulKorisnickiNalog.Controllers
         {
             return Ok(_dbContext.Poslovnica.ToList());
         }
+
+        [HttpGet("{id}")]
+        public IActionResult Delete(int id)
+        {
+            if (!HttpContext.GetLoginInfo().isPermisijaAdministrator)
+                return BadRequest("nije logiran");
+
+            Poslovnica poslovnica = _dbContext.Poslovnica.Find(id);
+            _dbContext.Poslovnica.Remove(poslovnica);
+            _dbContext.SaveChanges();
+            return Ok(poslovnica);
+        }
     }
 }

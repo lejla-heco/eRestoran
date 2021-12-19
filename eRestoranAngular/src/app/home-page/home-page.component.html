@@ -32,7 +32,7 @@
 
 <!-- Osnovni podaci o restoranu-->
 
-<section id="kontakt" class="page-section pb-0">
+<section id="kontakt" class="animate__animated animate__fadeIn page-section pb-0">
   <div class="container pb-2">
     <div class="text-center">
       <h2 class="section-heading text-uppercase">O nama</h2>
@@ -46,7 +46,7 @@
           <p  class="section-subheading text-muted fw-bold">Kontakt telefon: </p>
           <p  class="section-subheading text-white"> {{poslovnica.brojTelefona}}</p>
           <div *ngIf="loginInformacije.isPermisijaAdministrator" class="text-center mb-4">
-            <a class="btn btn-outline-light mt-auto" ><i class="bi bi-trash-fill"></i>  Obriši poslovnicu</a>
+            <a class="btn btn-outline-light mt-auto" (click)="obrisi(poslovnica.id)"><i class="bi bi-trash-fill"></i>  Obriši poslovnicu</a>
           </div>
         </div>
       </div>
