@@ -1,0 +1,75 @@
+<header class="py-5 bg-image-full" style="background-image: url('/assets/img/cover/poslovnica.jpg')">
+  <div class="text-center my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">Nova poslovnica</h1>
+      <p class="lead fw-normal text-white mb-0">Evidencija nove poslovnice</p>
+    </div>
+  </div>
+</header>
+<section class="py-5 bg-light">
+
+  <div class="container px-4 mt-2">
+    <div class="row gx-4 gx-lg-5 align-items-center">
+      <div class="col-md-6">
+        <div id="map" style="height: 600px; width: 100%"></div>
+      </div>
+      <div class="col-md-6">
+        <div class="small mb-1">Na karti pored odaberite lokaciju (geografsku širinu i dužinu) nove poslovnice</div>
+        <h3 class="display-5 fw-bolder">Unesite podatke:</h3>
+        <div class="fs-6 mb-5">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Adresa</span>
+            </div>
+            <input type="text" class="form-control" [(ngModel)]="poslovnica.adresa">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Broj telefona</span>
+            </div>
+            <input type="text" class="form-control" [(ngModel)]="poslovnica.brojTelefona">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Redovno radno vrijeme</span>
+            </div>
+            <input type="text" class="form-control" [(ngModel)]="poslovnica.radnoVrijemeRedovno">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Radno vrijeme nedjeljom</span>
+            </div>
+            <input type="text" class="form-control" [(ngModel)]="poslovnica.radnoVrijemeVikend">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Geografska širina</span>
+            </div>
+            <input type="number" class="form-control" readonly placeholder="Odaberite lokaciju na mapi" [(ngModel)]="poslovnica.lat">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Geografska dužina</span>
+            </div>
+            <input type="number" class="form-control" readonly placeholder="Odaberite lokaciju na mapi" [(ngModel)]="poslovnica.lng">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Opstina</span>
+            </div>
+            <select class="form-control mb-3" [(ngModel)]="poslovnica.opstinaId"  [ngModelOptions]="{standalone: true}">
+              <option *ngFor = "let opstina of opstine" [value]=opstina.id>{{opstina.naziv}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="d-flex">
+          <button class="btn btn-outline-dark flex-shrink-0" type="button">
+            <i class="bi bi-briefcase-fill"></i>
+            Dodaj novu poslovnicu
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>

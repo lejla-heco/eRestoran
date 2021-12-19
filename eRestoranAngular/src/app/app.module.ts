@@ -21,6 +21,7 @@ import { OmiljenjeStavkeComponent } from './omiljenje-stavke/omiljenje-stavke.co
 import { AutorizacijaAdminProvjera } from "./guards/autorizacija-admin-provjera.service";
 import { AutorizacijaKorisnikProvjera } from "./guards/autorizacija-korisnik-provjera.service";
 import { GoogleMapsModule } from '@angular/google-maps';
+import { PoslovnicaComponent } from './poslovnica/poslovnica.component';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
     NoviZaposlenikComponent,
     EditZaposlenikComponent,
     OmiljenjeStavkeComponent,
+    PoslovnicaComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,6 +59,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
       {path:"novi-zaposlenik", component:NoviZaposlenikComponent, canActivate:[AutorizacijaAdminProvjera]},
       {path:"edit-zaposlenik/:id", component:EditZaposlenikComponent, canActivate:[AutorizacijaAdminProvjera]},
       {path:"omiljene-stavke", component:OmiljenjeStavkeComponent, canActivate:[AutorizacijaKorisnikProvjera]},
+      {path:"poslovnica", component:PoslovnicaComponent, canActivate:[AutorizacijaAdminProvjera]},
       {path:"login", component:LoginComponent},
       {path:"registracija", component:RegistracijaComponent}
     ],{
