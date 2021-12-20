@@ -1,15 +1,15 @@
 <header class="py-5 bg-image-full" style="background-image: url('/assets/img/cover/nova-stavka.jpg')">
   <div class="text-center my-5">
     <div class="text-center text-white">
-      <h1 class="display-4 fw-bolder">Uređivanje zaposlenika</h1>
+      <h1 class="display-4 fw-bolder">Evidencija novog dostavljača</h1>
     </div>
   </div>
 </header>
 <!-- Product section-->
-<section class="py-5 bg-light" *ngIf="urediZaposlenik!=null">
+<section class="py-5 bg-light">
   <div class="container px-4 px-lg-5 my-5 mt-2">
     <div style="text-align: left">
-      <button class="btn btn-outline-dark flex-shrink-0 mb-2" type="button" routerLink="/zaposlenik">
+      <button class="btn btn-outline-dark flex-shrink-0 mb-2" type="button" routerLink="/dostavljac">
         <i class="bi bi-arrow-bar-left"></i>
         Nazad
       </button>
@@ -22,44 +22,44 @@
         </div>
       </div>
       <div class="col-md-6">
-        <div class="small mb-1">Unesite nove podatke  zaposleniku</div>
-        <h3 class="display-5 fw-bolder">Uredi</h3>
+        <div class="small mb-1">Unesite podatke o novom dostavljaču</div>
+        <h3 class="display-5 fw-bolder">Novi dostavljač</h3>
         <div class="fs-6 mb-5">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Ime</span>
             </div>
-            <input type="text" class="form-control" [(ngModel)]="urediZaposlenik.ime">
+            <input type="text" class="form-control" [(ngModel)]="noviDostavljac.ime">
           </div>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Prezime</span>
             </div>
-            <input type="text" class="form-control" [(ngModel)]="urediZaposlenik.prezime">
+            <input type="text" class="form-control" [(ngModel)]="noviDostavljac.prezime">
           </div>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Email</span>
             </div>
-            <input type="text" class="form-control" [(ngModel)]="urediZaposlenik.email">
+            <input type="text" class="form-control" [(ngModel)]="noviDostavljac.email">
           </div>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Korisnicko ime</span>
             </div>
-            <input type="text" class="form-control" [(ngModel)]="urediZaposlenik.username">
+            <input type="text" class="form-control" [(ngModel)]="noviDostavljac.username">
           </div>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Lozinka</span>
             </div>
-            <input type="text" class="form-control" [(ngModel)]="urediZaposlenik.password">
+            <input type="text" class="form-control" [(ngModel)]="noviDostavljac.password">
           </div>
 
           <div class="d-flex">
             <button class="btn btn-outline-dark flex-shrink-0" type="button" (click)="posaljiPodatke()">
-              <i class="bi bi-archive-fill"></i>
-              Ažuriraj podatke
+              <i class="bi bi-plus-circle-fill"></i>
+              Dodaj dostavljača
             </button>
           </div>
         </div>

@@ -22,6 +22,8 @@ import { AutorizacijaAdminProvjera } from "./guards/autorizacija-admin-provjera.
 import { AutorizacijaKorisnikProvjera } from "./guards/autorizacija-korisnik-provjera.service";
 import { GoogleMapsModule } from '@angular/google-maps';
 import { PoslovnicaComponent } from './poslovnica/poslovnica.component';
+import { DostavljacComponent } from './dostavljac/dostavljac.component';
+import { NoviDostavljacComponent } from './dostavljac/novi-dostavljac/novi-dostavljac.component';
 
 
 @NgModule({
@@ -42,6 +44,8 @@ import { PoslovnicaComponent } from './poslovnica/poslovnica.component';
     EditZaposlenikComponent,
     OmiljenjeStavkeComponent,
     PoslovnicaComponent,
+    DostavljacComponent,
+    NoviDostavljacComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,7 +65,9 @@ import { PoslovnicaComponent } from './poslovnica/poslovnica.component';
       {path:"omiljene-stavke", component:OmiljenjeStavkeComponent, canActivate:[AutorizacijaKorisnikProvjera]},
       {path:"poslovnica", component:PoslovnicaComponent, canActivate:[AutorizacijaAdminProvjera]},
       {path:"login", component:LoginComponent},
-      {path:"registracija", component:RegistracijaComponent}
+      {path:"registracija", component:RegistracijaComponent},
+      {path:"dostavljac",component:DostavljacComponent,canActivate:[AutorizacijaAdminProvjera]},
+      {path:"novi-dostavljac", component:NoviDostavljacComponent, canActivate:[AutorizacijaAdminProvjera]}
     ],{
       anchorScrolling : 'enabled',
       scrollPositionRestoration : 'enabled',

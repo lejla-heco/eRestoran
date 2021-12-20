@@ -14,7 +14,7 @@ export class ZaposlenikComponent implements OnInit {
   zaposlenici : Zaposlenik[] = null;
   odabraniZaposlenik: Zaposlenik = null;//brisanje
   obrisan:boolean=false;
-  id : number = null;//edit?
+  id : number = null;//edit
   constructor(private httpKlijent:HttpClient,private router : Router) { }
 
   ngOnInit(): void {

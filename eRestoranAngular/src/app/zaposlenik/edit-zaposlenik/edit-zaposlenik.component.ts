@@ -20,6 +20,7 @@ export class EditZaposlenikComponent implements OnInit {
       this.id = +params['id'];
     });
     this.dohvatiZaposlenika();
+
   }
   generisiPreview() {
     // @ts-ignore
