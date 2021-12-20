@@ -18,12 +18,14 @@ export class NarudzbaComponent implements OnInit {
   updateKolicina : NovaKolicina = new NovaKolicina();
   kuponi : Kupon[] = null;
   odabraniKupon : Kupon = new Kupon();
+  zakljuciNarudzbu : boolean = false;
 
   constructor(private httpKlijent : HttpClient) {
   }
 
   ngOnInit(): void {
     this.ucitajNarudzbu();
+    this.ucitajKupone();
   }
 
   private ucitajNarudzbu() {
@@ -67,13 +69,24 @@ export class NarudzbaComponent implements OnInit {
 
   private ukloniOmiljeno(narudzba: Narudzba) {
     this.httpKlijent.get(MyConfig.adresaServera + "/Narudzba/UkloniOmiljenu/" + narudzba.id, MyConfig.httpOpcije()).subscribe((response : any)=>{
-      alert("Uklonjena narudzba iz omiljenih");
+
     });
   }
 
   private dodajOmiljeno(narudzba: Narudzba){
     this.httpKlijent.get(MyConfig.adresaServera + "/Narudzba/OmiljenaNarudzba/" + narudzba.id, MyConfig.httpOpcije()).subscribe((response : any)=>{
-      alert("Omiljena narudzba");
+
     });
+  }
+
+  private ucitajKupone() {
+    this.httpKlijent.get(MyConfig.adresaServera + "/Kupon/GetAll", MyConfig.httpOpcije()).subscribe((response : any)=>{
+      this.kuponi = response;
+    })
+  }
+
+  zatvoriModal() {
+    this.zakljuciNarudzbu = false;
+    this.odabraniKupon.id = 0;
   }
 }

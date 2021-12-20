@@ -1,5 +1,5 @@
 export class Kupon{
-  id : number;
+  id : number = 0;
   kod : string;
   popust : number;
 }

@@ -54,5 +54,23 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
 
             return Ok(kupon);   
         }
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            if (!HttpContext.GetLoginInfo().isPermisijaKorisnik)
+                return BadRequest("nije logiran");
+
+            int id = HttpContext.GetLoginInfo().korisnickiNalog.Korisnik.ID;
+
+            List<Kupon> kuponi = _dbContext.KorisnikKupon.Where(kk => kk.KorisnikID == id && !kk.Iskoristen).Select(kk => new Kupon()
+            {
+                ID = kk.KuponID,
+                Kod = kk.Kupon.Kod,
+                Popust = kk.Kupon.Popust
+            }).ToList();
+
+            return Ok(kuponi);
+        }
     }
 }

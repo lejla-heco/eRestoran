@@ -46,25 +46,54 @@
     </div>
   </div>
   <div *ngIf ="narudzba.cijena != 0" class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-    <div class="col-sm text-center">
-      <div class="mb-2"><b>Moji kuponi:</b></div>
-      <select *ngIf = "kuponi != null"  class="form-control mb-3" [(ngModel)]="odabraniKupon.id"  [ngModelOptions]="{standalone: true}">
-        <option *ngFor = "let kupon of kuponi" [value]=kupon.id>{{kupon.kod}} | {{kupon.popust}} % popusta</option>
-      </select>
-      <div *ngIf = "kuponi == null" class="mb-2">Trenutno nemate dostupnih kupona</div>
-    </div>
-    <div class="col-sm text-center">
+    <div class="text-center">
     <div class="mb-2"><b>Cijena narudžbe: {{narudzba.cijena}} KM</b></div>
-    <button class="btn btn-outline-dark">
+    <button class="btn btn-outline-dark" (click)="zakljuciNarudzbu = true">
       <i class="bi bi-check-circle-fill"></i>
       Zaključi narudžbu
     </button>
     </div>
-    <div class="col-sm text-center mt-3">
-      <i class="omiljeno bi bi-heart-fill" [ngClass]="narudzba.omiljeno? 'crveno' : 'crno'" (click)="upravljajOmiljenomNarudzbom(narudzba)">
-      <i *ngIf="narudzba.omiljeno" style="font-size:medium"> Omiljena narudžba</i>
-      <i *ngIf="!narudzba.omiljeno" style="font-size:medium"> Dodajte narudžbu u omiljene?</i>
-      </i>
-    </div>
   </div>
 </section>
+
+
+<div *ngIf="zakljuciNarudzbu" class="animate__animated animate__fadeInDownBig portfolio-modal modal" id="portfolioModal" tabindex="-1" aria-labelledby="portfolioModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" aria-label="Close" (click)="zatvoriModal()"></button>
+      </div>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <div class="modal-body">
+
+              <h2 class="text-uppercase">Zaključi narudžbu</h2>
+              <p class="item-intro text-muted">Ispunite dodatne podatke o narudžbi</p>
+              <div class="text-center">
+                <h3 class="my-3"><b>Moji kuponi:</b></h3>
+                <select *ngIf = "kuponi != null && kuponi.length != 0"  class="form-control mb-3 text-center" [(ngModel)]="odabraniKupon.id"  [ngModelOptions]="{standalone: true}">
+                  <option *ngFor = "let kupon of kuponi" [value]=kupon.id>{{kupon.kod}}  -  {{kupon.popust}} % popusta</option>
+                </select>
+                <div *ngIf = "kuponi == null || kuponi.length == 0" class="mb-2">Trenutno nemate dostupnih kupona</div>
+              </div>
+              <div *ngIf="odabraniKupon.id != 0">
+                <b>Cijena narudžbe sa popustom iznosi: </b>
+              </div>
+              <div class="text-center my-4">
+                <i class="omiljeno bi bi-heart-fill" style="font-size:40px;" [ngClass]="narudzba.omiljeno? 'crveno' : 'crno'" (click)="upravljajOmiljenomNarudzbom(narudzba)">
+                </i>
+                <div *ngIf="narudzba.omiljeno" style="font-size:medium"> Omiljena narudžba</div>
+                <div *ngIf="!narudzba.omiljeno" style="font-size:medium"> Dodaj narudžbu u omiljene?</div>
+              </div>
+              <button class="btn btn-outline-dark">
+                <i class="bi bi-check-circle-fill"></i>
+                Zaključi narudžbu
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

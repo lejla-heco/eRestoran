@@ -77,7 +77,7 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
             int id = HttpContext.GetLoginInfo().korisnickiNalog.Korisnik.ID;
 
             Narudzba narudzba = _dbContext.Narudzba.Where(n => n.KorisnikID == id && n.Zakljucena == false).FirstOrDefault();
-            if (narudzba == null) return null;
+            if (narudzba == null) return Ok(new Narudzba());
 
             NarudzbaGetNarudzbaVM getNarudzbaVM = new NarudzbaGetNarudzbaVM()
             {
