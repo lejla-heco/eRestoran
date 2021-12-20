@@ -78,7 +78,7 @@
                 <div *ngIf = "kuponi == null || kuponi.length == 0" class="mb-2">Trenutno nemate dostupnih kupona</div>
               </div>
               <div *ngIf="odabraniKupon.id != 0">
-                <b>Cijena narudžbe sa popustom iznosi: </b>
+                <b id="cijenaPopust"></b>
               </div>
               <div class="text-center my-4">
                 <i class="omiljeno bi bi-heart-fill" style="font-size:40px;" [ngClass]="narudzba.omiljeno? 'crveno' : 'crno'" (click)="upravljajOmiljenomNarudzbom(narudzba)">

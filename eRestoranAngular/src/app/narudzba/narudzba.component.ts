@@ -91,6 +91,8 @@ export class NarudzbaComponent implements OnInit {
   }
 
   posaljiKupon() {
-    
+    this.httpKlijent.get(MyConfig.adresaServera + "/Kupon/PrimijeniKupon/" + this.odabraniKupon.id, MyConfig.httpOpcije()).subscribe((response : any)=>{
+      document.getElementById("cijenaPopust").innerHTML = "Cijena narudžbe sa popustom iznosi: " + response + " KM";
+    })
   }
 }
