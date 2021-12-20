@@ -33,4 +33,12 @@ export class DostavljacComponent implements OnInit {
   prikazi_brisanje(odabrani: Dostavljac) {
     this.odabraniDostavljac=odabrani;
   }
+
+  obrisi(dostavljac: Dostavljac) {
+    this.httpKlijent.post("https://localhost:44325"+"/Dostavljac/Delete/"+dostavljac.id, dostavljac).subscribe((x:any)=>{
+      alert("Dostavljac "+ dostavljac.ime+dostavljac.prezime+ " je uspješno obrisan");
+      this.obrisan=true;
+      this.ucitajDostavljace();
+    });
+  }
 }

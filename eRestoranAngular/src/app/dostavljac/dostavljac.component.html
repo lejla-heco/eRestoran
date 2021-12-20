@@ -63,7 +63,7 @@
 
               <p>{{odabraniDostavljac.korisnickoIme}}</p>
               <p style="font-size: larger ">Da li ste sigurni da želite obrisati odabranog dostavljača?</p>
-              <button class="btn btn-danger  text-uppercase">
+              <button class="btn btn-danger  text-uppercase" (click)="obrisi(odabraniDostavljac)">
                 <i class="bi bi-trash"></i>
                 Obriši
               </button>
