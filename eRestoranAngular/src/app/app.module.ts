@@ -24,6 +24,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { PoslovnicaComponent } from './poslovnica/poslovnica.component';
 import { DostavljacComponent } from './dostavljac/dostavljac.component';
 import { NoviDostavljacComponent } from './dostavljac/novi-dostavljac/novi-dostavljac.component';
+import { EditDostavljacComponent } from './dostavljac/edit-dostavljac/edit-dostavljac.component';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import { NoviDostavljacComponent } from './dostavljac/novi-dostavljac/novi-dosta
     PoslovnicaComponent,
     DostavljacComponent,
     NoviDostavljacComponent,
+    EditDostavljacComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,7 +69,8 @@ import { NoviDostavljacComponent } from './dostavljac/novi-dostavljac/novi-dosta
       {path:"login", component:LoginComponent},
       {path:"registracija", component:RegistracijaComponent},
       {path:"dostavljac",component:DostavljacComponent,canActivate:[AutorizacijaAdminProvjera]},
-      {path:"novi-dostavljac", component:NoviDostavljacComponent, canActivate:[AutorizacijaAdminProvjera]}
+      {path:"novi-dostavljac", component:NoviDostavljacComponent, canActivate:[AutorizacijaAdminProvjera]},
+      {path:"edit-dostavljac/:id", component:EditDostavljacComponent, canActivate:[AutorizacijaAdminProvjera]}
     ],{
       anchorScrolling : 'enabled',
       scrollPositionRestoration : 'enabled',

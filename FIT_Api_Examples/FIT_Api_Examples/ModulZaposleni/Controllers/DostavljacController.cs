@@ -70,5 +70,25 @@ namespace FIT_Api_Examples.ModulZaposleni.Controllers
         {
             return _dbContext.Dostavljac.ToList();
         }
+        [HttpGet("{id}")]
+        public DostavljacUpdateVM GetById(int id)
+        {
+            Dostavljac dostavljac = _dbContext.Dostavljac.Find(id);
+            if (dostavljac != null)
+            {
+                DostavljacUpdateVM odabraniDostavljac = new DostavljacUpdateVM()
+                {
+                    id = dostavljac.ID,
+                    ime = dostavljac.Ime,
+                    prezime = dostavljac.Prezime,
+                    email = dostavljac.Email,
+                    username = dostavljac.KorisnickoIme,
+                    password = dostavljac.Lozinka,
+                    slika = dostavljac.Slika
+                };
+                return odabraniDostavljac;
+            }
+            return null;
+        }
     }
 }

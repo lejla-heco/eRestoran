@@ -25,4 +25,8 @@ export class DostavljacComponent implements OnInit {
       this.dostavljaci = result;
     })
   }
+
+  posaljiPodatke(id:number) {
+    this.router.navigate(['/edit-dostavljac', id]);
+  }
 }
