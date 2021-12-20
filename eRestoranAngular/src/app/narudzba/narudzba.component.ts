@@ -89,4 +89,8 @@ export class NarudzbaComponent implements OnInit {
     this.zakljuciNarudzbu = false;
     this.odabraniKupon.id = 0;
   }
+
+  posaljiKupon() {
+    
+  }
 }

@@ -72,7 +72,7 @@
               <p class="item-intro text-muted">Ispunite dodatne podatke o narudžbi</p>
               <div class="text-center">
                 <h3 class="my-3"><b>Moji kuponi:</b></h3>
-                <select *ngIf = "kuponi != null && kuponi.length != 0"  class="form-control mb-3 text-center" [(ngModel)]="odabraniKupon.id"  [ngModelOptions]="{standalone: true}">
+                <select *ngIf = "kuponi != null && kuponi.length != 0"  class="form-control mb-3 text-center" [(ngModel)]="odabraniKupon.id"  [ngModelOptions]="{standalone: true}" (change)="posaljiKupon()">
                   <option *ngFor = "let kupon of kuponi" [value]=kupon.id>{{kupon.kod}}  -  {{kupon.popust}} % popusta</option>
                 </select>
                 <div *ngIf = "kuponi == null || kuponi.length == 0" class="mb-2">Trenutno nemate dostupnih kupona</div>
