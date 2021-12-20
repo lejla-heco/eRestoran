@@ -35,7 +35,7 @@
 
 
               <i  class="bi bi-pencil-square"  style="margin-left: 10px" (click)="posaljiPodatke(dostavljac.id) " > </i>
-              <i  class="bi bi-trash"  style="margin-left: 10px"></i>
+              <i  class="bi bi-trash"  style="margin-left: 10px" (click)="prikazi_brisanje(dostavljac)"></i>
 
             </div>
           </div>
@@ -46,3 +46,31 @@
 </section>
 
 
+<!-- Modal za brisanje zaposlenika-->
+<div *ngIf="odabraniDostavljac != null && obrisan==false" class="animate__animated animate__fadeIn portfolio-modal modal" id="portfolioModal" tabindex="-1" aria-labelledby="portfolioModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" aria-label="Close" (click)="odabraniDostavljac = null"></button>
+      </div>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <div class="modal-body">
+              <!-- Project details-->
+              <h3 class="text-uppercase">{{odabraniDostavljac.ime}} {{odabraniDostavljac.prezime}}</h3>
+              <p class="item-intro text-muted"></p>
+
+              <p>{{odabraniDostavljac.korisnickoIme}}</p>
+              <p style="font-size: larger ">Da li ste sigurni da želite obrisati odabranog dostavljača?</p>
+              <button class="btn btn-danger  text-uppercase">
+                <i class="bi bi-trash"></i>
+                Obriši
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
