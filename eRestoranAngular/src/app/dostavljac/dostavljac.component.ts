@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Zaposlenik} from "../zaposlenik/view-models/zaposlenik-vm";
 import {Dostavljac} from "./view-models/dostavljac-vm";
+import {HttpClient} from "@angular/common/http";
+import {Router} from "@angular/router";
+import {MyConfig} from "../my-config";
 
 @Component({
   selector: 'app-dostavljac',
@@ -12,9 +15,14 @@ export class DostavljacComponent implements OnInit {
   odabraniDostavljac: Dostavljac = null;//brisanje
   obrisan:boolean=false;
   id : number = null;//edit
-  constructor() { }
+  constructor(private httpKlijent:HttpClient,private router : Router) { }
 
   ngOnInit(): void {
+    this.ucitajDostavljace();
   }
-
+  public ucitajDostavljace() {
+    this.httpKlijent.get("https://localhost:44325/Dostavljac/GetAll").subscribe((result : any)=>{
+      this.dostavljaci = result;
+    })
+  }
 }

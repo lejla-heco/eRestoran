@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NoviDostavljac} from "../view-models/novi-dostavljac-vm";
 import {MyConfig} from "../../my-config";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-novi-dostavljac',
@@ -9,7 +10,7 @@ import {MyConfig} from "../../my-config";
 })
 export class NoviDostavljacComponent implements OnInit {
 noviDostavljac:NoviDostavljac= new NoviDostavljac();
-  constructor() { }
+  constructor(private httpKlijent: HttpClient) { }
 
   ngOnInit(): void {
   }
@@ -29,6 +30,27 @@ noviDostavljac:NoviDostavljac= new NoviDostavljac();
   posaljiPodatke() {
 
 
+    // @ts-ignore
+    var file = document.getElementById("fajl-input").files[0];
+    var data = new FormData();
+
+    data.append("slikaDostavljaca", file);
+    this.httpKlijent.post("https://localhost:44325" + "/Dostavljac/Add", this.noviDostavljac).subscribe((result : any)=>{
+      this.httpKlijent.post("https://localhost:44325" + "/Dostavljac/AddSlika/" + result, data).subscribe((result:any)=>{
+        alert("Uspjesno dodan novi dostavljač");
+        this.ocistiFormu();
+      });
+    });
+
+  }
+  ocistiFormu(){
+    this.noviDostavljac.ime = null;
+    this.noviDostavljac.prezime = null;
+    this.noviDostavljac.email = null;
+    this.noviDostavljac.username = null;
+    this.noviDostavljac.password = null;
+
+    document.getElementById("preview-slika").setAttribute("src","");
   }
 
 }
