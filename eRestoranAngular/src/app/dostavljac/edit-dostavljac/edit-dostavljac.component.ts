@@ -42,4 +42,19 @@ export class EditDostavljacComponent implements OnInit {
     }
   }
 
+  //MyConfig.adresaServera
+    posaljiPodatke() {
+  // @ts-ignore
+  var file = document.getElementById("fajl-input").files[0];
+
+  var data = new FormData();
+  data.append("slikaZaposlenika", file);
+  this.httpKlijent.post("https://localhost:44325" + "/Dostavljac/Update/"+ this.id, this.urediDostavljac).subscribe((result :any)=>{
+  this.httpKlijent.post("https://localhost:44325" + "/Dostavljac/AddSlika/" + result, data).subscribe((result: any)=>{
+  alert("Uspješno uređen dostavljač "+ this.urediDostavljac.ime+" "+this.urediDostavljac.prezime);
+  this.router.navigate(['/dostavljac']);
+});
+});
+
+}
 }

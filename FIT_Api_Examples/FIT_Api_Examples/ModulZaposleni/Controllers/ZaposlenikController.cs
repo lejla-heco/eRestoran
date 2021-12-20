@@ -132,7 +132,6 @@ namespace FIT_Api_Examples.ModulZaposleni.Controllers
             zaposlenik.KorisnickoIme = zaposlenikUpdateVM.username.RemoveTags();
             zaposlenik.Lozinka = zaposlenikUpdateVM.password.RemoveTags();
            
-            //Console.WriteLine(5);
             _dbContext.SaveChanges();
             return Ok(zaposlenik.ID);
         }

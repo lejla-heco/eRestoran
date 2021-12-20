@@ -90,5 +90,24 @@ namespace FIT_Api_Examples.ModulZaposleni.Controllers
             }
             return null;
         }
+        [HttpPost("{id}")]
+        public ActionResult Update(int id, [FromBody] DostavljacUpdateVM dostavljacUpdateVM)
+        {
+
+            Dostavljac dostavljac = _dbContext.Dostavljac.Find(id);
+
+            if (dostavljac == null)
+                return BadRequest("pogresan ID");
+
+            dostavljac.Ime = dostavljacUpdateVM.ime.RemoveTags();
+            dostavljac.Prezime = dostavljacUpdateVM.prezime.RemoveTags();
+            dostavljac.Email = dostavljacUpdateVM.email.RemoveTags();
+            dostavljac.KorisnickoIme = dostavljacUpdateVM.username.RemoveTags();
+            dostavljac.Lozinka = dostavljacUpdateVM.password.RemoveTags();
+
+            
+            _dbContext.SaveChanges();
+            return Ok(dostavljac.ID);
+        }
     }
 }
