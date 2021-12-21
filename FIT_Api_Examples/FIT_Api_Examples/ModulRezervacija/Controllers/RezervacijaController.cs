@@ -61,6 +61,7 @@ namespace FIT_Api_Examples.ModulRezervacija.Controllers
             List<RezervacijaGetAllVM> rezervacije = _dbContext.Rezervacija
                                           .Select(z => new RezervacijaGetAllVM()
                                           {
+                                              id=z.ID,
                                               brojOsoba=z.BrojOsoba,
                                               brojStolova=z.BrojStolova,
                                               datumRezerviranja=z.DatumRezerviranja,
@@ -72,6 +73,19 @@ namespace FIT_Api_Examples.ModulRezervacija.Controllers
 
                                           }).ToList();
             return rezervacije;
+        }
+        [HttpPost("{id}")]
+        public ActionResult Delete(int id)
+        {
+            Rezervacija rezervacija = _dbContext.Rezervacija.Find(id);
+
+            if (rezervacija == null)
+                return BadRequest("pogresan ID");
+
+            _dbContext.Remove(rezervacija);
+
+            _dbContext.SaveChanges();
+            return Ok(rezervacija);
         }
     }
 }

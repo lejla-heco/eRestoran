@@ -1,5 +1,6 @@
 export  class Rezervacija{
 
+  id:number;
   brojOsoba:number;
   brojStolova:number;
   poruka:string;

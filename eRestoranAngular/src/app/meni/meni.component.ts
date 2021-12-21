@@ -22,7 +22,7 @@ export class MeniComponent implements OnInit {
   meniGrupe : MeniGrupa[] = null;
   novaStavkaNarudzbe : StavkaNarudzbe = new StavkaNarudzbe();
   id : number = null;
-  obrisana:boolean=false;
+
   loginInformacije : LoginInformacije = null;
   odabranaStavkaMenija: MeniStavka = null;
   ocijenjenaStavkaMenija:MeniStavkaKorisnik=new MeniStavkaKorisnik();
@@ -46,6 +46,7 @@ export class MeniComponent implements OnInit {
     this.trenutnaKategorija = kategorija;
     this.httpKlijent.get(MyConfig.adresaServera + "/Meni/GetAllPaged?nazivKategorije=" + kategorija).subscribe((result : any)=>{
       this.meniStavke = result;
+      this.odabranaStavkaMenija=null;
     })
   }
 
@@ -83,7 +84,6 @@ export class MeniComponent implements OnInit {
   brisanje(s :MeniStavka) {
   this.httpKlijent.post(MyConfig.adresaServera+"/Meni/Delete/"+s.id, s).subscribe((x:any)=>{
     alert("Stavka "+ s.naziv+ " je uspješno obrisana");
-    this.obrisana=true;
     this.ucitajMeniStavke(s.nazivGrupe);
   });
 

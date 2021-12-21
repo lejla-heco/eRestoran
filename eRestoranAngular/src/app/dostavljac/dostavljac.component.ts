@@ -13,7 +13,7 @@ import {MyConfig} from "../my-config";
 export class DostavljacComponent implements OnInit {
   dostavljaci : Dostavljac[] = null;
   odabraniDostavljac: Dostavljac = null;//brisanje
-  obrisan:boolean=false;
+
   id : number = null;//edit
   constructor(private httpKlijent:HttpClient,private router : Router) { }
 
@@ -23,6 +23,7 @@ export class DostavljacComponent implements OnInit {
   public ucitajDostavljace() {
     this.httpKlijent.get("https://localhost:44325/Dostavljac/GetAll").subscribe((result : any)=>{
       this.dostavljaci = result;
+      this.odabraniDostavljac=null;
     })
   }
 
@@ -37,7 +38,7 @@ export class DostavljacComponent implements OnInit {
   obrisi(dostavljac: Dostavljac) {
     this.httpKlijent.post("https://localhost:44325"+"/Dostavljac/Delete/"+dostavljac.id, dostavljac).subscribe((x:any)=>{
       alert("Dostavljac "+ dostavljac.ime+dostavljac.prezime+ " je uspješno obrisan");
-      this.obrisan=true;
+
       this.ucitajDostavljace();
     });
   }

@@ -15,7 +15,7 @@ export class PregledRezervacijaComponent implements OnInit {
   rezervacije : Rezervacija[] = null;
 
   odabranaRezervacija: Rezervacija = null;//brisanje
-  obrisana:boolean=false;
+  //obrisana:boolean=false;
   constructor(private httpKlijent:HttpClient) { }
 
   ngOnInit(): void {
@@ -23,17 +23,27 @@ export class PregledRezervacijaComponent implements OnInit {
     this.ucitajRezervacije();
 
 
+
   }
 
   public ucitajRezervacije() {
     this.httpKlijent.get("https://localhost:44325/Rezervacija/GetAll").subscribe((result : any)=>{
       this.rezervacije = result;
-
+      this.odabranaRezervacija=null;
     });
   }
 
 
   prikaziBrisanje(rezervacija: Rezervacija) {
     this.odabranaRezervacija=rezervacija;
+  }
+
+  brisanje(rezervacija: Rezervacija) {
+
+      this.httpKlijent.post("https://localhost:44325"+"/Rezervacija/Delete/"+rezervacija.id, rezervacija).subscribe((x:any)=>{
+        alert("Odabrana rezervacija je uspješno otkazana");
+        this.ucitajRezervacije();
+      });
+
   }
 }

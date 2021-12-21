@@ -13,7 +13,7 @@ import {Router} from "@angular/router";
 export class ZaposlenikComponent implements OnInit {
   zaposlenici : Zaposlenik[] = null;
   odabraniZaposlenik: Zaposlenik = null;//brisanje
-  obrisan:boolean=false;
+
   id : number = null;//edit
   constructor(private httpKlijent:HttpClient,private router : Router) { }
 
@@ -23,6 +23,7 @@ export class ZaposlenikComponent implements OnInit {
   public ucitajZaposlenike() {
     this.httpKlijent.get(MyConfig.adresaServera+"/Zaposlenik/GetAll").subscribe((result : any)=>{
       this.zaposlenici = result;
+      this.odabraniZaposlenik=null;
     })
   }
 
@@ -33,7 +34,7 @@ export class ZaposlenikComponent implements OnInit {
   brisanje(zaposlenik: Zaposlenik) {
     this.httpKlijent.post(MyConfig.adresaServera+"/Zaposlenik/Delete/"+zaposlenik.id, zaposlenik).subscribe((x:any)=>{
       alert("Zaposlenik "+ zaposlenik.ime+zaposlenik.prezime+ " je uspješno obrisan");
-      this.obrisan=true;
+
       this.ucitajZaposlenike();
     });
   }
