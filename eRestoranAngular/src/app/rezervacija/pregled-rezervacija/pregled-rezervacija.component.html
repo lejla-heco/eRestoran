@@ -19,30 +19,6 @@
                 <form>
 
                   <h3 class="display-6 fw-bolder">Pregled rezervacija</h3>
-                  <!--<div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">Broj osoba</span>
-                    </div>
-                    <input type="number"  min="1" class="form-control" [(ngModel)]="rezervacija.brojOsoba" [ngModelOptions]="{standalone: true}" >
-                  </div>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">Broj stolova</span>
-                    </div>
-                    <input type="number"  min="1" class="form-control"  [(ngModel)]="rezervacija.brojStolova" [ngModelOptions]="{standalone: true}" >
-                  </div>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">Poruka</span>
-                    </div>
-                    <input type="text" class="form-control" [(ngModel)]="rezervacija.poruka" [ngModelOptions]="{standalone: true}">
-                  </div>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">Datum rezervacije</span>
-                    </div>
-                    <input type="date" class="form-control" [(ngModel)]="rezervacija.datumRezerviranja" [ngModelOptions]="{standalone: true}">
-                  </div>-->
 
 
                   <div  *ngFor="let rezervacija of rezervacije;let i=index"class="animate__animated animate__fadeIn col mb-5"><!--*ngFor="let stavka of meniStavke"-->
@@ -61,7 +37,7 @@
                           <p *ngIf="rezervacija.poruka!=null" class="text-black">Poruka: {{rezervacija.poruka}}</p>
 
 
-                          <button class="btn btn-dark flex-shrink-0"><i  class="bi bi-trash"  ></i> Otkaži rezervaciju</button>
+                          <button class="btn btn-dark flex-shrink-0"(click)="prikaziBrisanje(rezervacija)"  ><i  class="bi bi-trash" ></i> Otkaži rezervaciju</button>
 
 
 
@@ -79,4 +55,36 @@
     </div>
   </div>
 </header>
+
+<!-- Modal za brisanje rezervacije-->
+<div *ngIf="this.odabranaRezervacija!= null" class="animate__animated animate__fadeIn portfolio-modal modal" id="portfolioModal" tabindex="-1" aria-labelledby="portfolioModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" aria-label="Close" (click)="this.odabranaRezervacija = null"></button>
+      </div>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <div class="modal-body">
+              <!-- Project details-->
+              <h3 class="text-uppercase">Rezervacija na dan </h3>
+              <h4>{{odabranaRezervacija.datumRezerviranja}}</h4>
+              <p class="item-intro text-muted"></p>
+
+              <p style="font-style: italic">Broj osoba: {{odabranaRezervacija.brojOsoba}}</p>
+              <p style="font-style: italic">Broj stolova: {{odabranaRezervacija.brojStolova}}</p>
+              <p style="font-style: italic">Prigoda: {{odabranaRezervacija.nazivPrigode}}</p>
+              <p style="font-size: larger ">Da li ste sigurni da želite otkazati odabranu rezervaciju?</p>
+              <button class="btn btn-danger  text-uppercase"  >
+                <i class="bi bi-trash"></i>
+                Obriši
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 

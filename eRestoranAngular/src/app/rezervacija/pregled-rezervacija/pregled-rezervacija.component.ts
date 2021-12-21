@@ -14,7 +14,8 @@ export class PregledRezervacijaComponent implements OnInit {
 
   rezervacije : Rezervacija[] = null;
 
-
+  odabranaRezervacija: Rezervacija = null;//brisanje
+  obrisana:boolean=false;
   constructor(private httpKlijent:HttpClient) { }
 
   ngOnInit(): void {
@@ -32,4 +33,7 @@ export class PregledRezervacijaComponent implements OnInit {
   }
 
 
+  prikaziBrisanje(rezervacija: Rezervacija) {
+    this.odabranaRezervacija=rezervacija;
+  }
 }
