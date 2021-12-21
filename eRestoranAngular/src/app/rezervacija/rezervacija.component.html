@@ -1,0 +1,61 @@
+<header class="masthead" style="padding-top: 8rem;">
+  <div class="container">
+    <div class="row d-flex justify-content-center align-items-center">
+      <div class="animate__animated animate__fadeIn col col-xl-6">
+        <div class="card" style="border: none">
+          <div class="row g-0">
+            <div class="col d-flex align-items-center">
+              <div class="card-body p-4 p-lg-5 text-black">
+                <form>
+
+                  <h3 class="display-6 fw-bolder">Nova rezervacija</h3>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Broj osoba</span>
+                    </div>
+                    <input type="number" class="form-control" >
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Broj stolova</span>
+                    </div>
+                    <input type="number" class="form-control"  >
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Poruka</span>
+                    </div>
+                    <input type="text" class="form-control" >
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Datum rezervacije</span>
+                    </div>
+                    <input type="date" class="form-control" >
+                  </div>
+
+
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Prigoda</span>
+                    </div>
+                    <select class="form-control mb-3"   >
+                    <option *ngFor = "let prigoda of prigode" [value]=prigoda.id>{{prigoda.naziv}}</option>
+                    </select>
+                  </div>
+
+
+
+                  <button class="btn btn-dark flex-shrink-0" > <i class="bi bi-person-plus-fill"></i>Rezerviši</button>
+
+
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+

@@ -79,7 +79,7 @@
 
               </div>
               <!--zvjezdice-->
-              <div class="App">
+              <!--<div class="App" >
 
                 <div (mouseenter)="prikaziOcjenjivanje(stavka)" class="flex-container">
 
@@ -90,7 +90,7 @@
                   </ng-container>
 
                 </div>
-              </div>
+              </div>-->
               <!-- Product price-->
               <span *ngIf="stavka.izdvojeno" class="text-muted text-decoration-line-through">{{stavka.cijena}} KM</span>
               <span *ngIf="stavka.izdvojeno"> {{stavka.snizenaCijena}} KM</span>
@@ -103,8 +103,36 @@
               <i class="bi bi-cart-plus-fill"></i>
               Dodaj u korpu</a>
             </div>
-            <i class="omiljeno bi bi-heart-fill" [ngClass]="stavka.omiljeno ? 'crveno' : 'crno'" (click)="upravljajOmiljenomStavkom(stavka)"></i>
-            <i class="bi bi-three-dots"  >    </i>
+            <!--<i class="omiljeno bi bi-heart-fill" [ngClass]="stavka.omiljeno ? 'crveno' : 'crno'" (click)="upravljajOmiljenomStavkom(stavka)"></i>-->
+
+<!--proba - zvjezdice-->
+
+
+            <div class="dropdown">
+              <i class="omiljeno bi bi-heart-fill" [ngClass]="stavka.omiljeno ? 'crveno' : 'crno'" (click)="upravljajOmiljenomStavkom(stavka)"></i>
+              <a style="text-decoration:none" role="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+               <!-- <i class="bi bi-three-dots"  >   </i>-->
+                Ocijeni
+
+              </a>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <div class="App" >
+
+                  <div (mouseenter)="prikaziOcjenjivanje(stavka)" class="flex-container">
+
+                    <ng-container  *ngFor="let star of stars">
+                      <app-star [odabranaId]="stavka.id" [odabrana]="ocijenjenaStavkaMenija" [starId]="star" [rating]="hoverState || rating" (enter)="enter($event)" (leave)="leave($event)"
+                                (bigClick)="updateRating(star)">
+                      </app-star>
+                    </ng-container>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
           </div>
         </div>
       </div>

@@ -33,6 +33,7 @@ namespace FIT_Api_Examples.Data
         public DbSet<StavkaNarudzbe> StavkaNarudzbe { get; set; }
         public DbSet<Prigoda> Prigoda { get; set; }
         public DbSet<Rezervacija> Rezervacija { get; set; }
+        public DbSet<StatusRezervacije> StatusRezervacije { get; set; }//dodano
         public DbSet<Dostavljac> Dostavljac { get; set; }
         public DbSet<Zaposlenik> Zaposlenik { get; set; }
         public DbSet<Administrator> Administrator { get; set; }

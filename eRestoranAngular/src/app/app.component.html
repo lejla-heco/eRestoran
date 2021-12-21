@@ -10,7 +10,7 @@
         <li class="nav-item"><a class="nav-link active" routerLink="home-page">Home</a></li>
         <li class="nav-item"><a class="nav-link" routerLink="meni">Meni</a></li>
         <li *ngIf="loginInformacije.isPermisijaKorisnik || loginInformacije.isPermisijaAdministrator" class="nav-item"><a class="nav-link" routerLink="posebna-ponuda">Posebna ponuda</a></li>
-        <li *ngIf="loginInformacije.isPermisijaKorisnik" class="nav-item"><a class="nav-link" href="#">Rezervacija</a></li>
+        <li *ngIf="loginInformacije.isPermisijaKorisnik" class="nav-item"><a class="nav-link" href="#"  routerLink="rezervacija">Rezervacija</a></li>
         <li *ngIf="loginInformacije.isPermisijaAdministrator" class="nav-item"><a class="nav-link" routerLink="kupon">Kuponi</a></li>
         <li *ngIf="loginInformacije.isPermisijaAdministrator" class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="navbarDropdownAdmin" role="button" data-bs-toggle="dropdown" aria-expanded="false">Osoblje</a>
