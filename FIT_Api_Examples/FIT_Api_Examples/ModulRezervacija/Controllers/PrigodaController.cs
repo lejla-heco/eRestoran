@@ -34,5 +34,16 @@ namespace FIT_Api_Examples.ModulRezervacija.Controllers
             _dbContext.SaveChanges();
             return Ok(novaPrigoda.ID);
         }
+        [HttpGet("{id}")]
+        public Prigoda GetById(int id)
+        {
+            Prigoda prigoda = _dbContext.Prigoda.Find(id);
+            if (prigoda != null)
+            {
+               
+                return prigoda;
+            }
+            return null;
+        }
     }
 }

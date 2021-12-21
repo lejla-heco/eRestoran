@@ -13,6 +13,7 @@ import {NovaRezervacija} from "./view-models/nova-rezervacija-vm";
 export class RezervacijaComponent implements OnInit {
   public prigode : Prigoda[] = null;
   rezervacija:NovaRezervacija= new NovaRezervacija();
+
   constructor(private httpKlijent:HttpClient) { }
 
   ngOnInit(): void {
@@ -22,6 +23,7 @@ export class RezervacijaComponent implements OnInit {
   private getAllPrigode() {
     this.httpKlijent.get("https://localhost:44325/Prigoda/GetAll", MyConfig.httpOpcije()).subscribe((result:any)=>{
       this.prigode = result;
+
     });
   }
 

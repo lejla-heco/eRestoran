@@ -34,6 +34,7 @@ namespace FIT_Api_Examples.ModulRezervacija.Controllers
             if (korisnik == null)
                 return BadRequest("Nemate ovlasti za trazenu akciju!");
             int statusid = _dbContext.StatusRezervacije.Where(s => s.Naziv == "Default").SingleOrDefault().ID;
+            
             Rezervacija novaRezervacija = new Rezervacija()
             {
 
@@ -44,7 +45,8 @@ namespace FIT_Api_Examples.ModulRezervacija.Controllers
                 BrojOsoba = rezervacijaAddVM.brojOsoba,
                 BrojStolova = rezervacijaAddVM.brojStolova,
                 Obavljena = false,
-                Poruka=rezervacijaAddVM.poruka
+                Poruka = rezervacijaAddVM.poruka,
+               
             };
 
             _dbContext.Rezervacija.Add(novaRezervacija);
@@ -57,5 +59,6 @@ namespace FIT_Api_Examples.ModulRezervacija.Controllers
         {
             return _dbContext.Rezervacija.ToList();
         }
+      
     }
 }

@@ -4,37 +4,22 @@
       <div class="animate__animated animate__fadeIn col col-xl-6">
 
         <div style="text-align: left">
-          <button class="btn btn-outline-light flex-shrink-0 mb-2" type="button" routerLink="/home-page">
+          <button class="btn btn-outline-light flex-shrink-0 mb-2" type="button" routerLink="/rezervacija">
             <i class="bi bi-arrow-bar-left"></i>
             Nazad
           </button>
-          <button style="margin-left: 350px" class="btn btn-outline-light flex-shrink-0 mb-2" type="button" routerLink="/pregled-rezervacija">
-            <i class="bi bi-arrow-bar-right"></i>
-            Pregled rezervacija
-          </button>
+
         </div>
 
-
-       <!-- <div style="text-align: right">
-          <button class="btn btn-outline-light flex-shrink-0 mb-2" type="button" routerLink="/home-page">
-            <i class="bi bi-arrow-bar-right"></i>
-            Pregled napravljenih rezervacija
-          </button>
-        </div>-->
         <div class="card" style="border: none">
           <div class="row g-0">
 
             <div class="col d-flex align-items-center">
               <div class="card-body p-4 p-lg-5 text-black">
                 <form>
-                <!--  <div style="text-align: left">
-                    <button class="btn btn-outline-dark flex-shrink-0 mb-2" type="button" routerLink="/home-page">
-                      <i class="bi bi-arrow-bar-left"></i>
-                      Nazad
-                    </button>
-                  </div>-->
-                  <h3 class="display-6 fw-bolder">Nova rezervacija</h3>
-                  <div class="input-group mb-3">
+
+                  <h3 class="display-6 fw-bolder">Pregled rezervacija</h3>
+                  <!--<div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Broj osoba</span>
                     </div>
@@ -57,23 +42,33 @@
                       <span class="input-group-text">Datum rezervacije</span>
                     </div>
                     <input type="date" class="form-control" [(ngModel)]="rezervacija.datumRezerviranja" [ngModelOptions]="{standalone: true}">
+                  </div>-->
+
+
+                  <div  *ngFor="let rezervacija of rezervacije;let i=index"class="animate__animated animate__fadeIn col mb-5"><!--*ngFor="let stavka of meniStavke"-->
+                    <div  (mousemove)="getPrigoda(rezervacija.prigodaID)" class="card h-100">
+
+                      <!-- Product details-->
+                      <div class="card-body p-3">
+                        <div class="text-center">
+                          <!-- Product name-->
+                          <h5 >Rezervacija {{i+1}}</h5>
+                          <p class="text-black">Broj osoba: {{rezervacija.brojOsoba}}</p>
+                          <p class="text-black">Broj stolova: {{rezervacija.brojStolova}}</p>
+                          <p class="text-black" > Prigoda : {{prigoda.naziv}}</p>
+                          <p class="text-black">Datum: {{rezervacija.datumRezerviranja}}</p>
+                          <p class="text-black">Poruka: {{rezervacija.poruka}}</p>
+
+
+                          <button class="btn btn-dark flex-shrink-0"><i  class="bi bi-trash"  ></i> Otkaži rezervaciju</button>
+
+
+
+                      </div>
+
+                      </div>
+                      </div>
                   </div>
-
-
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">Prigoda</span>
-                    </div>
-                    <select class="form-control mb-3"  [(ngModel)]="rezervacija.prigodaID" [ngModelOptions]="{standalone: true}" >
-                    <option *ngFor = "let prigoda of prigode" [value]=prigoda.id>{{prigoda.naziv}}</option>
-                    </select>
-                  </div>
-
-
-
-                  <button class="btn btn-dark flex-shrink-0" (click)="posaljiPodatke()">Rezerviši</button>
-
-
                 </form>
               </div>
             </div>
