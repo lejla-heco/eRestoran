@@ -5,5 +5,5 @@ export  class Rezervacija{
   poruka:string;
   prigodaID:number;
   datumRezerviranja:string;
-  //nazivPrigode:string;
+  nazivPrigode:string;
 }

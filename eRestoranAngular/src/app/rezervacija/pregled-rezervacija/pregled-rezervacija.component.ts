@@ -13,8 +13,7 @@ import {Prigoda} from "../view-models/prigoda-vm";
 export class PregledRezervacijaComponent implements OnInit {
 
   rezervacije : Rezervacija[] = null;
-navizPrigode:string=null;
-prigoda:Prigoda=null;
+
 
   constructor(private httpKlijent:HttpClient) { }
 
@@ -31,10 +30,6 @@ prigoda:Prigoda=null;
 
     });
   }
-  public getPrigoda(id:number) {
-    this.httpKlijent.get("https://localhost:44325/Prigoda/GetById/"+id).subscribe((result:any)=>{
-      this.prigoda = result;
 
-    });}
 
 }

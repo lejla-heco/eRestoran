@@ -54,11 +54,24 @@ namespace FIT_Api_Examples.ModulRezervacija.Controllers
             return Ok(novaRezervacija);
         }
 
+       
         [HttpGet]
-        public List<Rezervacija> GetAll()
+        public List<RezervacijaGetAllVM> GetAll()
         {
-            return _dbContext.Rezervacija.ToList();
+            List<RezervacijaGetAllVM> rezervacije = _dbContext.Rezervacija
+                                          .Select(z => new RezervacijaGetAllVM()
+                                          {
+                                              brojOsoba=z.BrojOsoba,
+                                              brojStolova=z.BrojStolova,
+                                              datumRezerviranja=z.DatumRezerviranja,
+                                              prigodaID=z.PrigodaID,
+                                              nazivPrigode=z.Prigoda.Naziv,
+                                               poruka=z.Poruka
+                    
+
+
+                                          }).ToList();
+            return rezervacije;
         }
-      
     }
 }
