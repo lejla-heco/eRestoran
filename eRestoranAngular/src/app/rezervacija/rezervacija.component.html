@@ -13,25 +13,25 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text">Broj osoba</span>
                     </div>
-                    <input type="number" class="form-control" >
+                    <input type="number"  min="1" class="form-control" [(ngModel)]="rezervacija.brojOsoba" [ngModelOptions]="{standalone: true}" >
                   </div>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Broj stolova</span>
                     </div>
-                    <input type="number" class="form-control"  >
+                    <input type="number"  min="1" class="form-control"  [(ngModel)]="rezervacija.brojStolova" [ngModelOptions]="{standalone: true}" >
                   </div>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Poruka</span>
                     </div>
-                    <input type="text" class="form-control" >
+                    <input type="text" class="form-control" [(ngModel)]="rezervacija.poruka" [ngModelOptions]="{standalone: true}">
                   </div>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Datum rezervacije</span>
                     </div>
-                    <input type="date" class="form-control" >
+                    <input type="date" class="form-control" [(ngModel)]="rezervacija.datumRezerviranja" [ngModelOptions]="{standalone: true}">
                   </div>
 
 
@@ -39,14 +39,14 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text">Prigoda</span>
                     </div>
-                    <select class="form-control mb-3"   >
+                    <select class="form-control mb-3"  [(ngModel)]="rezervacija.prigodaID" [ngModelOptions]="{standalone: true}" >
                     <option *ngFor = "let prigoda of prigode" [value]=prigoda.id>{{prigoda.naziv}}</option>
                     </select>
                   </div>
 
 
 
-                  <button class="btn btn-dark flex-shrink-0" > <i class="bi bi-person-plus-fill"></i>Rezerviši</button>
+                  <button class="btn btn-dark flex-shrink-0" (click)="posaljiPodatke()">Rezerviši</button>
 
 
                 </form>
