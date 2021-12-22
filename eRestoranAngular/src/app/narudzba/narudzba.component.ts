@@ -19,6 +19,7 @@ export class NarudzbaComponent implements OnInit {
   kuponi : Kupon[] = null;
   odabraniKupon : Kupon = new Kupon();
   zakljuciNarudzbu : boolean = false;
+  closeModal : boolean = false;
 
   constructor(private httpKlijent : HttpClient) {
   }
@@ -86,8 +87,12 @@ export class NarudzbaComponent implements OnInit {
   }
 
   zatvoriModal() {
-    this.zakljuciNarudzbu = false;
     this.odabraniKupon.id = 0;
+    this.closeModal = true;
+    this.animiraj();
+    this.zakljuciNarudzbu = setTimeout(function (){
+      return false;
+    },2000)== 0? false : true;
   }
 
   posaljiKupon() {
@@ -99,9 +104,13 @@ export class NarudzbaComponent implements OnInit {
   posaljiNarudzbu() {
     this.httpKlijent.get(MyConfig.adresaServera + "/Narudzba/Zakljuci/" + this.odabraniKupon.id, MyConfig.httpOpcije()).subscribe((response : any)=>{
       console.log(response);
+      this.zatvoriModal();
       this.ucitajNarudzbu();
-      this.zakljuciNarudzbu = false;
       document.getElementById('kolicina').innerHTML = "0";
     })
+  }
+
+  animiraj() {
+    return this.closeModal == true? 'animate__animated animate__backOutUp' : 'animate__animated animate__backInDown';
   }
 }
