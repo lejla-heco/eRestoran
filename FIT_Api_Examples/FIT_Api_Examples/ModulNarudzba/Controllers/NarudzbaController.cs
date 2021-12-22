@@ -4,6 +4,7 @@ using FIT_Api_Examples.ModulKorisnik.Models;
 using FIT_Api_Examples.ModulMeni.Models;
 using FIT_Api_Examples.ModulNarudzba.Models;
 using FIT_Api_Examples.ModulNarudzba.ViewModels;
+using FIT_Api_Examples.ModulZaposleni.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -257,7 +258,7 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
                     Kupon kupon = _dbContext.Kupon.Find(id);
                     double novaCijena = narudzba.Cijena - (narudzba.Cijena * kupon.Popust / 100);
                     narudzba.Cijena = (float)Math.Round(novaCijena, 2);
-                    KorisnikKupon korisnikKupon = _dbContext.KorisnikKupon.Where(kk => kk.KorisnikID == korisnik.ID && kk.KuponID == id).FirstOrDefault();
+                    KorisnikKupon korisnikKupon = _dbContext.KorisnikKupon.Where(kk => kk.KorisnikID == korisnik.ID && kk.KuponID == id && !kk.Iskoristen).FirstOrDefault();
                     if (korisnikKupon == null)
                         return BadRequest("Ne postoji kupon");
                     korisnikKupon.Iskoristen = true;
@@ -267,6 +268,14 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
                     return BadRequest(err.Message + " inn " + err.InnerException);
                 }
             }
+            narudzba.StatusNarudzbeID = _dbContext.StatusNarudzbe.Where(s => s.Naziv == "Poslano").SingleOrDefault().ID;
+
+            Zaposlenik odabraniZaposlenik = _dbContext.Zaposlenik
+                .Where(z => z.AktivneNarudzbe == _dbContext.Zaposlenik.Min<Zaposlenik>(w => w.AktivneNarudzbe)).FirstOrDefault();
+            odabraniZaposlenik.AktivneNarudzbe++;
+            narudzba.Zaposlenik = odabraniZaposlenik;
+            if (odabraniZaposlenik == null)
+                return BadRequest("Nemamo zaposlenika!");
             _dbContext.SaveChanges();
 
             return Ok(narudzba);

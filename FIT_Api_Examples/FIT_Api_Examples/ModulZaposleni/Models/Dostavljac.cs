@@ -12,5 +12,6 @@ namespace FIT_Api_Examples.ModulZaposleni.Models
     {
         public string Slika { get; set; }
         public int DostavljeneNarudzbe { get; set; }
+        public int AktivneNarudzbe { get; set; }
     }
 }

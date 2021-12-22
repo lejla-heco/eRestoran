@@ -33,6 +33,8 @@ namespace FIT_Api_Examples.ModulZaposleni.Controllers
                 Lozinka = dostavljacAddVM.password
 
             };
+            noviDostavljac.AktivneNarudzbe = 0;
+            noviDostavljac.DostavljeneNarudzbe = 0;
             _dbContext.Dostavljac.Add(noviDostavljac);
             _dbContext.SaveChanges();
             return Ok(noviDostavljac.ID);
