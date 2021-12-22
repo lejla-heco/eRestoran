@@ -223,5 +223,31 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        public IActionResult Zakljuci([FromBody] NarudzbaZakljuciVM narudzbaZakljuciVM)
+        {
+            if (!HttpContext.GetLoginInfo().isPermisijaKorisnik)
+                return BadRequest("nije logiran");
+
+            Korisnik korisnik = HttpContext.GetLoginInfo().korisnickiNalog.Korisnik;
+
+            Narudzba narudzba = _dbContext.Narudzba.Where(n => n.KorisnikID == korisnik.ID && n.Zakljucena == false).SingleOrDefault();
+            if (narudzba == null)
+                return BadRequest("Ne postoji aktivna narudzba!");
+
+            narudzba.Zakljucena = true;
+
+            if (narudzbaZakljuciVM.id != null)
+            {
+                Kupon kupon = _dbContext.Kupon.Find(narudzbaZakljuciVM.id);
+                narudzba.Cijena -= narudzba.Cijena * (kupon.Popust / 100);
+                KorisnikKupon korisnikKupon = _dbContext.KorisnikKupon.Where(kk => kk.KorisnikID == korisnik.ID && kk.KuponID == kupon.ID).SingleOrDefault();
+                korisnikKupon.Iskoristen = true;
+            }
+            _dbContext.SaveChanges();
+
+            return Ok(narudzba.Cijena);
+        }
+
     }
 }
