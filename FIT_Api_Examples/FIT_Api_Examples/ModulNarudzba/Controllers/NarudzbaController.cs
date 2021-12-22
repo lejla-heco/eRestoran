@@ -278,7 +278,7 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
                 return BadRequest("Nemamo zaposlenika!");
             _dbContext.SaveChanges();
 
-            return Ok(narudzba);
+            return Ok(narudzba.Cijena);
         }
 
     }

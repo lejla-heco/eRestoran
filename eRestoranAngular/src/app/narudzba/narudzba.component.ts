@@ -20,6 +20,9 @@ export class NarudzbaComponent implements OnInit {
   odabraniKupon : Kupon = new Kupon();
   zakljuciNarudzbu : boolean = false;
   closeModal : boolean = false;
+  closeModalObavjestenje : boolean = false;
+  obavjestenje : boolean = false;
+  obavjestenjeMessage : string = "";
 
   constructor(private httpKlijent : HttpClient) {
   }
@@ -103,8 +106,9 @@ export class NarudzbaComponent implements OnInit {
 
   posaljiNarudzbu() {
     this.httpKlijent.get(MyConfig.adresaServera + "/Narudzba/Zakljuci/" + this.odabraniKupon.id, MyConfig.httpOpcije()).subscribe((response : any)=>{
-      console.log(response);
       this.zatvoriModal();
+      this.obavjestenjeMessage = "Cijena Vaše narudžbe iznosi: " + response + " KM";
+      this.obavjestenje = true;
       this.ucitajNarudzbu();
       document.getElementById('kolicina').innerHTML = "0";
     })
@@ -112,5 +116,18 @@ export class NarudzbaComponent implements OnInit {
 
   animiraj() {
     return this.closeModal == true? 'animate__animated animate__backOutUp' : 'animate__animated animate__backInDown';
+  }
+
+  animirajObavjestenje() {
+    return this.closeModalObavjestenje == true? 'animate__animated animate__backOutUp' : 'animate__animated animate__backInDown';
+  }
+
+  zatvoriModalObavjestenje(){
+    this.closeModalObavjestenje = true;
+    this.animiraj();
+    this.obavjestenje = setTimeout(function (){
+      return false;
+    },2000)== 0? false : true;
+    this.obavjestenjeMessage = "";
   }
 }
