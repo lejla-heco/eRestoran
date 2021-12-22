@@ -86,7 +86,7 @@
                 <div *ngIf="narudzba.omiljeno" style="font-size:medium"> Omiljena narudžba</div>
                 <div *ngIf="!narudzba.omiljeno" style="font-size:medium"> Dodaj narudžbu u omiljene?</div>
               </div>
-              <button class="btn btn-outline-dark">
+              <button class="btn btn-outline-dark" (click)="posaljiNarudzbu()">
                 <i class="bi bi-check-circle-fill"></i>
                 Zaključi narudžbu
               </button>

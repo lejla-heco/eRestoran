@@ -87,7 +87,7 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
 
             float novaCijena = trenutnaNarudzba.Cijena - (trenutnaNarudzba.Cijena * kupon.Popust / 100);
 
-            return Ok(novaCijena);
+            return Ok(Math.Round(novaCijena, 2));
         }
     }
 }

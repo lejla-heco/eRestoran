@@ -77,7 +77,20 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
             int id = HttpContext.GetLoginInfo().korisnickiNalog.Korisnik.ID;
 
             Narudzba narudzba = _dbContext.Narudzba.Where(n => n.KorisnikID == id && n.Zakljucena == false).FirstOrDefault();
-            if (narudzba == null) return Ok(new Narudzba());
+            if (narudzba == null)
+            {
+                narudzba = new Narudzba()
+                {
+                    DatumNarucivanja = DateTime.Now,
+                    Zakljucena = false,
+                    KorisnikID = id,
+                    BrojStavki = 0,
+                    Cijena = 0,
+                    Omiljeno = false,
+                };
+                _dbContext.Narudzba.Add(narudzba);
+                _dbContext.SaveChanges();
+            }
 
             NarudzbaGetNarudzbaVM getNarudzbaVM = new NarudzbaGetNarudzbaVM()
             {
@@ -223,8 +236,8 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
             return Ok();
         }
 
-        [HttpPost]
-        public IActionResult Zakljuci([FromBody] NarudzbaZakljuciVM narudzbaZakljuciVM)
+        [HttpGet("{id}")]
+        public IActionResult Zakljuci(int id)
         {
             if (!HttpContext.GetLoginInfo().isPermisijaKorisnik)
                 return BadRequest("nije logiran");
@@ -237,16 +250,26 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
 
             narudzba.Zakljucena = true;
 
-            if (narudzbaZakljuciVM.id != null)
+            if (id != 0)
             {
-                Kupon kupon = _dbContext.Kupon.Find(narudzbaZakljuciVM.id);
-                narudzba.Cijena -= narudzba.Cijena * (kupon.Popust / 100);
-                KorisnikKupon korisnikKupon = _dbContext.KorisnikKupon.Where(kk => kk.KorisnikID == korisnik.ID && kk.KuponID == kupon.ID).SingleOrDefault();
-                korisnikKupon.Iskoristen = true;
+                try
+                {
+                    Kupon kupon = _dbContext.Kupon.Find(id);
+                    double novaCijena = narudzba.Cijena - (narudzba.Cijena * kupon.Popust / 100);
+                    narudzba.Cijena = (float)Math.Round(novaCijena, 2);
+                    KorisnikKupon korisnikKupon = _dbContext.KorisnikKupon.Where(kk => kk.KorisnikID == korisnik.ID && kk.KuponID == id).FirstOrDefault();
+                    if (korisnikKupon == null)
+                        return BadRequest("Ne postoji kupon");
+                    korisnikKupon.Iskoristen = true;
+                }
+                catch(SystemException err)
+                {
+                    return BadRequest(err.Message + " inn " + err.InnerException);
+                }
             }
             _dbContext.SaveChanges();
 
-            return Ok(narudzba.Cijena);
+            return Ok(narudzba);
         }
 
     }

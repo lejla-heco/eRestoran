@@ -7,6 +7,6 @@ namespace FIT_Api_Examples.ModulNarudzba.ViewModels
 {
     public class NarudzbaZakljuciVM
     {
-        public int? id { get; set; }
+        public int id { get; set; }
     }
 }

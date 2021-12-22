@@ -95,4 +95,13 @@ export class NarudzbaComponent implements OnInit {
       document.getElementById("cijenaPopust").innerHTML = "Cijena narudžbe sa popustom iznosi: " + response + " KM";
     })
   }
+
+  posaljiNarudzbu() {
+    this.httpKlijent.get(MyConfig.adresaServera + "/Narudzba/Zakljuci/" + this.odabraniKupon.id, MyConfig.httpOpcije()).subscribe((response : any)=>{
+      console.log(response);
+      this.ucitajNarudzbu();
+      this.zakljuciNarudzbu = false;
+      document.getElementById('kolicina').innerHTML = "0";
+    })
+  }
 }
