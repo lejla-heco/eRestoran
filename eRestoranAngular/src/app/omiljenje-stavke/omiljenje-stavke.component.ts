@@ -74,7 +74,6 @@ export class OmiljenjeStavkeComponent implements OnInit {
 
   obrisiStavku(stavka : OmiljenaStavka) {
     this.httpKlijent.get(MyConfig.adresaServera+"/OmiljenaStavka/Delete/" + stavka.omiljenaStavkaId, MyConfig.httpOpcije()).subscribe((response : any)=>{
-      alert("Uspjesno uklonjena stavka");
       this.ucitajOmiljeneStavke(stavka.nazivGrupe);
     });
   }

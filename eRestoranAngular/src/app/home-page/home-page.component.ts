@@ -15,6 +15,10 @@ export class HomePageComponent implements OnInit {
   public posebnaPonuda: PosebnaPonudaStavka[] = null;
   public poslovnice : Poslovnica[] = null;
   loginInformacije : LoginInformacije = null;
+  obavjestenje : boolean = false;
+  closeModal : boolean = false;
+  obavjestenjeNaslov : string = "";
+  obavjestenjeSadrzaj : string = "";
 
   constructor(private httpKlijent : HttpClient) {
     this.loginInformacije = AutentifikacijaHelper.getLoginInfo();
@@ -88,8 +92,23 @@ export class HomePageComponent implements OnInit {
 
   obrisi(id : number) {
     this.httpKlijent.get(MyConfig.adresaServera + "/Poslovnica/Delete/" + id, MyConfig.httpOpcije()).subscribe((response : any)=>{
-      alert("Uspjesno obrisana poslovnica: " + response.adresa);
       this.getPoslovnice();
+      this.obavjestenje = true;
+      this.closeModal = false;
+      this.obavjestenjeNaslov="Uspješno obrisana poslovnica";
+      this.obavjestenjeSadrzaj="Uspješno ste obrisali poslovnicu na adresi: "+response.adresa;
     });
+  }
+
+  animirajObavjestenje() {
+    return this.closeModal == true? 'animate__animated animate__bounceOut' : 'animate__animated animate__bounceIn';
+  }
+
+  zatvoriModalObavjestenje(){
+    this.closeModal = true;
+    this.animirajObavjestenje();
+    this.obavjestenje = setTimeout(function (){
+      return false;
+    },2000)== 0? false : true;
   }
 }

@@ -127,7 +127,7 @@ export class NarudzbaComponent implements OnInit {
     this.animiraj();
     this.obavjestenje = setTimeout(function (){
       return false;
-    },2000)== 0? false : true;
+    },1000)== 0? false : true;
     this.obavjestenjeMessage = "";
   }
 }

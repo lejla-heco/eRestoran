@@ -12,6 +12,11 @@ import {HttpClient} from "@angular/common/http";
 export class PoslovnicaComponent implements OnInit {
   poslovnica : Poslovnica = new Poslovnica();
   opstine: Opstina[] = null;
+  obavjestenje : boolean = false;
+  closeModal : boolean = false;
+  obavjestenjeNaslov : string = "";
+  obavjestenjeSadrzaj : string = "";
+
   constructor(private httpKlijent : HttpClient) { }
 
   ngOnInit(): void {
@@ -60,8 +65,11 @@ export class PoslovnicaComponent implements OnInit {
 
   dodajPoslovnicu() {
     this.httpKlijent.post(MyConfig.adresaServera + "/Poslovnica/Add",this.poslovnica,MyConfig.httpOpcije()).subscribe((response : any)=>{
-      alert("Uspjesno dodana nova poslovnica!");
       this.ocistiFormu();
+      this.obavjestenje = true;
+      this.closeModal = false;
+      this.obavjestenjeNaslov = "Dodana nova poslovnica";
+      this.obavjestenjeSadrzaj ="Uspješno ste dodali novu poslovnicu na adresi: "+ response.adresa;
     });
   }
 
@@ -73,5 +81,17 @@ export class PoslovnicaComponent implements OnInit {
     this.poslovnica.lat = null;
     this.poslovnica.lng = null;
     this.poslovnica.opstinaId = null;
+  }
+
+  animirajObavjestenje() {
+    return this.closeModal == true? 'animate__animated animate__bounceOut' : 'animate__animated animate__bounceIn';
+  }
+
+  zatvoriModalObavjestenje(){
+    this.closeModal = true;
+    this.animirajObavjestenje();
+    this.obavjestenje = setTimeout(function (){
+      return false;
+    },2000)== 0? false : true;
   }
 }

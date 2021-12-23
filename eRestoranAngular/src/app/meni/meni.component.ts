@@ -4,7 +4,6 @@ import {MeniStavka} from "./view-models/meni-stavka-vm";
 import {MyConfig} from "../my-config";
 import {MeniGrupa} from "./view-models/meni-grupa-vm";
 import {Router} from "@angular/router";
-import {Uloga} from "../helper/uloga";
 import {StavkaNarudzbe} from "../narudzba/view-models/stavka-narudzbe-vm";
 import {MeniStavkaKorisnik} from "./view-models/meni-korisnik-vm";
 import {LoginInformacije} from "../helper/login-informacije";
@@ -27,6 +26,10 @@ export class MeniComponent implements OnInit {
   odabranaStavkaMenija: MeniStavka = null;
   ocijenjenaStavkaMenija:MeniStavkaKorisnik=new MeniStavkaKorisnik();
   trenutnaKategorija: string = "Doručak";
+  obavjestenje : boolean = false;
+  closeModal : boolean = false;
+  obavjestenjeNaslov : string = "";
+  obavjestenjeSadrzaj : string = "";
 
   title = "star-angular";
   stars = [1, 2, 3, 4, 5];
@@ -83,7 +86,7 @@ export class MeniComponent implements OnInit {
 
   brisanje(s :MeniStavka) {
   this.httpKlijent.post(MyConfig.adresaServera+"/Meni/Delete/"+s.id, s).subscribe((x:any)=>{
-    alert("Stavka "+ s.naziv+ " je uspješno obrisana");
+    this.zatvoriModal();
     this.ucitajMeniStavke(s.nazivGrupe);
   });
 
@@ -91,6 +94,7 @@ export class MeniComponent implements OnInit {
 
   public prikazi_brisanje(stavka : MeniStavka){
     this.odabranaStavkaMenija = stavka;
+    this.closeModal = false;
   }
 
   dodajUKorpu(stavka : MeniStavkaKorisnik) {
@@ -110,7 +114,10 @@ export class MeniComponent implements OnInit {
   }
   updateRating(i:any) {
     this.rating = i;
-    //alert("Uspješno ste ocijenili stavku "+this.id+" sa "+i+" zvjezdice");
+    this.obavjestenje = true;
+    this.closeModal = false;
+    this.obavjestenjeNaslov = "Vaša ocjena je uspješno poslana";
+    this.obavjestenjeSadrzaj = this.ocijenjenaStavkaMenija.naziv + " stavku ste ocijenili ocjenom " + this.rating;
   }
   upravljajOmiljenomStavkom(stavka : MeniStavkaKorisnik) {
     if (stavka.omiljeno){
@@ -128,8 +135,8 @@ export class MeniComponent implements OnInit {
       stavkaId : stavka.id
     };
       this.httpKlijent.post(MyConfig.adresaServera + '/OmiljenaStavka/DeleteById', podaci, MyConfig.httpOpcije()).subscribe((response : any)=>{
-        alert("Uspjesno uklonjena omiljena stavka menija!");
-      })
+
+      });
   }
 
   private dodajOmiljenuStavku(stavka: MeniStavkaKorisnik) {
@@ -137,7 +144,32 @@ export class MeniComponent implements OnInit {
       meniStavkaId : stavka.id
     };
     this.httpKlijent.post(MyConfig.adresaServera + '/OmiljenaStavka/Add', podaci, MyConfig.httpOpcije()).subscribe((response : any)=>{
-      alert("Dodano u omiljeno");
+
     });
+    this.obavjestenje = true;
+    this.closeModal = false;
+    this.obavjestenjeNaslov = "Stavka dodana u sekciju omiljenih stavki";
+    this.obavjestenjeSadrzaj = stavka.naziv + " stavka je dodana u omiljene";
+  }
+
+  animirajObavjestenje() {
+    return this.closeModal == true? 'animate__animated animate__bounceOut' : 'animate__animated animate__bounceIn';
+  }
+
+  zatvoriModalObavjestenje(){
+    this.closeModal = true;
+    this.animirajObavjestenje();
+    this.obavjestenje = setTimeout(function (){
+      return false;
+    },1000)== 0? false : true;
+  }
+
+  zatvoriModal(){
+    this.closeModal = true;
+    this.animirajObavjestenje();
+
+    setTimeout(()=>{
+      this.odabranaStavkaMenija = null;
+    },1000);
   }
 }

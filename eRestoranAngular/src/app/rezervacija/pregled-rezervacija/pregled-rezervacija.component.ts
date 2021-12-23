@@ -21,13 +21,10 @@ export class PregledRezervacijaComponent implements OnInit {
   ngOnInit(): void {
 
     this.ucitajRezervacije();
-
-
-
   }
 
   public ucitajRezervacije() {
-    this.httpKlijent.get("https://localhost:44325/Rezervacija/GetAll").subscribe((result : any)=>{
+    this.httpKlijent.get(MyConfig.adresaServera + "/Rezervacija/GetAll").subscribe((result : any)=>{
       this.rezervacije = result;
       this.odabranaRezervacija=null;
     });
@@ -40,7 +37,7 @@ export class PregledRezervacijaComponent implements OnInit {
 
   brisanje(rezervacija: Rezervacija) {
 
-      this.httpKlijent.post("https://localhost:44325"+"/Rezervacija/Delete/"+rezervacija.id, rezervacija).subscribe((x:any)=>{
+      this.httpKlijent.post(MyConfig.adresaServera + "/Rezervacija/Delete/"+rezervacija.id, rezervacija).subscribe((x:any)=>{
         alert("Odabrana rezervacija je uspješno otkazana");
         this.ucitajRezervacije();
       });

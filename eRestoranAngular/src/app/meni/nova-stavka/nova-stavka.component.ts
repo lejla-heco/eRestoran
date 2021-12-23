@@ -12,6 +12,12 @@ import {MeniGrupa} from "../view-models/meni-grupa-vm";
 export class NovaStavkaComponent implements OnInit {
   novaStavka : NovaMeniStavka = new NovaMeniStavka();
   meniGrupe : MeniGrupa[] = null;
+
+  obavjestenje : boolean = false;
+  closeModal : boolean = false;
+  obavjestenjeNaslov : string = "";
+  obavjestenjeSadrzaj : string = "";
+
   constructor(private httpKlijent : HttpClient) { }
 
   ngOnInit(): void {
@@ -46,8 +52,12 @@ export class NovaStavkaComponent implements OnInit {
     data.append("slikaMeniStavke", file);
     this.httpKlijent.post(MyConfig.adresaServera + "/Meni/Add", this.novaStavka, MyConfig.httpOpcije()).subscribe((result : any)=>{
       this.httpKlijent.post(MyConfig.adresaServera + "/Meni/AddSlika/" + result, data, MyConfig.httpOpcije()).subscribe((result:any)=>{
-        alert("Uspjesno dodana nova stavka");
+        this.obavjestenje = true;
+        this.closeModal = false;
+        this.obavjestenjeNaslov = "Dodana nova stavka";
+        this.obavjestenjeSadrzaj = "Uspješno ste dodali novu stavku na meni";
         this.ocistiFormu();
+
       });
     });
   }
@@ -63,5 +73,17 @@ export class NovaStavkaComponent implements OnInit {
 
   private validirajFormu() {
 
+  }
+
+  animirajObavjestenje() {
+    return this.closeModal == true? 'animate__animated animate__bounceOut' : 'animate__animated animate__bounceIn';
+  }
+
+  zatvoriModalObavjestenje(){
+    this.closeModal = true;
+    this.animirajObavjestenje();
+    this.obavjestenje = setTimeout(function (){
+      return false;
+    },1000)== 0? false : true;
   }
 }

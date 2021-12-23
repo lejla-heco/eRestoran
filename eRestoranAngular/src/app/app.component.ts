@@ -15,6 +15,7 @@ export class AppComponent {
   title = 'eRestoranAngular';
   loginInformacije : LoginInformacije = new LoginInformacije();
   kuponi : Kupon[] = null;
+  trenutnaSelekcija: string = "Home";
 
   constructor(private router: Router, private httpKlijent : HttpClient) {
     router.events.subscribe(event => {
@@ -41,5 +42,9 @@ export class AppComponent {
     this.httpKlijent.get(MyConfig.adresaServera + "/Kupon/GetAll", MyConfig.httpOpcije()).subscribe((response : any)=>{
       this.kuponi = response;
     })
+  }
+
+  clicked(naziv : string){
+    this.trenutnaSelekcija = naziv;
   }
 }

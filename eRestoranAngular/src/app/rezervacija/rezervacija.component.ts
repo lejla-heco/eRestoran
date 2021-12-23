@@ -21,14 +21,14 @@ export class RezervacijaComponent implements OnInit {
   }
 
   private getAllPrigode() {
-    this.httpKlijent.get("https://localhost:44325/Prigoda/GetAll", MyConfig.httpOpcije()).subscribe((result:any)=>{
+    this.httpKlijent.get(MyConfig.adresaServera + "/Prigoda/GetAll", MyConfig.httpOpcije()).subscribe((result:any)=>{
       this.prigode = result;
 
     });
   }
 
   posaljiPodatke() {
-    this.httpKlijent.post("https://localhost:44325/Rezervacija/Add",this.rezervacija, MyConfig.httpOpcije()).subscribe((result:any)=>{
+    this.httpKlijent.post(MyConfig.adresaServera + "/Rezervacija/Add",this.rezervacija, MyConfig.httpOpcije()).subscribe((result:any)=>{
       alert("Uspješno dodana nova rezervacija");
     });
   }

@@ -27,8 +27,6 @@ export class StarComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log(this.starId);
-    console.log(this.rating);
 
     if (this.rating >= this.starId) {
       this.starClassName = "star-rating-filled";
@@ -49,15 +47,10 @@ export class StarComponent implements OnInit {
 
     this.bigClick.emit(this.starId);
     this.ocjenaPoslata.ocjena=this.rating;
-    console.log(this.ocjenaPoslata.ocjena);
 
     this.httpKlijent.post(MyConfig.adresaServera+"/Meni/AddOcjena/"+this.odabrana.id,this.ocjenaPoslata).subscribe((result : any)=>{
-      alert("Uspješno ste ocijenili stavku "+this.odabrana.naziv+" sa "+this.rating+" zvjezdice");
-      //this.router.navigate(['/meni']);
-      //window.location.replace('https://erestoran-api.p2102.app.fit.ba/meni')
 
     });
 
   }
-
 }

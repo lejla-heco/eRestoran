@@ -7,22 +7,22 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-        <li class="nav-item"><a class="nav-link active" routerLink="home-page">Home</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="meni">Meni</a></li>
-        <li *ngIf="loginInformacije.isPermisijaKorisnik || loginInformacije.isPermisijaAdministrator" class="nav-item"><a class="nav-link" routerLink="posebna-ponuda">Posebna ponuda</a></li>
-        <li *ngIf="loginInformacije.isPermisijaKorisnik" class="nav-item"><a class="nav-link" href="#"  routerLink="rezervacija">Rezervacija</a></li>
-        <li *ngIf="loginInformacije.isPermisijaAdministrator" class="nav-item"><a class="nav-link" routerLink="kupon">Kuponi</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="home-page" (click)="clicked('Home')" [ngClass]="this.trenutnaSelekcija == 'Home' ? 'active' : ''">Home</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="meni" (click)="clicked('Meni')" [ngClass]="this.trenutnaSelekcija == 'Meni' ? 'active' : ''">Meni</a></li>
+        <li *ngIf="loginInformacije.isPermisijaKorisnik || loginInformacije.isPermisijaAdministrator" class="nav-item"><a class="nav-link" routerLink="posebna-ponuda" (click)="clicked('PP')" [ngClass]="this.trenutnaSelekcija == 'PP' ? 'active' : ''">Posebna ponuda</a></li>
+        <li *ngIf="loginInformacije.isPermisijaKorisnik" class="nav-item"><a class="nav-link" href="#"  routerLink="rezervacija" (click)="clicked('Rezervacija')" [ngClass]="this.trenutnaSelekcija == 'Rezervacija' ? 'active' : ''">Rezervacija</a></li>
+        <li *ngIf="loginInformacije.isPermisijaAdministrator" class="nav-item"><a class="nav-link" routerLink="kupon" (click)="clicked('Kuponi')" [ngClass]="this.trenutnaSelekcija == 'Kuponi' ? 'active' : ''">Kuponi</a></li>
         <li *ngIf="loginInformacije.isPermisijaAdministrator" class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdownAdmin" role="button" data-bs-toggle="dropdown" aria-expanded="false">Osoblje</a>
+          <a class="nav-link dropdown-toggle" id="navbarDropdownAdmin" role="button" data-bs-toggle="dropdown" aria-expanded="false" (click)="clicked('Osoblje')" [ngClass]="this.trenutnaSelekcija == 'Osoblje' ? 'active' : ''">Osoblje</a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownAdmin">
             <li><a class="dropdown-item" href="#" routerLink="zaposlenik">Zaposlenici</a></li>
             <li><hr class="dropdown-divider" /></li>
             <li><a class="dropdown-item" href="#" routerLink="dostavljac">Dostavljači</a></li>
           </ul>
         </li>
-        <li *ngIf="loginInformacije.isPermisijaAdministrator" class="nav-item"><a class="nav-link" routerLink="poslovnica">Poslovnice</a></li>
+        <li *ngIf="loginInformacije.isPermisijaAdministrator" class="nav-item"><a class="nav-link" routerLink="poslovnica" (click)="clicked('NP')" [ngClass]="this.trenutnaSelekcija == 'NP' ? 'active' : ''">Nova poslovnica</a></li>
         <li *ngIf="loginInformacije.isPermisijaKorisnik" class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Omiljeno</a>
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" (click)="clicked('Omiljeno')" [ngClass]="this.trenutnaSelekcija == 'Omiljeno' ? 'active' : ''">Omiljeno</a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="#" routerLink="omiljene-stavke">Najdraže stavke</a></li>
             <li><hr class="dropdown-divider" /></li>
@@ -60,11 +60,11 @@
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" href="">
               <i class="bi bi-basket-fill"></i>
-              Historija narudžbi
+              Moje narudžbe
             </a>
             <a class="dropdown-item" href="">
               <i class="bi bi-clock-history"></i>
-              Historija rezervacija
+              Moje rezervacije
             </a>
             <a class="dropdown-item" href="">
               <i class="bi bi-gear-fill"></i>
