@@ -3,7 +3,9 @@ using FIT_Api_Examples.Helper;
 using FIT_Api_Examples.Helper.AutentifikacijaAutorizacija;
 using FIT_Api_Examples.ModulKorisnik.Models;
 using FIT_Api_Examples.ModulKorisnik.ViewModels;
+using FIT_Api_Examples.ModulNarudzba.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,6 +51,29 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
 
             var omiljeneStavke = PagedList<OmiljenaNarudzbaGetAllPagedVM>.Create(data, pageNumber, 3);
             return Ok(omiljeneStavke);
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult Naruci(int id)
+        {
+            if (!HttpContext.GetLoginInfo().isPermisijaKorisnik)
+                return BadRequest("nije logiran");
+
+            Korisnik korisnik = HttpContext.GetLoginInfo().korisnickiNalog.Korisnik;
+
+            if (korisnik == null)
+                return BadRequest("Nemate ovlasti za trazenu akciju!");
+
+            Narudzba narudzba = _dbContext.Narudzba.Find(id);
+            narudzba.StatusNarudzbeID = _dbContext.StatusNarudzbe.Where(s => s.Naziv == "Poslano").SingleOrDefault().ID;
+            _dbContext.SaveChanges();
+            string statusNaziv = _dbContext.Narudzba.Include(n => n.StatusNarudzbe).Where(n => n.ID == id).SingleOrDefault().StatusNarudzbe.Naziv;
+            var response = new
+            {
+                status = statusNaziv,
+            };
+
+            return Ok(response);
         }
     }
 }
