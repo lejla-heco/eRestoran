@@ -1,4 +1,5 @@
 ﻿using FIT_Api_Examples.Data;
+using FIT_Api_Examples.Helper;
 using FIT_Api_Examples.Helper.AutentifikacijaAutorizacija;
 using FIT_Api_Examples.ModulKorisnik.Models;
 using FIT_Api_Examples.ModulMeni.Models;
@@ -281,6 +282,36 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
             _dbContext.SaveChanges();
 
             return Ok(narudzba.Cijena);
+        }
+
+        [HttpGet("{pageNumber}")]
+        public ActionResult<PagedList<NarudzbaGetAllPagedVM>> GetAllPaged(int pageNumber)
+        {
+            if (!HttpContext.GetLoginInfo().isPermisijaKorisnik)
+                return BadRequest("nije logiran");
+
+            Korisnik korisnik = HttpContext.GetLoginInfo().korisnickiNalog.Korisnik;
+
+            if (korisnik == null)
+                return BadRequest("Nemate ovlasti za trazenu akciju!");
+
+            var data = _dbContext.Narudzba.Where(n => n.KorisnikID == korisnik.ID && !n.Omiljeno && n.Zakljucena)
+                                                            .Select(n => new NarudzbaGetAllPagedVM()
+                                                            {
+                                                                id = n.ID,
+                                                                cijena = n.Cijena,
+                                                                datumNarucivanja = n.DatumNarucivanja.ToString("dd/MM/yyyy hh:mm"),
+                                                                status = n.StatusNarudzbe.Naziv,
+                                                                isKoristenKupon = n.KuponKoristen,
+                                                                stavke = _dbContext.StavkaNarudzbe.Where(sn => sn.NarudzbaID == n.ID).Select(sn => new NarudzbaGetAllPagedVM.Stavka()
+                                                                {
+                                                                    naziv = sn.MeniStavka.Naziv,
+                                                                    kolicina = sn.Kolicina
+                                                                }).ToList()
+                                                            }).AsQueryable();
+
+            var mojeNarudzbe = PagedList<NarudzbaGetAllPagedVM>.Create(data, pageNumber, 6);
+            return Ok(mojeNarudzbe);
         }
 
     }
