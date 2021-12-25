@@ -28,6 +28,7 @@ import { EditDostavljacComponent } from './dostavljac/edit-dostavljac/edit-dosta
 import { RezervacijaComponent } from './rezervacija/rezervacija.component';
 import { PregledRezervacijaComponent } from './rezervacija/pregled-rezervacija/pregled-rezervacija.component';
 import { OmiljeneNarudzbeComponent } from './omiljene-narudzbe/omiljene-narudzbe.component';
+import { MojeNarudzbeComponent } from './moje-narudzbe/moje-narudzbe.component';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import { OmiljeneNarudzbeComponent } from './omiljene-narudzbe/omiljene-narudzbe
     RezervacijaComponent,
     PregledRezervacijaComponent,
     OmiljeneNarudzbeComponent,
+    MojeNarudzbeComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,7 +81,8 @@ import { OmiljeneNarudzbeComponent } from './omiljene-narudzbe/omiljene-narudzbe
       {path:"edit-dostavljac/:id", component:EditDostavljacComponent, canActivate:[AutorizacijaAdminProvjera]},
       {path:"rezervacija", component:RezervacijaComponent, canActivate:[AutorizacijaKorisnikProvjera]},
       {path:"pregled-rezervacija", component:PregledRezervacijaComponent, canActivate:[AutorizacijaKorisnikProvjera]},
-      {path:"omiljene-narudzbe", component:OmiljeneNarudzbeComponent, canActivate:[AutorizacijaKorisnikProvjera]}
+      {path:"omiljene-narudzbe", component:OmiljeneNarudzbeComponent, canActivate:[AutorizacijaKorisnikProvjera]},
+      {path:"moje-narudzbe", component:MojeNarudzbeComponent, canActivate:[AutorizacijaKorisnikProvjera]}
     ],{
       anchorScrolling : 'enabled',
       scrollPositionRestoration : 'enabled',

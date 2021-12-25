@@ -1,19 +1,19 @@
 <header class="masthead-kupon" style="padding-top: 5rem; background-image: url('/assets/img/omiljene-narudzbe.jpg')">
-    <div class="container px-5 my-3">
-      <div class="text-center text-white mb-3">
-        <h1 class="display-4 fw-bolder">Moje najdraže narudžbe</h1>
-        <p class="lead fw-normal text-white mb-0">Sve Vaše omiljene narudžbe</p>
+  <div class="container px-5 my-3">
+    <div class="text-center text-white mb-3">
+      <h1 class="display-4 fw-bolder">Moje narudžbe</h1>
+      <p class="lead fw-normal text-white mb-0">Sve Vaše narudžbe koje niste lajkali</p>
+    </div>
+    <div class="row gx-5 justify-content-center text-dark">
+      <div *ngIf ="mojeNarudzbe == null || mojeNarudzbe?.length == 0" class="py-5 my-5">
+      <h3 class="animate__animated animate__bounceIn display-7 fw-bolder text-center text-white">
+        Nemate narudžbi</h3>
+        <button class="btn btn-outline-light text mt-2" routerLink="/meni"><i class="bi bi-search"></i> Pregledaj meni</button>
       </div>
-      <div class="row gx-5 justify-content-center text-dark">
-        <div *ngIf ="najdrazeNarudzbe == null || najdrazeNarudzbe?.length == 0" class="py-5 my-5">
-          <h3 class="animate__animated animate__bounceIn display-7 fw-bolder text-center text-white">
-            Nemate omiljenih narudžbi</h3>
-          <button class="btn btn-outline-light text mt-2" routerLink="/meni"><i class="bi bi-search"></i> Pregledaj meni</button>
-        </div>
-        <div *ngFor = "let narudzba of najdrazeNarudzbe" class="animate__animated animate__bounceIn col-lg-6 col-xl-4" style="text-align: left;">
-          <div class="card h-100 mb-5 mb-xl-0">
-            <div class="card-body p-5">
-              <div class="small text-uppercase fw-bold text-muted">Narudžba na dan: {{narudzba.datumNarucivanja}}<div>
+      <div *ngFor = "let narudzba of mojeNarudzbe" class="animate__animated animate__bounceIn col-lg-6 col-xl-4" style="text-align: left;">
+        <div class="card h-100 mb-5 mb-xl-0">
+          <div class="card-body p-5">
+            <div class="small text-uppercase fw-bold text-muted">Narudžba na dan: {{narudzba.datumNarucivanja}}<div>
               <div class="mb-3">
                 <span class="display-4 fw-bold text-dark">{{narudzba.cijena}} KM</span>
               </div>
@@ -24,20 +24,20 @@
                 </li>
               </ul>
             </div>
-                <div class="text-dark">Status narudžbe: {{narudzba.status}}</div>
-                <div clas="text-muted" *ngIf="narudzba.isKoristenKupon">Korišten kupon za narudžbu</div>
+              <div class="text-dark">Status narudžbe: {{narudzba.status}}</div>
+              <div clas="text-muted" *ngIf="narudzba.isKoristenKupon">Korišten kupon za narudžbu</div>
             </div>
           </div>
-            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-              <div class="text-center">
-                <a *ngIf = "narudzba.status != 'Poslano'" class="btn btn-outline-dark mt-auto" (click)="naruci(narudzba)"><i class="bi bi-arrow-repeat"></i> Naruči ponovo</a>
-                <a *ngIf = "narudzba.status == 'Preuzeto'" class="btn btn-outline-dark mt-auto mx-2" (click)="obrisi(narudzba)"><i class="bi bi-trash-fill"></i> Obriši</a>
-              </div>
+          <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            <div class="text-center">
+              <a *ngIf = "narudzba.status != 'Poslano'" class="btn btn-outline-dark mt-auto" (click)="naruci(narudzba)"><i class="bi bi-arrow-repeat"></i> Naruči ponovo</a>
+              <a *ngIf = "narudzba.status == 'Preuzeto'" class="btn btn-outline-dark mt-auto mx-2" (click)="obrisi(narudzba)"><i class="bi bi-trash-fill"></i> Obriši</a>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-    </div>
-    </div>
-    </div>
+  </div>
 
   <div class="pagination p5">
     <ul class="mx-auto">
