@@ -27,6 +27,7 @@ import { NoviDostavljacComponent } from './dostavljac/novi-dostavljac/novi-dosta
 import { EditDostavljacComponent } from './dostavljac/edit-dostavljac/edit-dostavljac.component';
 import { RezervacijaComponent } from './rezervacija/rezervacija.component';
 import { PregledRezervacijaComponent } from './rezervacija/pregled-rezervacija/pregled-rezervacija.component';
+import { OmiljeneNarudzbeComponent } from './omiljene-narudzbe/omiljene-narudzbe.component';
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import { PregledRezervacijaComponent } from './rezervacija/pregled-rezervacija/p
     EditDostavljacComponent,
     RezervacijaComponent,
     PregledRezervacijaComponent,
+    OmiljeneNarudzbeComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,7 +78,8 @@ import { PregledRezervacijaComponent } from './rezervacija/pregled-rezervacija/p
       {path:"novi-dostavljac", component:NoviDostavljacComponent, canActivate:[AutorizacijaAdminProvjera]},
       {path:"edit-dostavljac/:id", component:EditDostavljacComponent, canActivate:[AutorizacijaAdminProvjera]},
       {path:"rezervacija", component:RezervacijaComponent, canActivate:[AutorizacijaKorisnikProvjera]},
-      {path:"pregled-rezervacija", component:PregledRezervacijaComponent, canActivate:[AutorizacijaKorisnikProvjera]}
+      {path:"pregled-rezervacija", component:PregledRezervacijaComponent, canActivate:[AutorizacijaKorisnikProvjera]},
+      {path:"omiljene-narudzbe", component:OmiljeneNarudzbeComponent, canActivate:[AutorizacijaKorisnikProvjera]}
     ],{
       anchorScrolling : 'enabled',
       scrollPositionRestoration : 'enabled',
