@@ -75,5 +75,25 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
 
             return Ok(response);
         }
+
+        [HttpGet("{id}")]
+        public ActionResult Delete(int id)
+        {
+            if (!HttpContext.GetLoginInfo().isPermisijaKorisnik)
+                return BadRequest("nije logiran");
+
+            Korisnik korisnik = HttpContext.GetLoginInfo().korisnickiNalog.Korisnik;
+
+            if (korisnik == null)
+                return BadRequest("Nemate ovlasti za trazenu akciju!");
+
+            Narudzba narudzba = _dbContext.Narudzba.Find(id);
+
+            List<StavkaNarudzbe> stavke = _dbContext.StavkaNarudzbe.Where(sn => sn.NarudzbaID == id).ToList();
+            _dbContext.RemoveRange(stavke);
+            _dbContext.Narudzba.Remove(narudzba);
+            _dbContext.SaveChanges();
+            return Ok();
+        }
     }
 }
