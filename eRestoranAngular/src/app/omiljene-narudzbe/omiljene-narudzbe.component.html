@@ -23,8 +23,9 @@
             </div>
           </div>
             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-              <div *ngIf = "narudzba.status != 'Poslano'" class="text-center"><a class="btn btn-outline-dark mt-auto" (click)="naruci(narudzba)">
-                Naruči ponovo</a>
+              <div class="text-center">
+                <a *ngIf = "narudzba.status != 'Poslano'" class="btn btn-outline-dark mt-auto" (click)="naruci(narudzba)"><i class="bi bi-arrow-repeat"></i> Naruči ponovo</a>
+                <a *ngIf = "narudzba.status == 'Preuzeto'" class="btn btn-outline-dark mt-auto mx-2" (click)="naruci(narudzba)"><i class="bi bi-trash-fill"></i> Obriši</a>
               </div>
         </div>
     </div>
