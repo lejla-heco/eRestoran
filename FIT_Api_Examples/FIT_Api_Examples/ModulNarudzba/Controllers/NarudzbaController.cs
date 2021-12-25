@@ -284,8 +284,9 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
             return Ok(narudzba.Cijena);
         }
 
+
         [HttpGet("{pageNumber}")]
-        public ActionResult<PagedList<NarudzbaGetAllPagedVM>> GetAllPaged(int pageNumber)
+        public IActionResult GetAllPaged(int pageNumber)
         {
             if (!HttpContext.GetLoginInfo().isPermisijaKorisnik)
                 return BadRequest("nije logiran");

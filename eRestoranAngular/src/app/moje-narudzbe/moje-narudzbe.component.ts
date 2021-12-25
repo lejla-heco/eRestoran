@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MojaNarudzba} from "./view-models/moja-narudzba-vm";
+import {MyConfig} from "../my-config";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-moje-narudzbe',
@@ -15,14 +17,17 @@ export class MojeNarudzbeComponent implements OnInit {
   obavjestenjeNaslov : string = "";
   obavjestenjeSadrzaj : string = "";
 
-  constructor() { }
+  constructor(private httpKlijent : HttpClient) { }
 
   ngOnInit(): void {
     this.ucitajNarudzbe();
   }
 
   private ucitajNarudzbe() {
-
+    this.httpKlijent.get(MyConfig.adresaServera + "/Narudzba/GetAllPaged/" + this.currentPage,MyConfig.httpOpcije()).subscribe((response : any)=>{
+      this.totalPages = response.totalPages;
+      this.mojeNarudzbe = response.dataItems;
+    })
   }
 
   naruci(narudzba : MojaNarudzba) {
