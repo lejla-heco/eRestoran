@@ -25,4 +25,17 @@ export class OmiljeneNarudzbeComponent implements OnInit {
       this.najdrazeNarudzbe = response.dataItems;
     })
   }
+
+  createRangeStranica() {
+    var niz = new Array(this.totalPages);
+    for(let i : number = 0; i < this.totalPages; i++){
+      niz[i] = i + 1;
+    }
+    return niz;
+  }
+
+  ucitajStranicu(page : number) {
+    this.currentPage = page;
+    this.ucitajNarudzbe();
+  }
 }

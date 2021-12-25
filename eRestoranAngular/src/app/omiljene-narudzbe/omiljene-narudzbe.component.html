@@ -5,7 +5,7 @@
         <p class="lead fw-normal text-white mb-0">Sve Vaše omiljene narudžbe</p>
       </div>
       <div class="row gx-5 justify-content-center text-dark">
-        <div *ngFor = "let narudzba of najdrazeNarudzbe" class="col-lg-6 col-xl-4" style="text-align: left;">
+        <div *ngFor = "let narudzba of najdrazeNarudzbe" class="animate__animated animate__bounceIn col-lg-6 col-xl-4" style="text-align: left;">
           <div class="card h-100 mb-5 mb-xl-0">
             <div class="card-body p-5">
               <div class="small text-uppercase fw-bold text-muted">Narudžba na dan: {{narudzba.datumNarucivanja}}<div>
@@ -31,4 +31,10 @@
     </div>
     </div>
     </div>
+
+  <div class="pagination p5">
+    <ul class="mx-auto">
+      <a *ngFor="let page of createRangeStranica()" (click)="ucitajStranicu(page)" [ngClass]="this.currentPage == page ? 'is-active' : ''"><li></li></a>
+    </ul>
+  </div>
 </header>
