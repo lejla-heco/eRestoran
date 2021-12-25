@@ -5,56 +5,30 @@
         <p class="lead fw-normal text-white mb-0">Sve Vaše omiljene narudžbe</p>
       </div>
       <div class="row gx-5 justify-content-center text-dark">
-        <div class="col-lg-6 col-xl-4" style="text-align: left;">
+        <div *ngFor = "let narudzba of najdrazeNarudzbe" class="col-lg-6 col-xl-4" style="text-align: left;">
           <div class="card h-100 mb-5 mb-xl-0">
             <div class="card-body p-5">
-              <div class="small text-uppercase fw-bold text-muted">Najdraža narudžba 1</div>
+              <div class="small text-uppercase fw-bold text-muted">Narudžba na dan: {{narudzba.datumNarucivanja}}<div>
               <div class="mb-3">
-                <span class="display-4 fw-bold">50 KM</span>
+                <span class="display-4 fw-bold text-dark">{{narudzba.cijena}} KM</span>
               </div>
               <ul class="list-unstyled mb-4">
-                <li class="mb-2">
+                <li class="mb-2" *ngFor="let stavka of narudzba.stavke">
                   <i class="bi bi-check text-primary"></i>
-                  Stavka 1 × broj komada
-                </li>
-                <li class="mb-2">
-                  <i class="bi bi-check text-primary"></i>
-                  Stavka 1 × broj komada
-                </li>
-                <li class="mb-2">
-                  <i class="bi bi-check text-primary"></i>
-                  Stavka 1 × broj komada
-                </li>
-                <li class="mb-2">
-                  <i class="bi bi-check text-primary"></i>
-                  Stavka 1 × broj komada
-                </li>
-                <li class="mb-2">
-                  <i class="bi bi-check text-primary"></i>
-                  Stavka 1 × broj komada
-                </li>
-                <li class="mb-2">
-                  <i class="bi bi-check text-primary"></i>
-                  Stavka 1 × broj komada
-                </li>
-                <li class="mb-2">
-                  <i class="bi bi-check text-primary"></i>
-                  Stavka 1 × broj komada
-                </li>
-                <li class="mb-2">
-                  <i class="bi bi-check text-primary"></i>
-                  Stavka 1 × broj komada
+                  {{stavka.naziv}} × {{stavka.kolicina}}
                 </li>
               </ul>
             </div>
-            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-              <div class="text-center"><a class="btn btn-outline-dark mt-auto">
-                <i class="bi bi-cart-plus-fill"></i>
-                Naruči ponovo</a>
-              </div>
+                <div class="text-dark">Status narudžbe: {{narudzba.status}}</div>
             </div>
           </div>
+            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+              <div class="text-center"><a class="btn btn-outline-dark mt-auto">
+                Naruči ponovo</a>
+              </div>
         </div>
+    </div>
+    </div>
     </div>
     </div>
 </header>
