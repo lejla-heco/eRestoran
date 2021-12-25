@@ -262,6 +262,8 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
                     if (korisnikKupon == null)
                         return BadRequest("Ne postoji kupon");
                     korisnikKupon.Iskoristen = true;
+                    korisnikKupon.NarudzbaID = narudzba.ID;
+                    narudzba.KuponKoristen = true;
                 }
                 catch(SystemException err)
                 {

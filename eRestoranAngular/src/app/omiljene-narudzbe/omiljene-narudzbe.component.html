@@ -5,6 +5,7 @@
         <p class="lead fw-normal text-white mb-0">Sve Vaše omiljene narudžbe</p>
       </div>
       <div class="row gx-5 justify-content-center text-dark">
+        <h3 *ngIf ="najdrazeNarudzbe == null || najdrazeNarudzbe?.length == 0" class="animate__animated animate__bounceIn display-7 fw-bolder text-center text-white py-5 my-5">Nemate omiljenih narudžbi</h3>
         <div *ngFor = "let narudzba of najdrazeNarudzbe" class="animate__animated animate__bounceIn col-lg-6 col-xl-4" style="text-align: left;">
           <div class="card h-100 mb-5 mb-xl-0">
             <div class="card-body p-5">
@@ -20,6 +21,7 @@
               </ul>
             </div>
                 <div class="text-dark">Status narudžbe: {{narudzba.status}}</div>
+                <div clas="text-muted" *ngIf="narudzba.isKoristenKupon">Korišten kupon za narudžbu</div>
             </div>
           </div>
             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">

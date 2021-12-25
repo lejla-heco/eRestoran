@@ -4,14 +4,16 @@ using FIT_Api_Examples.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FIT_Api_Examples.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211225121055_KuponKoristen")]
+    partial class KuponKoristen
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,16 +125,11 @@ namespace FIT_Api_Examples.Migrations
                     b.Property<int>("KuponID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("NarudzbaID")
-                        .HasColumnType("int");
-
                     b.HasKey("ID");
 
                     b.HasIndex("KorisnikID");
 
                     b.HasIndex("KuponID");
-
-                    b.HasIndex("NarudzbaID");
 
                     b.ToTable("KorisnikKupon");
                 });
@@ -509,15 +506,9 @@ namespace FIT_Api_Examples.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FIT_Api_Examples.ModulNarudzba.Models.Narudzba", "Narudzba")
-                        .WithMany()
-                        .HasForeignKey("NarudzbaID");
-
                     b.Navigation("Korisnik");
 
                     b.Navigation("Kupon");
-
-                    b.Navigation("Narudzba");
                 });
 
             modelBuilder.Entity("FIT_Api_Examples.ModulKorisnik.Models.OmiljenaStavka", b =>

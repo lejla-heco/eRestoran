@@ -40,8 +40,9 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
                                                             {
                                                                 id = n.ID,
                                                                 cijena = n.Cijena,
-                                                                datumNarucivanja = n.DatumNarucivanja.ToString("dd/MM/yyyyy hh:mm"),
+                                                                datumNarucivanja = n.DatumNarucivanja.ToString("dd/MM/yyyy hh:mm"),
                                                                 status = n.StatusNarudzbe.Naziv,
+                                                                isKoristenKupon = n.KuponKoristen,
                                                                 stavke = _dbContext.StavkaNarudzbe.Where(sn => sn.NarudzbaID == n.ID).Select(sn=> new OmiljenaNarudzbaGetAllPagedVM.Stavka()
                                                                 {
                                                                     naziv = sn.MeniStavka.Naziv,
@@ -90,6 +91,11 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
             Narudzba narudzba = _dbContext.Narudzba.Find(id);
 
             List<StavkaNarudzbe> stavke = _dbContext.StavkaNarudzbe.Where(sn => sn.NarudzbaID == id).ToList();
+            KorisnikKupon korisnikKupon = _dbContext.KorisnikKupon.Where(kk => kk.KorisnikID == korisnik.ID && kk.NarudzbaID == id).SingleOrDefault();
+            if (korisnikKupon != null)
+            {
+                _dbContext.KorisnikKupon.Remove(korisnikKupon);
+            }
             _dbContext.RemoveRange(stavke);
             _dbContext.Narudzba.Remove(narudzba);
             _dbContext.SaveChanges();

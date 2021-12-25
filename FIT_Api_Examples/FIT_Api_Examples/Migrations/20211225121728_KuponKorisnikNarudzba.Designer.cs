@@ -4,14 +4,16 @@ using FIT_Api_Examples.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FIT_Api_Examples.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211225121728_KuponKorisnikNarudzba")]
+    partial class KuponKorisnikNarudzba
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,7 +125,7 @@ namespace FIT_Api_Examples.Migrations
                     b.Property<int>("KuponID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("NarudzbaID")
+                    b.Property<int>("NarudzbaID")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
@@ -511,7 +513,9 @@ namespace FIT_Api_Examples.Migrations
 
                     b.HasOne("FIT_Api_Examples.ModulNarudzba.Models.Narudzba", "Narudzba")
                         .WithMany()
-                        .HasForeignKey("NarudzbaID");
+                        .HasForeignKey("NarudzbaID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Korisnik");
 

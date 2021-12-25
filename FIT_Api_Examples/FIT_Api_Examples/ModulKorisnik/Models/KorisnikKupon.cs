@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FIT_Api_Examples.ModulNarudzba.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -16,5 +17,8 @@ namespace FIT_Api_Examples.ModulKorisnik.Models
         [ForeignKey("KuponID")]
         public int KuponID { get; set; }
         public Kupon Kupon { get; set; }
+        [ForeignKey("NarudzbaID")]
+        public int? NarudzbaID { get; set; }
+        public Narudzba Narudzba { get; set; }
     }
 }

@@ -11,6 +11,7 @@ namespace FIT_Api_Examples.ModulKorisnik.ViewModels
         public float cijena { get; set; }
         public string datumNarucivanja { get; set; }
         public string status { get; set; }
+        public bool isKoristenKupon { get; set; }
 
         public class Stavka
         {
