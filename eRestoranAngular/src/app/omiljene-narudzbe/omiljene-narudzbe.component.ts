@@ -64,4 +64,14 @@ export class OmiljeneNarudzbeComponent implements OnInit {
       return false;
     },1000)== 0? false : true;
   }
+
+  obrisi(narudzba : OmiljenaNarudzba) {
+    this.httpKlijent.get(MyConfig.adresaServera + "/OmiljenaNarudzba/Delete/" + narudzba.id, MyConfig.httpOpcije()).subscribe((response : any)=>{
+      this.obavjestenje = true;
+      this.closeModal = false;
+      this.obavjestenjeNaslov = "Vaša narudžba je uspješno obrisana";
+      this.obavjestenjeSadrzaj = "Uspješno ste obrisali odabranu najdražu narudžbu";
+      this.ucitajNarudzbe();
+    });
+  }
 }
