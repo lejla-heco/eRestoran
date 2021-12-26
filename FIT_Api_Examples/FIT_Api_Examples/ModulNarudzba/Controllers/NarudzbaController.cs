@@ -345,6 +345,32 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
             var mojeNarudzbe = PagedList<NarudzbaGetAllPagedZapolsenikVM>.Create(data, pageNumber, 6);
             return Ok(mojeNarudzbe);
         }
+        [HttpPost("{id}")]
+        public ActionResult Update(int id, [FromBody] NarudzbaStatusUpdateVM narudzbaStatusUpdateVM)
+        {
+            if (!HttpContext.GetLoginInfo().isPermisijaZaposlenik)
+                return BadRequest("nije logiran");
+
+            Zaposlenik zaposlenik = HttpContext.GetLoginInfo().korisnickiNalog.Zaposlenik;
+
+            if (zaposlenik == null)
+                return BadRequest("Nemate ovlasti za trazenu akciju!");
+
+            Narudzba narudzba = _dbContext.Narudzba.Find(id);
+
+            if (narudzba == null)
+                return BadRequest("pogresan ID");
+           
+            
+            narudzba.ID = narudzbaStatusUpdateVM.id;
+            //narudzba.StatusNarudzbe.Naziv = narudzbaStatusUpdateVM.status;
+           //if(narudzba.StatusNarudzbe!=null)
+            narudzba.StatusNarudzbeID= narudzbaStatusUpdateVM.statusID;
+            
+           
+            _dbContext.SaveChanges();
+            return Ok(narudzba.ID);
+        }
 
     }
 }
