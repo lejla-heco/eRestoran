@@ -1,0 +1,79 @@
+<header class="masthead-kupon" style="padding-top: 5rem; background-image: url('/assets/img/omiljene-narudzbe.jpg')">
+  <div class="container px-5 my-3">
+    <div class="text-center text-white mb-3">
+      <h1 class="display-4 fw-bolder">Lista narudžbi</h1>
+
+    </div>
+    <div class="row gx-5 justify-content-center text-dark">
+      <div *ngIf ="mojeNarudzbe == null || mojeNarudzbe?.length == 0" class="py-5 my-5">
+        <h3 class="animate__animated animate__bounceIn display-7 fw-bolder text-center text-white">
+          Trenutno nemate narudžbi</h3>
+        <button class="btn btn-outline-light text mt-2" (click)="reloadPage()" routerLinkActive="/pregled-narudzbi"><i class="bi bi-search"></i> Pregledaj meni</button>
+      </div>
+      <div *ngFor = "let narudzba of mojeNarudzbe" class="animate__animated animate__bounceIn col-lg-6 col-xl-4 mb-4" style="text-align: left;">
+        <div class="card h-100 mb-5 mb-xl-0">
+          <div class="card-body p-5">
+            <div class="small text-uppercase fw-bold text-muted">Narudžba na dan: {{narudzba.datumNarucivanja}}<div>
+              <div class="mb-3">
+                <span class="display-4 fw-bold text-dark">{{narudzba.cijena}} KM</span>
+              </div>
+              <ul class="list-unstyled mb-4">
+                <li class="mb-2" *ngFor="let stavka of narudzba.stavke">
+                  <i class="bi bi-check text-primary"></i>
+                  {{stavka.naziv}} × {{stavka.kolicina}}
+                </li>
+              </ul>
+            </div>
+              <div class="text-dark">Status narudžbe: {{narudzba.status}}</div> <br/>
+                <div clas="text-muted">Uredi status narudžbe
+                <select class="form-control mb-3" [(ngModel)]="narudzba.statusID">
+
+                  <option *ngFor = "let status of statusi" [value]=status.id>{{status.naziv}}</option>
+                </select></div>
+              <div clas="text-muted" *ngIf="narudzba.isKoristenKupon">Korišten kupon za narudžbu</div>
+            </div>
+          </div>
+          <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            <div class="text-center">
+              <!--<a *ngIf = "narudzba.status != 'Poslano'" class="btn btn-outline-dark mt-auto" ><i class="bi bi-arrow-repeat"></i> Naruči ponovo</a>-->
+              <a *ngIf = "narudzba.status == 'Preuzeto'" class="btn btn-outline-dark mt-auto mx-2"><i class="bi bi-trash-fill"></i> Obriši</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pagination p5">
+    <ul class="mx-auto">
+      <a *ngFor="let page of createRangeStranica()" (click)="ucitajStranicu(page)" [ngClass]="this.currentPage == page ? 'is-active' : ''"><li></li></a>
+    </ul>
+  </div>
+</header>
+
+<!--
+<div *ngIf="obavjestenje" class="portfolio-modal modal" [ngClass]="animirajObavjestenje()" id="portfolioModalResponse" tabindex="-1" aria-labelledby="portfolioModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog mt-2">
+    <div class="modal-content">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <div class="modal-body">
+              <p class="item-intro text-muted mb-2">{{obavjestenjeNaslov}}</p>
+              <div class="text-center">
+                <div class="mb-2"><b>{{obavjestenjeSadrzaj}}</b></div>
+
+                <button class="btn btn-outline-dark" (click)="zatvoriModalObavjestenje()">
+                  <i class="bi bi-check-circle-fill"></i>
+                  Ok
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+-->

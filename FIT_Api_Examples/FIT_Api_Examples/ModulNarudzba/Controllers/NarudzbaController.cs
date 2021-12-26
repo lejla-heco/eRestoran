@@ -315,5 +315,36 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
             return Ok(mojeNarudzbe);
         }
 
+        [HttpGet("{pageNumber}")]
+        public IActionResult GetAllPagedZaposlenik(int pageNumber)
+        {
+            if (!HttpContext.GetLoginInfo().isPermisijaZaposlenik)
+                return BadRequest("nije logiran");
+
+            Zaposlenik zaposlenik = HttpContext.GetLoginInfo().korisnickiNalog.Zaposlenik;
+
+            if (zaposlenik == null)
+                return BadRequest("Nemate ovlasti za trazenu akciju!");
+
+            var data = _dbContext.Narudzba.Where(n => n.ZaposlenikID == zaposlenik.ID)
+                                                            .Select(n => new NarudzbaGetAllPagedZapolsenikVM()
+                                                            {
+                                                                id = n.ID,
+                                                                cijena = n.Cijena,
+                                                                datumNarucivanja = n.DatumNarucivanja.ToString("dd/MM/yyyy hh:mm"),
+                                                                status = n.StatusNarudzbe.Naziv,
+                                                                statusID=n.StatusNarudzbe.ID,
+                                                                isKoristenKupon = n.KuponKoristen,
+                                                                stavke = _dbContext.StavkaNarudzbe.Where(sn => sn.NarudzbaID == n.ID).Select(sn => new NarudzbaGetAllPagedZapolsenikVM.Stavka()
+                                                                {
+                                                                    naziv = sn.MeniStavka.Naziv,
+                                                                    kolicina = sn.Kolicina
+                                                                }).ToList()
+                                                            }).AsQueryable();
+
+            var mojeNarudzbe = PagedList<NarudzbaGetAllPagedZapolsenikVM>.Create(data, pageNumber, 6);
+            return Ok(mojeNarudzbe);
+        }
+
     }
 }
