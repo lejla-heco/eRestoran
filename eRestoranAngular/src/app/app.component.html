@@ -10,6 +10,7 @@
         <li class="nav-item"><a class="nav-link" routerLink="home-page" (click)="clicked('Home')" [ngClass]="this.trenutnaSelekcija == 'Home' ? 'active' : ''">Home</a></li>
         <li class="nav-item"><a class="nav-link" routerLink="meni" (click)="clicked('Meni')" [ngClass]="this.trenutnaSelekcija == 'Meni' ? 'active' : ''">Meni</a></li>
         <li *ngIf="loginInformacije.isPermisijaZaposlenik" class="nav-item"><a class="nav-link" routerLink="pregled-narudzbi" (click)="clicked('Narudzbe')" [ngClass]="this.trenutnaSelekcija == 'Narudzbe' ? 'active' : ''">Narudžbe</a></li>
+        <li *ngIf="loginInformacije.isPermisijaDostavljac" class="nav-item"><a class="nav-link" routerLink="pregled-narudzbi-dostavljac" (click)="clicked('Narudzbe')" [ngClass]="this.trenutnaSelekcija == 'Narudzbe' ? 'active' : ''">Narudžbe</a></li>
         <li *ngIf="loginInformacije.isPermisijaKorisnik || loginInformacije.isPermisijaAdministrator" class="nav-item"><a class="nav-link" routerLink="posebna-ponuda" (click)="clicked('PP')" [ngClass]="this.trenutnaSelekcija == 'PP' ? 'active' : ''">Posebna ponuda</a></li>
         <li *ngIf="loginInformacije.isPermisijaKorisnik" class="nav-item"><a class="nav-link" href="#"  routerLink="rezervacija" (click)="clicked('Rezervacija')" [ngClass]="this.trenutnaSelekcija == 'Rezervacija' ? 'active' : ''">Rezervacija</a></li>
         <li *ngIf="loginInformacije.isPermisijaAdministrator" class="nav-item"><a class="nav-link" routerLink="kupon" (click)="clicked('Kuponi')" [ngClass]="this.trenutnaSelekcija == 'Kuponi' ? 'active' : ''">Kuponi</a></li>
@@ -86,6 +87,12 @@
         </a>
       </ul>
       <ul *ngIf="loginInformacije.isPermisijaZaposlenik" class="navbar-nav d-flex">
+        <a class="nav-item btn btn-outline-light" href="" (click)="odjava()">
+          <i class="bi bi-door-closed-fill"></i>
+          Odjava
+        </a>
+      </ul>
+      <ul *ngIf="loginInformacije.isPermisijaDostavljac" class="navbar-nav d-flex">
         <a class="nav-item btn btn-outline-light" href="" (click)="odjava()">
           <i class="bi bi-door-closed-fill"></i>
           Odjava

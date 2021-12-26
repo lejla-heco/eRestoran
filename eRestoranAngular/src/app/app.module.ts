@@ -31,6 +31,8 @@ import { OmiljeneNarudzbeComponent } from './omiljene-narudzbe/omiljene-narudzbe
 import { MojeNarudzbeComponent } from './moje-narudzbe/moje-narudzbe.component';
 import { PregledNarudzbiComponent } from './pregled-narudzbi/pregled-narudzbi.component';
 import {AutorizacijaZaposlenikProvjera} from "./guards/autorizacija-zaposlenik-provjera.service";
+import { PregledNarudzbiDostavljacComponent } from './pregled-narudzbi-dostavljac/pregled-narudzbi-dostavljac.component';
+import {AutorizacijaDostavljacProvjera} from "./guards/autorizacija-dostavljac-provjera.service";
 
 
 @NgModule({
@@ -59,6 +61,7 @@ import {AutorizacijaZaposlenikProvjera} from "./guards/autorizacija-zaposlenik-p
     OmiljeneNarudzbeComponent,
     MojeNarudzbeComponent,
     PregledNarudzbiComponent,
+    PregledNarudzbiDostavljacComponent,
   ],
   imports: [
     BrowserModule,
@@ -86,7 +89,8 @@ import {AutorizacijaZaposlenikProvjera} from "./guards/autorizacija-zaposlenik-p
       {path:"pregled-rezervacija", component:PregledRezervacijaComponent, canActivate:[AutorizacijaKorisnikProvjera]},
       {path:"omiljene-narudzbe", component:OmiljeneNarudzbeComponent, canActivate:[AutorizacijaKorisnikProvjera]},
       {path:"moje-narudzbe", component:MojeNarudzbeComponent, canActivate:[AutorizacijaKorisnikProvjera]},
-      {path:"pregled-narudzbi", component:PregledNarudzbiComponent, canActivate:[AutorizacijaZaposlenikProvjera]}
+      {path:"pregled-narudzbi", component:PregledNarudzbiComponent, canActivate:[AutorizacijaZaposlenikProvjera]},
+      {path:"pregled-narudzbi-dostavljac", component:PregledNarudzbiDostavljacComponent, canActivate:[AutorizacijaDostavljacProvjera]}
     ],{
       anchorScrolling : 'enabled',
       scrollPositionRestoration : 'enabled',

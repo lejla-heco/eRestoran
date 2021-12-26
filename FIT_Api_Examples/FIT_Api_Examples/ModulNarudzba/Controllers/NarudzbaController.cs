@@ -312,6 +312,7 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
                                                             }).AsQueryable();
 
             var mojeNarudzbe = PagedList<NarudzbaGetAllPagedVM>.Create(data, pageNumber, 6);
+
             return Ok(mojeNarudzbe);
         }
 
@@ -326,7 +327,9 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
             if (zaposlenik == null)
                 return BadRequest("Nemate ovlasti za trazenu akciju!");
 
-            var data = _dbContext.Narudzba.Where(n => n.ZaposlenikID == zaposlenik.ID)
+           
+
+            var data = _dbContext.Narudzba.Where(n => n.ZaposlenikID == zaposlenik.ID && n.StatusNarudzbe.Naziv != "Spremljeno" )
                                                             .Select(n => new NarudzbaGetAllPagedZapolsenikVM()
                                                             {
                                                                 id = n.ID,
@@ -343,6 +346,20 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
                                                             }).AsQueryable();
 
             var mojeNarudzbe = PagedList<NarudzbaGetAllPagedZapolsenikVM>.Create(data, pageNumber, 6);
+
+            Narudzba narudzba = _dbContext.Narudzba.Where(n => n.ZaposlenikID == zaposlenik.ID && n.StatusNarudzbe.Naziv == "Spremljeno").SingleOrDefault();
+            if (narudzba == null)
+                return BadRequest("Ne postoji spremljena narudzba!");
+            if (_dbContext.Narudzba.Where(x => x.StatusNarudzbe.Naziv == "Spremljeno").Count() > 0)
+            {
+                Dostavljac odabraniDostavljac = _dbContext.Dostavljac
+               .Where(d=> d.AktivneNarudzbe == _dbContext.Dostavljac.Min<Dostavljac>(w => w.AktivneNarudzbe)).FirstOrDefault();
+                odabraniDostavljac.AktivneNarudzbe++;
+                narudzba.Dostavljac = odabraniDostavljac;
+                if (odabraniDostavljac == null)
+                    return BadRequest("Nemamo dostavljaca!");
+                _dbContext.SaveChanges();
+            }
             return Ok(mojeNarudzbe);
         }
         [HttpPost("{id}")]

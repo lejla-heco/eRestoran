@@ -70,6 +70,7 @@ urediStatusNarudzbe:UrediStatusNarudzbe= new UrediStatusNarudzbe();
       this.closeModal = false;
       this.obavjestenjeNaslov ="Uređen status";
       this.obavjestenjeSadrzaj="Uspješno ste uredili status narudzbe";
+      this.ucitajNarudzbe();
     })
 
 }

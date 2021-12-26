@@ -8,7 +8,7 @@
       <div *ngIf ="mojeNarudzbe == null || mojeNarudzbe?.length == 0" class="py-5 my-5">
         <h3 class="animate__animated animate__bounceIn display-7 fw-bolder text-center text-white">
           Trenutno nemate narudžbi</h3>
-        <button class="btn btn-outline-light text mt-2" (click)="reloadPage()" routerLinkActive="/pregled-narudzbi"><i class="bi bi-search"></i> Pregledaj meni</button>
+        <button class="btn btn-outline-light text mt-2" ><i class="bi bi-search"></i> Pregledaj meni</button>
       </div>
       <div *ngFor = "let narudzba of mojeNarudzbe" class="animate__animated animate__bounceIn col-lg-6 col-xl-4 mb-4" style="text-align: left;">
         <div  class="card h-100 mb-5 mb-xl-0" >
@@ -25,11 +25,11 @@
               </ul>
             </div>
               <div class="text-dark">Status narudžbe: {{narudzba.status}}</div> <br/>
-                <div clas="text-muted">Uredi status narudžbe
+              <div clas="text-muted">Uredi status narudžbe
                 <select class="form-control mb-3" [(ngModel)]="narudzba.statusID">
 
                   <option *ngFor = "let status of statusi" [value]=status.id>{{status.naziv}}</option>
-                </select><button (click)="urediStatus(narudzba)" class="btn btn-outline-dark mt-auto mx-2"><i class="bi bi-pencil-square"  style="margin-left: 10px"></i>Uredi status</button></div>
+                </select><button  class="btn btn-outline-dark mt-auto mx-2"><i class="bi bi-pencil-square"  style="margin-left: 10px"></i>Uredi status</button></div>
               <div clas="text-muted" *ngIf="narudzba.isKoristenKupon">Korišten kupon za narudžbu</div>
             </div>
           </div>
@@ -51,7 +51,7 @@
   </div>
 </header>
 
-<
+<!--
 <div *ngIf="obavjestenje" class="portfolio-modal modal" [ngClass]="animirajObavjestenje()" id="portfolioModalResponse" tabindex="-1" aria-labelledby="portfolioModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
   <div class="modal-dialog mt-2">
     <div class="modal-content">
@@ -75,5 +75,4 @@
     </div>
   </div>
 </div>
-
-
+-->
