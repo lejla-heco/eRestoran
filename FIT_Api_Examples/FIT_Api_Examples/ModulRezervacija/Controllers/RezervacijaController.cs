@@ -71,8 +71,10 @@ namespace FIT_Api_Examples.ModulRezervacija.Controllers
                                               datumRezerviranja=z.DatumRezerviranja,
                                               prigodaID=z.PrigodaID,
                                               nazivPrigode=z.Prigoda.Naziv,
-                                               poruka=z.Poruka
-                    
+                                               poruka=z.Poruka,
+                                               statusID=z.StatusRezervacijeID,
+                                              nazivStatusa = z.StatusRezervacije.Naziv,
+
 
 
                                           }).ToList();

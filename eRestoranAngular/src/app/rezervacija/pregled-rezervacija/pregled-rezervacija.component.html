@@ -36,6 +36,7 @@
                           <p class="text-black">Datum: {{rezervacija.datumRezerviranja}}</p>
                           <p *ngIf="rezervacija.poruka==null" class="text-black">Poruka: nema poruke </p>
                           <p *ngIf="rezervacija.poruka!=null" class="text-black">Poruka: {{rezervacija.poruka}}</p>
+                          <p class="text-black">Status rezervacije: {{rezervacija.nazivStatusa}}</p>
 
 
                           <button class="btn btn-dark flex-shrink-0"(click)="prikaziBrisanje(rezervacija)"  ><i  class="bi bi-trash" ></i> Otkaži rezervaciju</button>

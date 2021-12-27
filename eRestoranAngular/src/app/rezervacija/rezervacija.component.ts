@@ -28,7 +28,7 @@ export class RezervacijaComponent implements OnInit {
   }
 
   posaljiPodatke() {
-    this.httpKlijent.post(MyConfig.adresaServera + "/Rezervacija/Add",this.rezervacija, MyConfig.httpOpcije()).subscribe((result:any)=>{
+    this.httpKlijent.post("https://localhost:44325" + "/Rezervacija/Add",this.rezervacija, MyConfig.httpOpcije()).subscribe((result:any)=>{
       alert("Uspješno dodana nova rezervacija");
     });
   }

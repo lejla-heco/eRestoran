@@ -14,6 +14,8 @@ namespace FIT_Api_Examples.ModulRezervacija.ViewModels
         public string poruka { get; set; }
         public int prigodaID { get; set; }
         public string nazivPrigode { get; set; }
+        public int statusID { get; set; }
+        public string nazivStatusa { get; set; }
 
     }
 }

@@ -24,7 +24,7 @@ export class PregledRezervacijaComponent implements OnInit {
   }
 
   public ucitajRezervacije() {
-    this.httpKlijent.get(MyConfig.adresaServera + "/Rezervacija/GetAll").subscribe((result : any)=>{
+    this.httpKlijent.get("https://localhost:44325" + "/Rezervacija/GetAll").subscribe((result : any)=>{
       this.rezervacije = result;
       this.odabranaRezervacija=null;
     });
