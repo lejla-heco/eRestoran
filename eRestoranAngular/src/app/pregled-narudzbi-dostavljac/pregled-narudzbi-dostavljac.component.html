@@ -29,14 +29,14 @@
                 <select class="form-control mb-3" [(ngModel)]="narudzba.statusID">
 
                   <option *ngFor = "let status of statusi" [value]=status.id>{{status.naziv}}</option>
-                </select><button  class="btn btn-outline-dark mt-auto mx-2"><i class="bi bi-pencil-square"  style="margin-left: 10px"></i>Uredi status</button></div>
+                </select><button (click)="urediStatus(narudzba)" class="btn btn-outline-dark mt-auto mx-2"><i class="bi bi-pencil-square"  style="margin-left: 10px"></i>Uredi status</button></div>
               <div clas="text-muted" *ngIf="narudzba.isKoristenKupon">Korišten kupon za narudžbu</div>
             </div>
           </div>
           <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
             <div class="text-center">
               <!--<a *ngIf = "narudzba.status != 'Poslano'" class="btn btn-outline-dark mt-auto" ><i class="bi bi-arrow-repeat"></i> Naruči ponovo</a>-->
-              <a *ngIf = "narudzba.status == 'Preuzeto'" class="btn btn-outline-dark mt-auto mx-2"><i class="bi bi-trash-fill"></i> Obriši</a>
+              <!--<a *ngIf = "narudzba.status == 'Preuzeto'" class="btn btn-outline-dark mt-auto mx-2"><i class="bi bi-trash-fill"></i> Obriši</a>-->
             </div>
           </div>
         </div>
@@ -51,7 +51,7 @@
   </div>
 </header>
 
-<!--
+
 <div *ngIf="obavjestenje" class="portfolio-modal modal" [ngClass]="animirajObavjestenje()" id="portfolioModalResponse" tabindex="-1" aria-labelledby="portfolioModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
   <div class="modal-dialog mt-2">
     <div class="modal-content">
@@ -75,4 +75,4 @@
     </div>
   </div>
 </div>
--->
+

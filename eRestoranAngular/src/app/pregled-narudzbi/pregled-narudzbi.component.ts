@@ -64,7 +64,7 @@ urediStatusNarudzbe:UrediStatusNarudzbe= new UrediStatusNarudzbe();
    this.urediStatusNarudzbe.statusID=narudzba.statusID;
   // this.urediStatusNarudzbe.status=narudzba.status;
 
-    this.httpKlijent.post("https://localhost:44325"+"/Narudzba/Update/"+this.urediStatusNarudzbe.id,this.urediStatusNarudzbe,MyConfig.httpOpcije()).subscribe((result:any)=>{
+    this.httpKlijent.post("https://localhost:44325"+"/Narudzba/UpdateStatusZaposlenik/"+this.urediStatusNarudzbe.id,this.urediStatusNarudzbe,MyConfig.httpOpcije()).subscribe((result:any)=>{
 
       this.obavjestenje = true;
       this.closeModal = false;

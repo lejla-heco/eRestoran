@@ -329,7 +329,7 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
 
            
 
-            var data = _dbContext.Narudzba.Where(n => n.ZaposlenikID == zaposlenik.ID && n.StatusNarudzbe.Naziv != "Spremljeno")
+            var data = _dbContext.Narudzba.Where(n => n.ZaposlenikID == zaposlenik.ID && n.StatusNarudzbe.Naziv != "Spremljeno" && n.StatusNarudzbe.Naziv != "U dostavi" && n.StatusNarudzbe.Naziv != "Preuzeto")
                                                             .Select(n => new NarudzbaGetAllPagedZapolsenikVM()
                                                             {
                                                                 id = n.ID,
@@ -351,7 +351,7 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
             return Ok(mojeNarudzbe);
         }
         [HttpPost("{id}")]
-        public ActionResult Update(int id, [FromBody] NarudzbaStatusUpdateVM narudzbaStatusUpdateVM)
+        public ActionResult UpdateStatusZaposlenik(int id, [FromBody] NarudzbaStatusUpdateVM narudzbaStatusUpdateVM)
         {
             if (!HttpContext.GetLoginInfo().isPermisijaZaposlenik)
                 return BadRequest("nije logiran");
@@ -405,7 +405,7 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
 
 
         
-            var data = _dbContext.Narudzba.Where(n => n.DostavljacID == dostavljac.ID )//n.DostavljacID==dostavljac.ID
+            var data = _dbContext.Narudzba.Where(n => n.DostavljacID == dostavljac.ID && n.StatusNarudzbe.Naziv != "Preuzeto" && n.StatusNarudzbe.Naziv != "Poslano" && n.StatusNarudzbe.Naziv != "U pripremi")
                                                             .Select(n => new NarudzbaGetAllPagedDostavljacVM()
                                                             {
                                                                 id = n.ID,
@@ -425,6 +425,34 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
 
           
             return Ok(mojeNarudzbe);
+        }
+        [HttpPost("{id}")]
+        public ActionResult UpdateStatusDostavljac(int id, [FromBody] NarudzbaStatusUpdateVM narudzbaStatusUpdateVM)
+        {
+            if (!HttpContext.GetLoginInfo().isPermisijaDostavljac)
+                return BadRequest("nije logiran");
+
+            Dostavljac dostavljac = HttpContext.GetLoginInfo().korisnickiNalog.Dostavljac;
+
+            if (dostavljac == null)
+                return BadRequest("Nemate ovlasti za trazenu akciju!");
+
+            Narudzba narudzba = _dbContext.Narudzba.Find(id);
+
+            if (narudzba == null)
+                return BadRequest("pogresan ID");
+
+
+            narudzba.ID = narudzbaStatusUpdateVM.id;
+            //narudzba.StatusNarudzbe.Naziv = narudzbaStatusUpdateVM.status;
+            narudzba.StatusNarudzbeID = narudzbaStatusUpdateVM.statusID;
+
+          
+
+
+            _dbContext.SaveChanges();
+           
+            return Ok(narudzba.ID);
         }
 
     }

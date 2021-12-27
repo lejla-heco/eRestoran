@@ -4,6 +4,7 @@ import {NarudzbaStatus} from "../pregled-narudzbi/view-model/status-narudzbe-vm"
 import {MyConfig} from "../my-config";
 import {HttpClient} from "@angular/common/http";
 import {NarudzbaDostavljac} from "./view-models/narudzbe-dostavljac-vm";
+import {UrediStatusNarudzbe} from "../pregled-narudzbi/view-model/narudzba-status-uredu-vm";
 
 @Component({
   selector: 'app-pregled-narudzbi-dostavljac',
@@ -16,6 +17,13 @@ export class PregledNarudzbiDostavljacComponent implements OnInit {
 
   mojeNarudzbe : NarudzbaDostavljac[] = null;
   statusi:NarudzbaStatus[]=null;
+
+  obavjestenje : boolean = false;
+  closeModal : boolean = false;
+  obavjestenjeNaslov : string = "";
+  obavjestenjeSadrzaj : string = "";
+
+  urediStatusNarudzbe:UrediStatusNarudzbe= new UrediStatusNarudzbe();
   constructor(private httpKlijent :HttpClient) {
 
   }
@@ -37,6 +45,20 @@ export class PregledNarudzbiDostavljacComponent implements OnInit {
       this.statusi = result;
     });
   }
+  urediStatus(narudzba:NarudzbaDostavljac) {
+    this.urediStatusNarudzbe.id=narudzba.id;
+    this.urediStatusNarudzbe.statusID=narudzba.statusID;
+    // this.urediStatusNarudzbe.status=narudzba.status;
+
+    this.httpKlijent.post("https://localhost:44325"+"/Narudzba/UpdateStatusDostavljac/"+this.urediStatusNarudzbe.id,this.urediStatusNarudzbe,MyConfig.httpOpcije()).subscribe((result:any)=>{
+
+      this.obavjestenje = true;
+      this.closeModal = false;
+      this.obavjestenjeNaslov ="Uređen status";
+      this.obavjestenjeSadrzaj="Uspješno ste uredili status narudzbe";
+      this.ucitajNarudzbe();
+    })
+  }
   createRangeStranica() {
     var niz = new Array(this.totalPages);
     for(let i : number = 0; i < this.totalPages; i++){
@@ -48,5 +70,16 @@ export class PregledNarudzbiDostavljacComponent implements OnInit {
   ucitajStranicu(page : number) {
     this.currentPage = page;
    // this.ucitajNarudzbe();
+  }
+  animirajObavjestenje() {
+    return this.closeModal == true? 'animate__animated animate__bounceOut' : 'animate__animated animate__bounceIn';
+  }
+
+  zatvoriModalObavjestenje(){
+    this.closeModal = true;
+    this.animirajObavjestenje();
+    this.obavjestenje = setTimeout(function (){
+      return false;
+    },1000)== 0? false : true;
   }
 }
