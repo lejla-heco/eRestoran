@@ -35,7 +35,7 @@ namespace FIT_Api_Examples.ModulRezervacija.Controllers
 
             if (korisnik == null)
                 return BadRequest("Nemate ovlasti za trazenu akciju!");
-            int statusid = _dbContext.StatusRezervacije.Where(s => s.Naziv == "Default").SingleOrDefault().ID;
+            int statusid = _dbContext.StatusRezervacije.Where(s => s.Naziv == "Na čekanju").SingleOrDefault().ID;
             
             Rezervacija novaRezervacija = new Rezervacija()
             {
@@ -100,6 +100,8 @@ namespace FIT_Api_Examples.ModulRezervacija.Controllers
                 brojStolova = z.BrojStolova,
                 datumRezerviranja = z.DatumRezerviranja.ToString("dd/MM/yyyy hh:mm"),
                 prigodaID = z.PrigodaID,
+                statusID=z.StatusRezervacijeID,
+                nazivStatusa=z.StatusRezervacije.Naziv,
                 nazivPrigode = z.Prigoda.Naziv,
                 poruka = z.Poruka
             }).AsQueryable();

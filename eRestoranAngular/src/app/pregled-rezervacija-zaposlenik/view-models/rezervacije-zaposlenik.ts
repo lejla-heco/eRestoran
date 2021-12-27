@@ -7,4 +7,6 @@ export  class RezervacijaZaposlenik{
   prigodaID:number;
   datumRezerviranja:string;
   nazivPrigode:string;
+  statusID:number;
+  nazivStatusa:string;
 }

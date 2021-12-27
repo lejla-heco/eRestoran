@@ -4,6 +4,7 @@ import {NarudzbaStatus} from "../pregled-narudzbi/view-model/status-narudzbe-vm"
 import {RezervacijaZaposlenik} from "./view-models/rezervacije-zaposlenik";
 import {MyConfig} from "../my-config";
 import {HttpClient} from "@angular/common/http";
+import {RezervacijaStatus} from "./view-models/rezervacija-status";
 
 @Component({
   selector: 'app-pregled-rezervacija-zaposlenik',
@@ -15,17 +16,23 @@ export class PregledRezervacijaZaposlenikComponent implements OnInit {
   totalPages: number;
 
   rezervacije : RezervacijaZaposlenik[] = null;
-  //statusi:NarudzbaStatus[]=null;
+  statusi:RezervacijaStatus[]=null;
   constructor(private httpKlijent:HttpClient) { }
 
   ngOnInit(): void {
     this.ucitajRezervacije();
+    this.getAllStatusiRezervacije();
   }
   private ucitajRezervacije() {
     this.httpKlijent.get("https://localhost:44325" + "/Rezervacija/GetAllPagedZaposlenik/" + this.currentPage,MyConfig.httpOpcije()).subscribe((response : any)=>{
       this.totalPages = response.totalPages;
       this.rezervacije = response.dataItems;
     })
+  }
+  private getAllStatusiRezervacije() {
+    this.httpKlijent.get("https://localhost:44325" + "/StatusRezervacije/GetAll").subscribe((result:any)=>{
+      this.statusi = result;
+    });
   }
   createRangeStranica() {
     var niz = new Array(this.totalPages);

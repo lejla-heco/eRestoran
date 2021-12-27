@@ -21,16 +21,17 @@
             </div>
               <div class="text-dark">Broj osoba: {{rezervacija.brojOsoba}}</div>
               <div class="text-dark">Broj stolova: {{rezervacija.brojStolova}}</div>
-              
+
               <div *ngIf="rezervacija.poruka==null" class="text-muted">Poruka: nema poruke</div>
               <div *ngIf="rezervacija.poruka!=null" class="text-muted">Poruka: {{rezervacija.poruka}}</div>
-              <div class="text-dark">Prigoda: {{rezervacija.nazivPrigode}}</div>
-              <!--<div clas="text-muted">Uredi status narudžbe
-                <select class="form-control mb-3" [(ngModel)]="narudzba.statusID">
+              <div class="text-dark">Prigoda: {{rezervacija.nazivPrigode}}</div> <br/>
+              <div class="text-dark">Status rezervacije: {{rezervacija.nazivStatusa}}</div>
+              <div clas="text-muted">Uredi status narudžbe
+                <select class="form-control mb-3" [(ngModel)]="rezervacija.statusID">
 
                   <option *ngFor = "let status of statusi" [value]=status.id>{{status.naziv}}</option>
-                </select><button (click)="urediStatus(narudzba)" class="btn btn-outline-dark mt-auto mx-2"><i class="bi bi-pencil-square"  style="margin-left: 10px"></i>Uredi status</button></div>
-              <div clas="text-muted" *ngIf="narudzba.isKoristenKupon">Korišten kupon za narudžbu</div>-->
+                </select><button  class="btn btn-outline-dark mt-auto mx-2"><i class="bi bi-pencil-square"  style="margin-left: 10px"></i>Uredi status</button></div>
+
             </div>
           </div>
           <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
