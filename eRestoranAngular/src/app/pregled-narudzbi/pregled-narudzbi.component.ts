@@ -55,9 +55,7 @@ urediStatusNarudzbe:UrediStatusNarudzbe= new UrediStatusNarudzbe();
     this.currentPage = page;
     this.ucitajNarudzbe();
   }
-  reloadPage() {
-    this.router.navigate(["/pregled-narudzbi"])
-  }
+
 
   urediStatus(narudzba:Narudzba) {
    this.urediStatusNarudzbe.id=narudzba.id;

@@ -1,8 +1,10 @@
 ﻿using FIT_Api_Examples.Data;
+using FIT_Api_Examples.Helper;
 using FIT_Api_Examples.Helper.AutentifikacijaAutorizacija;
 using FIT_Api_Examples.ModulKorisnik.Models;
 using FIT_Api_Examples.ModulRezervacija.Models;
 using FIT_Api_Examples.ModulRezervacija.ViewModels;
+using FIT_Api_Examples.ModulZaposleni.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -49,6 +51,8 @@ namespace FIT_Api_Examples.ModulRezervacija.Controllers
                
             };
 
+            
+
             _dbContext.Rezervacija.Add(novaRezervacija);
             _dbContext.SaveChanges();
             return Ok(novaRezervacija);
@@ -73,6 +77,38 @@ namespace FIT_Api_Examples.ModulRezervacija.Controllers
 
                                           }).ToList();
             return rezervacije;
+        }
+
+        [HttpGet("{pageNumber}")]
+        public IActionResult GetAllPagedZaposlenik(int pageNumber)
+        {
+
+            if (!HttpContext.GetLoginInfo().isPermisijaZaposlenik)
+                return BadRequest("nije logiran");
+
+            Zaposlenik zaposlenik = HttpContext.GetLoginInfo().korisnickiNalog.Zaposlenik;
+
+            if (zaposlenik == null)
+                return BadRequest("Nemate ovlasti za trazenu akciju!");
+
+
+
+            var data = _dbContext.Rezervacija.Select(z => new RezervacijaGetAllPagedZaposlenik()
+            {
+                id = z.ID,
+                brojOsoba = z.BrojOsoba,
+                brojStolova = z.BrojStolova,
+                datumRezerviranja = z.DatumRezerviranja.ToString("dd/MM/yyyy hh:mm"),
+                prigodaID = z.PrigodaID,
+                nazivPrigode = z.Prigoda.Naziv,
+                poruka = z.Poruka
+            }).AsQueryable();
+
+            var mojeNarudzbe = PagedList<RezervacijaGetAllPagedZaposlenik>.Create(data, pageNumber, 6);
+
+
+            return Ok(mojeNarudzbe);
+           
         }
         [HttpPost("{id}")]
         public ActionResult Delete(int id)
