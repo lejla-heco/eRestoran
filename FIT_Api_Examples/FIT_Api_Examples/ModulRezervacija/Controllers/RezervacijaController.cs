@@ -95,7 +95,7 @@ namespace FIT_Api_Examples.ModulRezervacija.Controllers
 
 
 
-            var data = _dbContext.Rezervacija.Select(z => new RezervacijaGetAllPagedZaposlenik()
+            var data = _dbContext.Rezervacija.Where(r=>r.Obavljena==false).Select(z => new RezervacijaGetAllPagedZaposlenik()
             {
                 id = z.ID,
                 brojOsoba = z.BrojOsoba,
@@ -105,7 +105,8 @@ namespace FIT_Api_Examples.ModulRezervacija.Controllers
                 statusID=z.StatusRezervacijeID,
                 nazivStatusa=z.StatusRezervacije.Naziv,
                 nazivPrigode = z.Prigoda.Naziv,
-                poruka = z.Poruka
+                poruka = z.Poruka,
+                obavljena=z.Obavljena
             }).AsQueryable();
 
             var mojeNarudzbe = PagedList<RezervacijaGetAllPagedZaposlenik>.Create(data, pageNumber, 6);
@@ -127,5 +128,34 @@ namespace FIT_Api_Examples.ModulRezervacija.Controllers
             _dbContext.SaveChanges();
             return Ok(rezervacija);
         }
+
+
+        [HttpPost("{id}")]
+        public ActionResult UpdateObavljenaZaposlenik(int id,RezervacijaObavljenaUpdateVM rezervacijaObavljenaUpdateVM)
+        {
+            if (!HttpContext.GetLoginInfo().isPermisijaZaposlenik)
+                return BadRequest("nije logiran");
+
+            Zaposlenik zaposlenik = HttpContext.GetLoginInfo().korisnickiNalog.Zaposlenik;
+
+            if (zaposlenik == null)
+                return BadRequest("Nemate ovlasti za trazenu akciju!");
+
+            Rezervacija rezervacija = _dbContext.Rezervacija.Find(id);
+
+            if (rezervacija == null)
+                return BadRequest("pogresan ID");
+
+            rezervacija.ID = rezervacijaObavljenaUpdateVM.id;
+            rezervacija.Obavljena = rezervacijaObavljenaUpdateVM.obavljena;
+
+           
+
+
+            _dbContext.SaveChanges();
+            
+            return Ok(rezervacija.ID);
+        }
+
     }
 }

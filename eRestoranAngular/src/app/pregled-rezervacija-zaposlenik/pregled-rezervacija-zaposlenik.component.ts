@@ -7,6 +7,7 @@ import {HttpClient} from "@angular/common/http";
 import {RezervacijaStatus} from "./view-models/rezervacija-status";
 import {UrediStatusNarudzbe} from "../pregled-narudzbi/view-model/narudzba-status-uredu-vm";
 import {UrediStatusRezervacije} from "./view-models/rezervacija-status-uredi";
+import {ObavljenaRezervacija} from "./view-models/rezervacija-obavljena-uredi";
 
 @Component({
   selector: 'app-pregled-rezervacija-zaposlenik',
@@ -21,6 +22,8 @@ export class PregledRezervacijaZaposlenikComponent implements OnInit {
   statusi:RezervacijaStatus[]=null;
 
   urediStatusRezervacije:UrediStatusRezervacije= new UrediStatusRezervacije();
+
+  obavljena:ObavljenaRezervacija= new ObavljenaRezervacija();
 
 
   obavjestenje : boolean = false;
@@ -82,5 +85,24 @@ export class PregledRezervacijaZaposlenikComponent implements OnInit {
     this.obavjestenje = setTimeout(function (){
       return false;
     },1000)== 0? false : true;
+  }
+
+
+  onChange(rezervacija: RezervacijaZaposlenik) {
+
+
+    rezervacija.obavljena=true;
+
+    this.obavljena.id=rezervacija.id;
+    this.obavljena.obavljena=rezervacija.obavljena;
+    this.httpKlijent.post("https://localhost:44325"+"/Rezervacija/UpdateObavljenaZaposlenik/"+this.obavljena.id,this.obavljena,MyConfig.httpOpcije()).subscribe((result:any)=> {
+
+      this.obavjestenje = true;
+      this.closeModal = false;
+      this.obavjestenjeNaslov = "Rezervacija obavljena";
+      this.obavjestenjeSadrzaj = "Uspješno ste označili rezervaciju obavljenom";
+      this.ucitajRezervacije();
+      this.ucitajRezervacije();
+    })
   }
 }

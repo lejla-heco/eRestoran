@@ -9,4 +9,5 @@ export  class RezervacijaZaposlenik{
   nazivPrigode:string;
   statusID:number;
   nazivStatusa:string;
+  obavljena:boolean;
 }
