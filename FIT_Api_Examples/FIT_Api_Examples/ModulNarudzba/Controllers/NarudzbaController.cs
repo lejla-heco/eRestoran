@@ -329,7 +329,7 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
 
            
 
-            var data = _dbContext.Narudzba.Where(n => n.ZaposlenikID == zaposlenik.ID && n.StatusNarudzbe.Naziv != "Spremljeno" )
+            var data = _dbContext.Narudzba.Where(n => n.ZaposlenikID == zaposlenik.ID && n.StatusNarudzbe.Naziv != "Spremljeno")
                                                             .Select(n => new NarudzbaGetAllPagedZapolsenikVM()
                                                             {
                                                                 id = n.ID,
@@ -347,19 +347,7 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
 
             var mojeNarudzbe = PagedList<NarudzbaGetAllPagedZapolsenikVM>.Create(data, pageNumber, 6);
 
-            Narudzba narudzba = _dbContext.Narudzba.Where(n => n.ZaposlenikID == zaposlenik.ID && n.StatusNarudzbe.Naziv == "Spremljeno").SingleOrDefault();
-            if (narudzba == null)
-                return BadRequest("Ne postoji spremljena narudzba!");
-            if (_dbContext.Narudzba.Where(x => x.StatusNarudzbe.Naziv == "Spremljeno").Count() > 0)
-            {
-                Dostavljac odabraniDostavljac = _dbContext.Dostavljac
-               .Where(d=> d.AktivneNarudzbe == _dbContext.Dostavljac.Min<Dostavljac>(w => w.AktivneNarudzbe)).FirstOrDefault();
-                odabraniDostavljac.AktivneNarudzbe++;
-                narudzba.Dostavljac = odabraniDostavljac;
-                if (odabraniDostavljac == null)
-                    return BadRequest("Nemamo dostavljaca!");
-                _dbContext.SaveChanges();
-            }
+         
             return Ok(mojeNarudzbe);
         }
         [HttpPost("{id}")]
@@ -381,12 +369,62 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
             
             narudzba.ID = narudzbaStatusUpdateVM.id;
             //narudzba.StatusNarudzbe.Naziv = narudzbaStatusUpdateVM.status;
-           //if(narudzba.StatusNarudzbe!=null)
             narudzba.StatusNarudzbeID= narudzbaStatusUpdateVM.statusID;
-            
+
+            if (narudzba.StatusNarudzbeID == 4)// Spremljeno
+            {
+                Dostavljac odabraniDostavljac = _dbContext.Dostavljac
+          .Where(d => d.AktivneNarudzbe == _dbContext.Dostavljac.Min<Dostavljac>(w => w.AktivneNarudzbe)).FirstOrDefault();
+                odabraniDostavljac.AktivneNarudzbe++;
+               
+                    narudzba.Dostavljac = odabraniDostavljac;
+              
+                 if (odabraniDostavljac == null)
+                     return BadRequest("Nemamo dostavljaca!");
+                _dbContext.SaveChanges();
+            }
            
+
             _dbContext.SaveChanges();
+            //UcitajNarudzbeDostavljacima();
             return Ok(narudzba.ID);
+        }
+
+       
+
+        [HttpGet("{pageNumber}")]
+        public IActionResult GetAllPagedDostavljac(int pageNumber)
+        {
+            if (!HttpContext.GetLoginInfo().isPermisijaDostavljac)
+                return BadRequest("nije logiran");
+
+            Dostavljac dostavljac = HttpContext.GetLoginInfo().korisnickiNalog.Dostavljac;
+
+            if (dostavljac == null)
+                return BadRequest("Nemate ovlasti za trazenu akciju!");
+
+
+        
+            var data = _dbContext.Narudzba.Where(n => n.DostavljacID == dostavljac.ID )//n.DostavljacID==dostavljac.ID
+                                                            .Select(n => new NarudzbaGetAllPagedDostavljacVM()
+                                                            {
+                                                                id = n.ID,
+                                                                cijena = n.Cijena,
+                                                                datumNarucivanja = n.DatumNarucivanja.ToString("dd/MM/yyyy hh:mm"),
+                                                                status = n.StatusNarudzbe.Naziv,
+                                                                statusID = n.StatusNarudzbe.ID,
+                                                                isKoristenKupon = n.KuponKoristen,
+                                                                stavke = _dbContext.StavkaNarudzbe.Where(sn => sn.NarudzbaID == n.ID).Select(sn => new NarudzbaGetAllPagedDostavljacVM.Stavka()
+                                                                {
+                                                                    naziv = sn.MeniStavka.Naziv,
+                                                                    kolicina = sn.Kolicina
+                                                                }).ToList()
+                                                            }).AsQueryable();
+
+            var mojeNarudzbe = PagedList<NarudzbaGetAllPagedDostavljacVM>.Create(data, pageNumber, 6);
+
+          
+            return Ok(mojeNarudzbe);
         }
 
     }

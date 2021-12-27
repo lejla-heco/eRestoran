@@ -62,7 +62,7 @@ urediStatusNarudzbe:UrediStatusNarudzbe= new UrediStatusNarudzbe();
   urediStatus(narudzba:Narudzba) {
    this.urediStatusNarudzbe.id=narudzba.id;
    this.urediStatusNarudzbe.statusID=narudzba.statusID;
-   //this.urediStatusNarudzbe.status=narudzba.status;
+  // this.urediStatusNarudzbe.status=narudzba.status;
 
     this.httpKlijent.post("https://localhost:44325"+"/Narudzba/Update/"+this.urediStatusNarudzbe.id,this.urediStatusNarudzbe,MyConfig.httpOpcije()).subscribe((result:any)=>{
 
