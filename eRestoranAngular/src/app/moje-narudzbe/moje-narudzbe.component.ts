@@ -63,4 +63,15 @@ export class MojeNarudzbeComponent implements OnInit {
     this.currentPage = page;
     this.ucitajNarudzbe();
   }
+
+  dodajUOmiljene(id : number) {
+    this.httpKlijent.get(MyConfig.adresaServera + "/Narudzba/OmiljenaNarudzba/" + id, MyConfig.httpOpcije()).subscribe((response : any) => {
+      console.log(response);
+      this.obavjestenje = true;
+      this.closeModal = false;
+      this.obavjestenjeNaslov = "Narudžba premještena u sekciju omiljenih narudžbi";
+      this.obavjestenjeSadrzaj = "Uspješno ste lajkali Vašu narudžbu";
+      this.ucitajNarudzbe();
+    })
+  }
 }

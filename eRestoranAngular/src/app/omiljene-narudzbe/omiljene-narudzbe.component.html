@@ -12,7 +12,8 @@
         </div>
         <div *ngFor = "let narudzba of najdrazeNarudzbe" class="animate__animated animate__bounceIn col-lg-6 col-xl-4" style="text-align: left;">
           <div class="card h-100 mb-5 mb-xl-0">
-            <div class="card-body p-5">
+            <i class="bi bi-x" style="font-size:35px; text-align:right; padding-right:10px;"></i>
+            <div class="card-body p-5 pt-0">
               <div class="small text-uppercase fw-bold text-muted">Narudžba na dan: {{narudzba.datumNarucivanja}}<div>
               <div class="mb-3">
                 <span class="display-4 fw-bold text-dark">{{narudzba.cijena}} KM</span>

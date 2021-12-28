@@ -13,7 +13,7 @@
       <div *ngFor = "let narudzba of mojeNarudzbe" class="animate__animated animate__bounceIn col-lg-6 col-xl-4 mb-4" style="text-align: left;">
         <div class="card h-100 mb-5 mb-xl-0">
           <div class="card-body p-5">
-            <a class = "small text-uppercase fw-bold omiljena-narudzba">
+            <a class = "small text-uppercase fw-bold omiljena-narudzba" (click)="dodajUOmiljene(narudzba.id)">
             <i class="bi bi-heart-fill"></i>
               Dodaj narudžbu u omiljene
             </a>
@@ -74,3 +74,6 @@
     </div>
   </div>
 </div>
+
+
+
