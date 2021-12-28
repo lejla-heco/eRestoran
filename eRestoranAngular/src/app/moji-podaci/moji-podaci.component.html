@@ -1,4 +1,4 @@
-<header class="masthead-kupon" style="padding-top: 8rem; background-image: url('/assets/img/moji-podaci.jpg')">
+<header class="masthead-kupon" style="padding-top: 6rem; background-image: url('/assets/img/moji-podaci.jpg')">
   <div class="container">
       <div class="row d-flex justify-content-center align-items-center">
         <div class="animate__animated animate__pulse col col-xl-6">
@@ -13,54 +13,54 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text">Ime</span>
                       </div>
-                      <input type="text" class="form-control" >
+                      <input type="text" class="form-control" [(ngModel)]="korisnik.ime" [ngModelOptions]="{standalone: true}">
                     </div>
                     <div class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Prezime</span>
                       </div>
-                      <input type="text" class="form-control"  >
+                      <input type="text" class="form-control" [(ngModel)]="korisnik.prezime" [ngModelOptions]="{standalone: true}">
                     </div>
                     <div class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Email</span>
                       </div>
-                      <input type="text" class="form-control" >
+                      <input type="text" class="form-control" [(ngModel)]="korisnik.email" [ngModelOptions]="{standalone: true}">
                     </div>
                     <div class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Broj telefona</span>
                       </div>
-                      <input type="text" class="form-control" >
+                      <input type="text" class="form-control" [(ngModel)]="korisnik.brojTelefona" [ngModelOptions]="{standalone: true}">
                     </div>
                     <div class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Adresa stanovanja</span>
                       </div>
-                      <input type="text" class="form-control" >
+                      <input type="text" class="form-control" [(ngModel)]="korisnik.adresaStanovanja" [ngModelOptions]="{standalone: true}">
                     </div>
                     <div class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Korisničko ime</span>
                       </div>
-                      <input type="text" class="form-control" placeholder="Korisnicko ime" >
+                      <input type="text" class="form-control" placeholder="Korisnicko ime" [(ngModel)]="korisnik.korisnickoIme" [ngModelOptions]="{standalone: true}">
                     </div>
                     <div class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Lozinka</span>
                       </div>
-                      <input type="password" class="form-control" placeholder="Lozinka" >
+                      <input type="password" class="form-control" placeholder="Lozinka" [(ngModel)]="korisnik.lozinka" [ngModelOptions]="{standalone: true}">
                     </div>
-<!--
+
                     <div class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Opstina</span>
                       </div>
-                      <select class="form-control mb-3" [(ngModel)]="registracija.opstinaId"  [ngModelOptions]="{standalone: true}">
+                      <select class="form-control mb-3" [(ngModel)]="korisnik.opstinaId"  [ngModelOptions]="{standalone: true}">
                         <option *ngFor = "let opstina of opstine" [value]=opstina.id>{{opstina.naziv}}</option>
                       </select>
                     </div>
--->
+
                     <button class="btn btn-dark flex-shrink-0"> <i class="bi bi-archive-fill"></i> Ažuriraj podatke</button>
                     <!--<button class="btn btn-dark flex-shrink-0" (click)="posaljiPodatke()">
                        <i class="bi bi-box-arrow-in-right"></i>

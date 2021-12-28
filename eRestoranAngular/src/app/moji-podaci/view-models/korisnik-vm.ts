@@ -6,4 +6,5 @@ export class Korisnik{
   adresaStanovanja : string;
   korisnickoIme : string;
   lozinka : string;
+  opstinaId : number;
 }

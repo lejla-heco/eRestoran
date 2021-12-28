@@ -62,7 +62,8 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
                 brojTelefona = korisnik.BrojTelefona,
                 adresaStanovanja = korisnik.AdresaStanovanja,
                 korisnickoIme = korisnik.KorisnickoIme,
-                lozinka = korisnik.Lozinka
+                lozinka = korisnik.Lozinka,
+                opstinaId = korisnik.OpstinaID,
             };
 
             return Ok(korisnikGetVM);

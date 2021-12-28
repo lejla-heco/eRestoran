@@ -31,7 +31,6 @@ export class RegistracijaComponent implements OnInit {
     this.httpKlijent.get( MyConfig.adresaServera + "/Opstina/GetAll").subscribe((result:any)=>{
       this.opstine = result;
     });
-    //MyConfig.adresaServera
   }
 
   registracijaPodataka() {
