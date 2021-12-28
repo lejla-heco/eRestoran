@@ -32,7 +32,7 @@ export class MojeNarudzbeComponent implements OnInit {
   }
 
   naruci(narudzba : MojaNarudzba) {
-    this.httpKlijent.get(MyConfig.adresaServera + "/OmiljenaNarudzba/Naruci/" + narudzba.id, MyConfig.httpOpcije()).subscribe((response : any)=>{
+    this.httpKlijent.get(MyConfig.adresaServera + "/Narudzba/Naruci/" + narudzba.id, MyConfig.httpOpcije()).subscribe((response : any)=>{
       narudzba.status = response.status;
       this.obavjestenje = true;
       this.closeModal = false;
@@ -42,7 +42,7 @@ export class MojeNarudzbeComponent implements OnInit {
   }
 
   obrisi(narudzba : MojaNarudzba) {
-    this.httpKlijent.get(MyConfig.adresaServera + "/OmiljenaNarudzba/Delete/" + narudzba.id, MyConfig.httpOpcije()).subscribe((response : any)=>{
+    this.httpKlijent.get(MyConfig.adresaServera + "/Narudzba/Delete/" + narudzba.id, MyConfig.httpOpcije()).subscribe((response : any)=>{
       this.obavjestenje = true;
       this.closeModal = false;
       this.obavjestenjeNaslov = "Vaša narudžba je uspješno obrisana";

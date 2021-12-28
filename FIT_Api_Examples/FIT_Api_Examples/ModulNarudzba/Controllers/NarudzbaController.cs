@@ -455,5 +455,53 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
             return Ok(narudzba.ID);
         }
 
+        [HttpGet("{id}")]
+        public ActionResult Naruci(int id)
+        {
+            if (!HttpContext.GetLoginInfo().isPermisijaKorisnik)
+                return BadRequest("nije logiran");
+
+            Korisnik korisnik = HttpContext.GetLoginInfo().korisnickiNalog.Korisnik;
+
+            if (korisnik == null)
+                return BadRequest("Nemate ovlasti za trazenu akciju!");
+
+            Narudzba narudzba = _dbContext.Narudzba.Find(id);
+            narudzba.StatusNarudzbeID = _dbContext.StatusNarudzbe.Where(s => s.Naziv == "Poslano").SingleOrDefault().ID;
+            _dbContext.SaveChanges();
+            string statusNaziv = _dbContext.Narudzba.Include(n => n.StatusNarudzbe).Where(n => n.ID == id).SingleOrDefault().StatusNarudzbe.Naziv;
+            var response = new
+            {
+                status = statusNaziv,
+            };
+
+            return Ok(response);
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult Delete(int id)
+        {
+            if (!HttpContext.GetLoginInfo().isPermisijaKorisnik)
+                return BadRequest("nije logiran");
+
+            Korisnik korisnik = HttpContext.GetLoginInfo().korisnickiNalog.Korisnik;
+
+            if (korisnik == null)
+                return BadRequest("Nemate ovlasti za trazenu akciju!");
+
+            Narudzba narudzba = _dbContext.Narudzba.Find(id);
+
+            List<StavkaNarudzbe> stavke = _dbContext.StavkaNarudzbe.Where(sn => sn.NarudzbaID == id).ToList();
+            KorisnikKupon korisnikKupon = _dbContext.KorisnikKupon.Where(kk => kk.KorisnikID == korisnik.ID && kk.NarudzbaID == id).SingleOrDefault();
+            if (korisnikKupon != null)
+            {
+                _dbContext.KorisnikKupon.Remove(korisnikKupon);
+            }
+            _dbContext.RemoveRange(stavke);
+            _dbContext.Narudzba.Remove(narudzba);
+            _dbContext.SaveChanges();
+            return Ok();
+        }
+
     }
 }
