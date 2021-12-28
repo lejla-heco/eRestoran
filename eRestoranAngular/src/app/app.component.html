@@ -25,11 +25,11 @@
         </li>
         <li *ngIf="loginInformacije.isPermisijaAdministrator" class="nav-item"><a class="nav-link" routerLink="poslovnica" (click)="clicked('NP')" [ngClass]="this.trenutnaSelekcija == 'NP' ? 'active' : ''">Nova poslovnica</a></li>
         <li *ngIf="loginInformacije.isPermisijaKorisnik" class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" (click)="clicked('Omiljeno')" [ngClass]="this.trenutnaSelekcija == 'Omiljeno' ? 'active' : ''">Omiljeno</a>
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" [ngClass]="this.trenutnaSelekcija == 'Omiljeno' ? 'active' : ''">Omiljeno</a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#" routerLink="omiljene-stavke">Najdraže stavke</a></li>
+            <li><a class="dropdown-item" href="#" routerLink="omiljene-stavke" (click)="clicked('Omiljeno')">Najdraže stavke</a></li>
             <li><hr class="dropdown-divider" /></li>
-            <li><a class="dropdown-item" href="#" routerLink="omiljene-narudzbe">Najdraže narudžbe</a></li>
+            <li><a class="dropdown-item" href="#" routerLink="omiljene-narudzbe" (click)="clicked('Omiljeno')">Najdraže narudžbe</a></li>
           </ul>
         </li>
       </ul>
@@ -61,7 +61,7 @@
             Moj profil
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="" routerLink="moje-narudzbe">
+            <a class="dropdown-item" href="" routerLink="moje-narudzbe" (click)="clicked('Home')">
               <i class="bi bi-basket-fill"></i>
               Moje narudžbe
             </a>

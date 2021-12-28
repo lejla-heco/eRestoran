@@ -11855,6 +11855,7 @@ header.masthead-kupon {
 }
 
 .omiljena-narudzba:hover {
+  cursor: pointer;
   color: red;
 }
 
