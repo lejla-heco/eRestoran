@@ -74,4 +74,15 @@ export class OmiljeneNarudzbeComponent implements OnInit {
       this.ucitajNarudzbe();
     });
   }
+
+  ukloniIzOmiljenih(id : number) {
+    this.httpKlijent.get(MyConfig.adresaServera + "/Narudzba/UkloniOmiljenu/" + id, MyConfig.httpOpcije()).subscribe((response : any)=>{
+      this.obavjestenje = true;
+      this.closeModal = false;
+      this.obavjestenjeNaslov = "Odlajkali ste narudžbu";
+      this.obavjestenjeSadrzaj = "Uspješno ste uklonili narudžbu iz sekcije omiljenih narudžbi";
+      this.currentPage = 1;
+      this.ucitajNarudzbe();
+    });
+  }
 }

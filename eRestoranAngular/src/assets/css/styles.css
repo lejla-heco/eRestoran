@@ -11857,3 +11857,12 @@ header.masthead-kupon {
 .omiljena-narudzba:hover {
   color: red;
 }
+
+.ukloni-omiljenu {
+  color: rgb(108,117,125);
+}
+
+.ukloni-omiljenu:hover{
+  cursor: pointer;
+  color: rgb(33,37,41);
+}
