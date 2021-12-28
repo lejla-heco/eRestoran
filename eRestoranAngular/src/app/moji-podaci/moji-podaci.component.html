@@ -49,7 +49,13 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text">Lozinka</span>
                       </div>
-                      <input type="password" class="form-control" placeholder="Lozinka" [(ngModel)]="korisnik.lozinka" [ngModelOptions]="{standalone: true}">
+                      <input [type]="fieldText ? 'text' : 'password'" class="form-control" placeholder="Lozinka" [(ngModel)]="korisnik.lozinka" [ngModelOptions]="{standalone: true}">
+
+                      <div class="input-group-append">
+                        <span class="input-group-text">
+                          <i class="bi" [ngClass]="{'bi-eye-slash-fill': !fieldText,'bi-eye-fill': fieldText}" (click)="prikaziSakrij()"></i>
+                        </span>
+                      </div>
                     </div>
 
                     <div class="input-group mb-3">
@@ -62,10 +68,7 @@
                     </div>
 
                     <button class="btn btn-dark flex-shrink-0"> <i class="bi bi-archive-fill"></i> Ažuriraj podatke</button>
-                    <!--<button class="btn btn-dark flex-shrink-0" (click)="posaljiPodatke()">
-                       <i class="bi bi-box-arrow-in-right"></i>
-                       Prijavi se
-                     </button>-->
+
 
 
                   </form>

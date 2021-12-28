@@ -12,6 +12,7 @@ import {Opstina} from "../registracija/view-models/opstina-vm";
 export class MojiPodaciComponent implements OnInit {
   korisnik : Korisnik = new Korisnik();
   opstine : Opstina[] = null;
+  fieldText: boolean;
   constructor(private httpKlijent : HttpClient) { }
 
   ngOnInit(): void {
@@ -29,5 +30,9 @@ export class MojiPodaciComponent implements OnInit {
     this.httpKlijent.get( MyConfig.adresaServera + "/Opstina/GetAll").subscribe((response : any)=>{
       this.opstine = response;
     });
+  }
+
+  prikaziSakrij() {
+    this.fieldText = !this.fieldText;
   }
 }
