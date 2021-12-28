@@ -35,7 +35,7 @@ export class PregledNarudzbiDostavljacComponent implements OnInit {
 
   }
   private ucitajNarudzbe() {
-    this.httpKlijent.get("https://localhost:44325" + "/Narudzba/GetAllPagedDostavljac/" + this.currentPage,MyConfig.httpOpcije()).subscribe((response : any)=>{
+    this.httpKlijent.get(MyConfig.adresaServera + "/Narudzba/GetAllPagedDostavljac/" + this.currentPage,MyConfig.httpOpcije()).subscribe((response : any)=>{
       this.totalPages = response.totalPages;
       this.mojeNarudzbe = response.dataItems;
     })
@@ -50,7 +50,7 @@ export class PregledNarudzbiDostavljacComponent implements OnInit {
     this.urediStatusNarudzbe.statusID=narudzba.statusID;
     // this.urediStatusNarudzbe.status=narudzba.status;
 
-    this.httpKlijent.post("https://localhost:44325"+"/Narudzba/UpdateStatusDostavljac/"+this.urediStatusNarudzbe.id,this.urediStatusNarudzbe,MyConfig.httpOpcije()).subscribe((result:any)=>{
+    this.httpKlijent.post(MyConfig.adresaServera + "/Narudzba/UpdateStatusDostavljac/"+this.urediStatusNarudzbe.id,this.urediStatusNarudzbe,MyConfig.httpOpcije()).subscribe((result:any)=>{
 
       this.obavjestenje = true;
       this.closeModal = false;

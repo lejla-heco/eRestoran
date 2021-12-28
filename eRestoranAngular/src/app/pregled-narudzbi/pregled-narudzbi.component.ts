@@ -33,7 +33,7 @@ urediStatusNarudzbe:UrediStatusNarudzbe= new UrediStatusNarudzbe();
     this.getAllStatusiNarudzbe();
   }
   private ucitajNarudzbe() {
-    this.httpKlijent.get("https://localhost:44325" + "/Narudzba/GetAllPagedZaposlenik/" + this.currentPage,MyConfig.httpOpcije()).subscribe((response : any)=>{
+    this.httpKlijent.get(MyConfig.adresaServera + "/Narudzba/GetAllPagedZaposlenik/" + this.currentPage,MyConfig.httpOpcije()).subscribe((response : any)=>{
       this.totalPages = response.totalPages;
       this.mojeNarudzbe = response.dataItems;
     })
@@ -62,7 +62,7 @@ urediStatusNarudzbe:UrediStatusNarudzbe= new UrediStatusNarudzbe();
    this.urediStatusNarudzbe.statusID=narudzba.statusID;
   // this.urediStatusNarudzbe.status=narudzba.status;
 
-    this.httpKlijent.post("https://localhost:44325"+"/Narudzba/UpdateStatusZaposlenik/"+this.urediStatusNarudzbe.id,this.urediStatusNarudzbe,MyConfig.httpOpcije()).subscribe((result:any)=>{
+    this.httpKlijent.post(MyConfig.adresaServera + "/Narudzba/UpdateStatusZaposlenik/"+this.urediStatusNarudzbe.id,this.urediStatusNarudzbe,MyConfig.httpOpcije()).subscribe((result:any)=>{
 
       this.obavjestenje = true;
       this.closeModal = false;

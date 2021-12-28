@@ -34,6 +34,7 @@ import {AutorizacijaZaposlenikProvjera} from "./guards/autorizacija-zaposlenik-p
 import { PregledNarudzbiDostavljacComponent } from './pregled-narudzbi-dostavljac/pregled-narudzbi-dostavljac.component';
 import {AutorizacijaDostavljacProvjera} from "./guards/autorizacija-dostavljac-provjera.service";
 import { PregledRezervacijaZaposlenikComponent } from './pregled-rezervacija-zaposlenik/pregled-rezervacija-zaposlenik.component';
+import { MojiPodaciComponent } from './moji-podaci/moji-podaci.component';
 
 
 @NgModule({
@@ -64,6 +65,7 @@ import { PregledRezervacijaZaposlenikComponent } from './pregled-rezervacija-zap
     PregledNarudzbiComponent,
     PregledNarudzbiDostavljacComponent,
     PregledRezervacijaZaposlenikComponent,
+    MojiPodaciComponent,
   ],
   imports: [
     BrowserModule,
@@ -93,7 +95,8 @@ import { PregledRezervacijaZaposlenikComponent } from './pregled-rezervacija-zap
       {path:"moje-narudzbe", component:MojeNarudzbeComponent, canActivate:[AutorizacijaKorisnikProvjera]},
       {path:"pregled-narudzbi", component:PregledNarudzbiComponent, canActivate:[AutorizacijaZaposlenikProvjera]},
       {path:"pregled-narudzbi-dostavljac", component:PregledNarudzbiDostavljacComponent, canActivate:[AutorizacijaDostavljacProvjera]},
-      {path:"pregled-rezervacija-zaposlenik",component:PregledRezervacijaZaposlenikComponent,canActivate:[AutorizacijaZaposlenikProvjera]}
+      {path:"pregled-rezervacija-zaposlenik",component:PregledRezervacijaZaposlenikComponent,canActivate:[AutorizacijaZaposlenikProvjera]},
+      {path:"moji-podaci", component:MojiPodaciComponent, canActivate:[AutorizacijaKorisnikProvjera]}
     ],{
       anchorScrolling : 'enabled',
       scrollPositionRestoration : 'enabled',

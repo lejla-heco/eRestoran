@@ -37,13 +37,13 @@ export class PregledRezervacijaZaposlenikComponent implements OnInit {
     this.getAllStatusiRezervacije();
   }
   private ucitajRezervacije() {
-    this.httpKlijent.get("https://localhost:44325" + "/Rezervacija/GetAllPagedZaposlenik/" + this.currentPage,MyConfig.httpOpcije()).subscribe((response : any)=>{
+    this.httpKlijent.get(MyConfig.adresaServera + "/Rezervacija/GetAllPagedZaposlenik/" + this.currentPage,MyConfig.httpOpcije()).subscribe((response : any)=>{
       this.totalPages = response.totalPages;
       this.rezervacije = response.dataItems;
     })
   }
   private getAllStatusiRezervacije() {
-    this.httpKlijent.get("https://localhost:44325" + "/StatusRezervacije/GetAll").subscribe((result:any)=>{
+    this.httpKlijent.get(MyConfig.adresaServera + "/StatusRezervacije/GetAll").subscribe((result:any)=>{
       this.statusi = result;
     });
   }
@@ -66,7 +66,7 @@ export class PregledRezervacijaZaposlenikComponent implements OnInit {
     this.urediStatusRezervacije.statusID=rezervacija.statusID;
     // this.urediStatusNarudzbe.status=narudzba.status;
 
-    this.httpKlijent.post("https://localhost:44325"+"/StatusRezervacije/UpdateStatusZaposlenik/"+this.urediStatusRezervacije.id,this.urediStatusRezervacije,MyConfig.httpOpcije()).subscribe((result:any)=> {
+    this.httpKlijent.post(MyConfig.adresaServera + "/StatusRezervacije/UpdateStatusZaposlenik/"+this.urediStatusRezervacije.id,this.urediStatusRezervacije,MyConfig.httpOpcije()).subscribe((result:any)=> {
 
       this.obavjestenje = true;
       this.closeModal = false;
@@ -95,7 +95,7 @@ export class PregledRezervacijaZaposlenikComponent implements OnInit {
 
     this.obavljena.id=rezervacija.id;
     this.obavljena.obavljena=rezervacija.obavljena;
-    this.httpKlijent.post("https://localhost:44325"+"/Rezervacija/UpdateObavljenaZaposlenik/"+this.obavljena.id,this.obavljena,MyConfig.httpOpcije()).subscribe((result:any)=> {
+    this.httpKlijent.post(MyConfig.adresaServera + "/Rezervacija/UpdateObavljenaZaposlenik/"+this.obavljena.id,this.obavljena,MyConfig.httpOpcije()).subscribe((result:any)=> {
 
       this.obavjestenje = true;
       this.closeModal = false;
