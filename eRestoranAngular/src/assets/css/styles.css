@@ -11848,3 +11848,12 @@ header.masthead-kupon {
   background-position: center center;
   background-size: cover;
 }
+
+.omiljena-narudzba {
+  text-decoration: none;
+  color: rgb(33,37,41);
+}
+
+.omiljena-narudzba:hover {
+  color: red;
+}

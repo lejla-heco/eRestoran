@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MojaNarudzba} from "./view-models/moja-narudzba-vm";
 import {MyConfig} from "../my-config";
 import {HttpClient} from "@angular/common/http";
+import {MeniStavkaKorisnik} from "../meni/view-models/meni-korisnik-vm";
 
 @Component({
   selector: 'app-moje-narudzbe',
