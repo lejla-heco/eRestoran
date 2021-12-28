@@ -1,4 +1,5 @@
 ﻿using FIT_Api_Examples.Data;
+using FIT_Api_Examples.Helper.AutentifikacijaAutorizacija;
 using FIT_Api_Examples.ModulKorisnik.Models;
 using FIT_Api_Examples.ModulKorisnik.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -41,6 +42,30 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
         public List<Korisnik> GetAll()
         {
             return _dbContext.Korisnik.ToList();
+        }
+
+        [HttpGet]
+        public ActionResult Get()
+        {
+            if (!HttpContext.GetLoginInfo().isPermisijaKorisnik)
+                return BadRequest("nije logiran");
+
+            Korisnik korisnik = HttpContext.GetLoginInfo().korisnickiNalog.Korisnik;
+            if (korisnik == null)
+                return BadRequest("Nepostojeci korisnik");
+
+            KorisnikGetVM korisnikGetVM = new KorisnikGetVM()
+            {
+                ime = korisnik.Ime,
+                prezime = korisnik.Prezime,
+                email = korisnik.Email,
+                brojTelefona = korisnik.BrojTelefona,
+                adresaStanovanja = korisnik.AdresaStanovanja,
+                korisnickoIme = korisnik.KorisnickoIme,
+                lozinka = korisnik.Lozinka
+            };
+
+            return Ok(korisnikGetVM);
         }
     }
 }
