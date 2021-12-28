@@ -37,12 +37,18 @@ export class MojeNarudzbeComponent implements OnInit {
       this.obavjestenje = true;
       this.closeModal = false;
       this.obavjestenjeNaslov = "Vaša narudžba je uspješno poslana";
-      this.obavjestenjeSadrzaj = "Uspješno ste ponovo naručili odabranu najdražu narudžbu po cijeni od: " + narudzba.cijena + " KM";
+      this.obavjestenjeSadrzaj = "Uspješno ste ponovo naručili odabranu narudžbu po cijeni od: " + narudzba.cijena + " KM";
     });
   }
 
   obrisi(narudzba : MojaNarudzba) {
-
+    this.httpKlijent.get(MyConfig.adresaServera + "/OmiljenaNarudzba/Delete/" + narudzba.id, MyConfig.httpOpcije()).subscribe((response : any)=>{
+      this.obavjestenje = true;
+      this.closeModal = false;
+      this.obavjestenjeNaslov = "Vaša narudžba je uspješno obrisana";
+      this.obavjestenjeSadrzaj = "Uspješno ste obrisali odabranu narudžbu";
+      this.ucitajNarudzbe();
+    });
   }
 
   animirajObavjestenje() {
