@@ -32,7 +32,13 @@ export class MojeNarudzbeComponent implements OnInit {
   }
 
   naruci(narudzba : MojaNarudzba) {
-
+    this.httpKlijent.get(MyConfig.adresaServera + "/OmiljenaNarudzba/Naruci/" + narudzba.id, MyConfig.httpOpcije()).subscribe((response : any)=>{
+      narudzba.status = response.status;
+      this.obavjestenje = true;
+      this.closeModal = false;
+      this.obavjestenjeNaslov = "Vaša narudžba je uspješno poslana";
+      this.obavjestenjeSadrzaj = "Uspješno ste ponovo naručili odabranu najdražu narudžbu po cijeni od: " + narudzba.cijena + " KM";
+    });
   }
 
   obrisi(narudzba : MojaNarudzba) {
