@@ -35,8 +35,8 @@ noviDostavljac:NoviDostavljac= new NoviDostavljac();
     var data = new FormData();
 
     data.append("slikaDostavljaca", file);
-    this.httpKlijent.post("https://localhost:44325" + "/Dostavljac/Add", this.noviDostavljac).subscribe((result : any)=>{
-      this.httpKlijent.post("https://localhost:44325" + "/Dostavljac/AddSlika/" + result, data).subscribe((result:any)=>{
+    this.httpKlijent.post(MyConfig.adresaServera + "/Dostavljac/Add", this.noviDostavljac).subscribe((result : any)=>{
+      this.httpKlijent.post(MyConfig.adresaServera + "/Dostavljac/AddSlika/" + result, data).subscribe((result:any)=>{
         alert("Uspjesno dodan novi dostavljač");
         this.ocistiFormu();
       });

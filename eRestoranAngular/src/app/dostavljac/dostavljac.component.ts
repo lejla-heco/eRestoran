@@ -21,7 +21,7 @@ export class DostavljacComponent implements OnInit {
     this.ucitajDostavljace();
   }
   public ucitajDostavljace() {
-    this.httpKlijent.get("https://localhost:44325/Dostavljac/GetAll").subscribe((result : any)=>{
+    this.httpKlijent.get(MyConfig.adresaServera + "/Dostavljac/GetAll").subscribe((result : any)=>{
       this.dostavljaci = result;
       this.odabraniDostavljac=null;
     })
@@ -36,7 +36,7 @@ export class DostavljacComponent implements OnInit {
   }
 
   obrisi(dostavljac: Dostavljac) {
-    this.httpKlijent.post("https://localhost:44325"+"/Dostavljac/Delete/"+dostavljac.id, dostavljac).subscribe((x:any)=>{
+    this.httpKlijent.post(MyConfig.adresaServera+"/Dostavljac/Delete/"+dostavljac.id, dostavljac).subscribe((x:any)=>{
       alert("Dostavljac "+ dostavljac.ime+dostavljac.prezime+ " je uspješno obrisan");
 
       this.ucitajDostavljace();

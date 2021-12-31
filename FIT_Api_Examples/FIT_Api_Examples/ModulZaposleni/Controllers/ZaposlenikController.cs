@@ -1,5 +1,7 @@
 ﻿using FIT_Api_Examples.Data;
 using FIT_Api_Examples.Helper;
+using FIT_Api_Examples.Helper.AutentifikacijaAutorizacija;
+using FIT_Api_Examples.ModulNarudzba.Models;
 using FIT_Api_Examples.ModulZaposleni.Models;
 using FIT_Api_Examples.ModulZaposleni.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -85,17 +87,31 @@ namespace FIT_Api_Examples.ModulZaposleni.Controllers
                                             }).ToList();
             return pagedStavke;
         }
-        [HttpPost("{id}")]
+        [HttpGet("{id}")]
         public ActionResult Delete(int id)
-        {
+        { 
+
             Zaposlenik zaposlenik = _dbContext.Zaposlenik.Find(id);
 
-            if (zaposlenik == null || id == 1)
-                return BadRequest("pogresan ID");
+                if (zaposlenik == null)
+                    return BadRequest("pogresan ID");
 
-            _dbContext.Remove(zaposlenik);
+                if (zaposlenik.AktivneNarudzbe > 0)
+                    return BadRequest("Zaposlenik trenutno obavlja narudžbe");
 
-            _dbContext.SaveChanges();
+                List<Narudzba> narudzbeZaposlenika = _dbContext.Narudzba.Where(n => n.ZaposlenikID == zaposlenik.ID).ToList();
+            foreach (Narudzba narudzba in narudzbeZaposlenika)
+            {
+                narudzba.ZaposlenikID = null;
+                narudzba.Zaposlenik = null;
+            }
+                _dbContext.SaveChanges();
+                
+                _dbContext.Zaposlenik.Remove(zaposlenik);
+                
+
+                _dbContext.SaveChanges();
+
             return Ok(zaposlenik);
         }
 

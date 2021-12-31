@@ -373,6 +373,8 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
 
             if (narudzba.StatusNarudzbeID == 4)// Spremljeno
             {
+                zaposlenik.AktivneNarudzbe--;
+                zaposlenik.ObavljeneNarudzbe++;
                 Dostavljac odabraniDostavljac = _dbContext.Dostavljac
           .Where(d => d.AktivneNarudzbe == _dbContext.Dostavljac.Min<Dostavljac>(w => w.AktivneNarudzbe)).FirstOrDefault();
                 odabraniDostavljac.AktivneNarudzbe++;
@@ -446,7 +448,11 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
             narudzba.ID = narudzbaStatusUpdateVM.id;
             //narudzba.StatusNarudzbe.Naziv = narudzbaStatusUpdateVM.status;
             narudzba.StatusNarudzbeID = narudzbaStatusUpdateVM.statusID;
-
+            if (narudzba.StatusNarudzbeID == 6)
+            {
+                dostavljac.AktivneNarudzbe--;
+                dostavljac.DostavljeneNarudzbe++;
+            }
           
 
 
@@ -468,6 +474,13 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
 
             Narudzba narudzba = _dbContext.Narudzba.Find(id);
             narudzba.StatusNarudzbeID = _dbContext.StatusNarudzbe.Where(s => s.Naziv == "Poslano").SingleOrDefault().ID;
+            Zaposlenik odabraniZaposlenik = _dbContext.Zaposlenik
+                .Where(z => z.AktivneNarudzbe == _dbContext.Zaposlenik.Min<Zaposlenik>(w => w.AktivneNarudzbe)).FirstOrDefault();
+            odabraniZaposlenik.AktivneNarudzbe++;
+            narudzba.Zaposlenik = odabraniZaposlenik;
+            if (odabraniZaposlenik == null)
+                return BadRequest("Nemamo zaposlenika!");
+
             _dbContext.SaveChanges();
             string statusNaziv = _dbContext.Narudzba.Include(n => n.StatusNarudzbe).Where(n => n.ID == id).SingleOrDefault().StatusNarudzbe.Naziv;
             var response = new

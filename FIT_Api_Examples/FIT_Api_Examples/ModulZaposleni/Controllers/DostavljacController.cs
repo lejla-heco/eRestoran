@@ -1,5 +1,6 @@
 ﻿using FIT_Api_Examples.Data;
 using FIT_Api_Examples.Helper;
+using FIT_Api_Examples.ModulNarudzba.Models;
 using FIT_Api_Examples.ModulZaposleni.Models;
 using FIT_Api_Examples.ModulZaposleni.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -118,6 +119,14 @@ namespace FIT_Api_Examples.ModulZaposleni.Controllers
 
             if (dostavljac == null || id == 1)
                 return BadRequest("pogresan ID");
+
+            if (dostavljac.AktivneNarudzbe > 0)
+                return BadRequest("Zaposlenik trenutno obavlja narudžbe");
+
+            List<Narudzba> narudzbeZaposlenika = _dbContext.Narudzba.Where(n => n.DostavljacID == dostavljac.ID).ToList();
+            foreach (Narudzba narudzba in narudzbeZaposlenika)
+                narudzba.DostavljacID = null;
+            _dbContext.SaveChanges();
 
             _dbContext.Remove(dostavljac);
 

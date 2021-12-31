@@ -27,7 +27,12 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text">Lozinka</span>
                     </div>
-                    <input type="password" class="form-control" [(ngModel)]="prijava.lozinka" [ngModelOptions]="{standalone: true}">
+                    <input [type]="fieldText ? 'text' : 'password'" class="form-control" [(ngModel)]="prijava.lozinka" [ngModelOptions]="{standalone: true}">
+                    <div class="input-group-append">
+                        <span class="input-group-text">
+                          <i class="bi" [ngClass]="{'bi-eye-slash-fill': !fieldText,'bi-eye-fill': fieldText}" (click)="prikaziSakrij()"></i>
+                        </span>
+                    </div>
                   </div>
                   <div class="input-group">
                   <div class="form-check form-switch">

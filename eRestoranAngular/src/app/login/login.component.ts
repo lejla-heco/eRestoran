@@ -13,6 +13,7 @@ import {AutentifikacijaHelper} from "../helper/autentifikacija-helper";
 export class LoginComponent implements OnInit {
   prijava : Login = new Login();
   zapamtiMe : boolean;
+  fieldText: boolean;
   constructor(private httpKlijent : HttpClient, private router : Router) { }
 
   ngOnInit(): void {
@@ -35,5 +36,9 @@ export class LoginComponent implements OnInit {
 
   prikaziRegistraciju() {
     this.router.navigate(['/registracija']);
+  }
+
+  prikaziSakrij() {
+    this.fieldText = !this.fieldText;
   }
 }

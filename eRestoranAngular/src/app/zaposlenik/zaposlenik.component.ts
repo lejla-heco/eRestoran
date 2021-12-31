@@ -32,7 +32,7 @@ export class ZaposlenikComponent implements OnInit {
   }
 
   brisanje(zaposlenik: Zaposlenik) {
-    this.httpKlijent.post(MyConfig.adresaServera+"/Zaposlenik/Delete/"+zaposlenik.id, zaposlenik).subscribe((x:any)=>{
+    this.httpKlijent.get(MyConfig.adresaServera+"/Zaposlenik/Delete/"+zaposlenik.id).subscribe((x:any)=>{
       alert("Zaposlenik "+ zaposlenik.ime+zaposlenik.prezime+ " je uspješno obrisan");
 
       this.ucitajZaposlenike();
