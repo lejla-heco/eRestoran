@@ -102,7 +102,7 @@ import { MojiPodaciComponent } from './moji-podaci/moji-podaci.component';
       scrollPositionRestoration : 'enabled',
       onSameUrlNavigation: 'reload'
     }),
-    GoogleMapsModule
+    GoogleMapsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
