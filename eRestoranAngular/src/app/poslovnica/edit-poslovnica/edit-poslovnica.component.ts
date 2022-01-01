@@ -91,7 +91,9 @@ export class EditPoslovnicaComponent implements OnInit, OnDestroy {
   }
 
   azuriraj() {
-
+    this.httpKlijent.post(MyConfig.adresaServera + "/Poslovnica/Update", this.poslovnica, MyConfig.httpOpcije()).subscribe((response : any)=>{
+      this.prikaziObavjestenje("Uspješno poslati podaci", "Uspješno ste uredili podatke o odabranoj poslovnici!");
+    })
   }
 
   private ucitajPoslovnicu() {
