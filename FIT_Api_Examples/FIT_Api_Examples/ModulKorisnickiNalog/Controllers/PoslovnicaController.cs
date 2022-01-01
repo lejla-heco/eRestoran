@@ -59,5 +59,30 @@ namespace FIT_Api_Examples.ModulKorisnickiNalog.Controllers
             _dbContext.SaveChanges();
             return Ok(poslovnica);
         }
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            if (!HttpContext.GetLoginInfo().isPermisijaAdministrator)
+                return BadRequest("nije logiran");
+
+            Poslovnica odabranaPoslovnica = _dbContext.Poslovnica.Find(id);
+            if (odabranaPoslovnica == null)
+                return BadRequest("Poslovnica ne postoji");
+
+            PoslovnicaGetByIdVM poslovnica = new PoslovnicaGetByIdVM()
+            {
+                id = odabranaPoslovnica.ID,
+                adresa = odabranaPoslovnica.Adresa,
+                brojTelefona = odabranaPoslovnica.BrojTelefona,
+                radnoVrijemeRedovno = odabranaPoslovnica.RadnoVrijemeRedovno,
+                radnoVrijemeVikend = odabranaPoslovnica.RadnoVrijemeVikend,
+                lat = odabranaPoslovnica.lat,
+                lng = odabranaPoslovnica.lng,
+                opstinaId = odabranaPoslovnica.OpstinaID
+            };
+
+            return Ok(poslovnica);
+        }
     }
 }

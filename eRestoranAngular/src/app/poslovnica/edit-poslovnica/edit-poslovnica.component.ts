@@ -13,7 +13,7 @@ import {ActivatedRoute} from "@angular/router";
 export class EditPoslovnicaComponent implements OnInit, OnDestroy {
   id : number;
   private sub : any;
-  poslovnica : Poslovnica = null;
+  poslovnica : Poslovnica = new Poslovnica();
   opstine: Opstina[] = null;
   obavjestenje : boolean = false;
   closeModal : boolean = false;
@@ -26,9 +26,10 @@ export class EditPoslovnicaComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.sub = this.router.params.subscribe(params => {
       this.id = +params['id'];
-    })
+    });
     this.inicijalizirajGoogleMapu();
     this.ucitajOpstine();
+    this.ucitajPoslovnicu();
   }
 
   inicijalizirajGoogleMapu() {
@@ -40,7 +41,7 @@ export class EditPoslovnicaComponent implements OnInit, OnDestroy {
 
     // Novi info window
     let infoWindow = new google.maps.InfoWindow({
-      content: "Kliknite na lokaciju da učitate geografsku širinu i dužinu!",
+      content: "Kliknite na lokaciju da učitate novu geografsku širinu i dužinu!",
       position: { lat: 43.8559, lng: 18.40725 },
     });
 
@@ -93,7 +94,25 @@ export class EditPoslovnicaComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnDestroy(){
+  private ucitajPoslovnicu() {
+    this.httpKlijent.get(MyConfig.adresaServera + "/Poslovnica/GetById/" + this.id, MyConfig.httpOpcije()).subscribe((response : any)=>{
+      this.poslovnica = response;
+    })
+  }
+
+  provjeriPolje(polje: any) {
+    if (polje.invalid && (polje.dirty || polje.touched)){
+      if (polje.errors?.['required']){
+        return 'Niste popunili ovo polje!';
+      }
+      else {
+        return '';
+      }
+    }
+    return 'Obavezno polje za unos';
+  }
+
+  ngOnDestroy() {
     this.sub.unsubscribe();
   }
 }

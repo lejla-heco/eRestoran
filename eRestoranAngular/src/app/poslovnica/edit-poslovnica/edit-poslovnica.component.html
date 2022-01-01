@@ -21,25 +21,25 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text">Adresa</span>
                             </div>
-                            <input type="text" class="form-control" [(ngModel)]="poslovnica.adresa" [ngModelOptions]="{standalone: true}">
+                            <input type="text" class="form-control" [(ngModel)]="poslovnica.adresa" [ngModelOptions]="{standalone: true}" required #adresa="ngModel" [placeholder]="provjeriPolje(adresa)">
                           </div>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                               <span class="input-group-text">Broj telefona</span>
                             </div>
-                            <input type="text" class="form-control" [(ngModel)]="poslovnica.brojTelefona" [ngModelOptions]="{standalone: true}">
+                            <input type="text" class="form-control" [(ngModel)]="poslovnica.brojTelefona" [ngModelOptions]="{standalone: true}" required #brojTelefona="ngModel" [placeholder]="provjeriPolje(brojTelefona)">
                           </div>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                               <span class="input-group-text">Redovno radno vrijeme</span>
                             </div>
-                            <input type="text" class="form-control" [(ngModel)]="poslovnica.radnoVrijemeRedovno" [ngModelOptions]="{standalone: true}">
+                            <input type="text" class="form-control" [(ngModel)]="poslovnica.radnoVrijemeRedovno" [ngModelOptions]="{standalone: true}" required #rrv="ngModel" [placeholder]="provjeriPolje(rrv)">
                           </div>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                               <span class="input-group-text">Radno vrijeme nedjeljom</span>
                             </div>
-                            <input type="text" class="form-control" [(ngModel)]="poslovnica.radnoVrijemeVikend" [ngModelOptions]="{standalone: true}">
+                            <input type="text" class="form-control" [(ngModel)]="poslovnica.radnoVrijemeVikend" [ngModelOptions]="{standalone: true}" required #rvn="ngModel" [placeholder]="provjeriPolje(rvn)">
                           </div>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
