@@ -3,6 +3,7 @@ import {Poslovnica} from "../home-page/view-models/poslovnica-vm";
 import {Opstina} from "../registracija/view-models/opstina-vm";
 import {MyConfig} from "../my-config";
 import {HttpClient} from "@angular/common/http";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-poslovnica',
@@ -17,7 +18,7 @@ export class PoslovnicaComponent implements OnInit {
   obavjestenjeNaslov : string = "";
   obavjestenjeSadrzaj : string = "";
 
-  constructor(private httpKlijent : HttpClient) { }
+  constructor(private httpKlijent : HttpClient, private router : Router) { }
 
   ngOnInit(): void {
     this.inicijalizirajGoogleMapu();
@@ -122,5 +123,12 @@ export class PoslovnicaComponent implements OnInit {
     this.closeModal = false;
     this.obavjestenjeNaslov = naslov;
     this.obavjestenjeSadrzaj = sadrzaj;
+  }
+
+  navigirajDoPoslovnica() {
+    this.router.navigate(['/home-page']);
+    setTimeout(()=>{
+      this.router.navigate(['/home-page'], {fragment:'kontakt'});
+    },1000);
   }
 }

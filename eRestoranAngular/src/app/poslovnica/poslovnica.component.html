@@ -93,10 +93,13 @@
               <p class="item-intro text-muted mb-2">{{obavjestenjeNaslov}}</p>
               <div class="text-center">
                 <div class="mb-2"><b>{{obavjestenjeSadrzaj}}</b></div>
-
-                <button class="btn btn-outline-dark" (click)="zatvoriModalObavjestenje()">
-                  <i class="bi bi-check-circle-fill"></i>
-                  Ok
+                <button class="btn btn-outline-dark" (click)="navigirajDoPoslovnica()">
+                  <i class="bi bi-book-fill"></i>
+                  Pregledaj poslovnice
+                </button>
+                <button class="btn btn-outline-dark mx-2" (click)="zatvoriModalObavjestenje()">
+                  <i class="bi bi-plus-circle-fill"></i>
+                  Dodaj novu poslovnicu
                 </button>
               </div>
             </div>

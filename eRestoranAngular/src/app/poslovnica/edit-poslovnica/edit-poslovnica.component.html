@@ -65,8 +65,8 @@
                         </div>
                         <div class="d-flex text-center">
                           <button class="btn btn-outline-dark flex-shrink-0 mx-auto" type="button" (click)="azuriraj()">
-                            <i class="bi bi-briefcase-fill"></i>
-                            Ažuriraj podatke
+                            <i class="bi bi-archive-fill"></i>
+                            Ažuriraj podatke o poslovnici
                           </button>
                         </div>
                       </div>
@@ -94,9 +94,17 @@
               <div class="text-center">
                 <div class="mb-2"><b>{{obavjestenjeSadrzaj}}</b></div>
 
-                <button class="btn btn-outline-dark" (click)="zatvoriModalObavjestenje()">
+                <button *ngIf="!this.azurirajPodatke" class="btn btn-outline-dark" (click)="zatvoriModalObavjestenje()">
                   <i class="bi bi-check-circle-fill"></i>
                   Ok
+                </button>
+                <button *ngIf="this.azurirajPodatke" class="btn btn-outline-dark" (click)="navigirajDoPoslovnica()">
+                  <i class="bi bi-book-fill"></i>
+                  Pregledaj poslovnice
+                </button>
+                <button *ngIf="this.azurirajPodatke" class="btn btn-outline-dark mx-2" (click)="zatvoriModalObavjestenje()">
+                  <i class="bi bi-ui-checks"></i>
+                  Nastavi uređivati
                 </button>
               </div>
             </div>

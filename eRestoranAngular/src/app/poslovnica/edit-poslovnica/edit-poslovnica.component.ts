@@ -3,7 +3,7 @@ import {Poslovnica} from "../../home-page/view-models/poslovnica-vm";
 import {Opstina} from "../../registracija/view-models/opstina-vm";
 import {MyConfig} from "../../my-config";
 import {HttpClient} from "@angular/common/http";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-edit-poslovnica',
@@ -19,12 +19,13 @@ export class EditPoslovnicaComponent implements OnInit, OnDestroy {
   closeModal : boolean = false;
   obavjestenjeNaslov : string = "";
   obavjestenjeSadrzaj : string = "";
+  azurirajPodatke: boolean = false;
 
-  constructor(private httpKlijent : HttpClient, private router : ActivatedRoute) {
+  constructor(private httpKlijent : HttpClient, private activatedRoute : ActivatedRoute, private router : Router) {
   }
 
   ngOnInit(): void {
-    this.sub = this.router.params.subscribe(params => {
+    this.sub = this.activatedRoute.params.subscribe(params => {
       this.id = +params['id'];
     });
     this.inicijalizirajGoogleMapu();
@@ -78,7 +79,7 @@ export class EditPoslovnicaComponent implements OnInit, OnDestroy {
   zatvoriModalObavjestenje(){
     this.closeModal = true;
     this.animirajObavjestenje();
-    this.obavjestenje = setTimeout(function (){
+    this.obavjestenje, this.azurirajPodatke = setTimeout(function (){
       return false;
     },500)== 0? false : true;
   }
@@ -92,6 +93,7 @@ export class EditPoslovnicaComponent implements OnInit, OnDestroy {
 
   azuriraj() {
     this.httpKlijent.post(MyConfig.adresaServera + "/Poslovnica/Update", this.poslovnica, MyConfig.httpOpcije()).subscribe((response : any)=>{
+      this.azurirajPodatke = true;
       this.prikaziObavjestenje("Uspješno poslati podaci", "Uspješno ste uredili podatke o odabranoj poslovnici!");
     })
   }
@@ -116,5 +118,12 @@ export class EditPoslovnicaComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+  }
+
+  navigirajDoPoslovnica() {
+    this.router.navigate(['/home-page']);
+    setTimeout(()=>{
+      this.router.navigate(['/home-page'], {fragment:'kontakt'});
+    },1000);
   }
 }
