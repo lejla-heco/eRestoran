@@ -17,11 +17,13 @@ export class NovaStavkaComponent implements OnInit {
   closeModal : boolean = false;
   obavjestenjeNaslov : string = "";
   obavjestenjeSadrzaj : string = "";
+  validnaPolja : boolean = false;
 
   constructor(private httpKlijent : HttpClient) { }
 
   ngOnInit(): void {
     this.getAllMeniGrupe();
+    this.novaStavka.meniGrupaId = -1;
   }
 
   private getAllMeniGrupe() {
@@ -44,22 +46,26 @@ export class NovaStavkaComponent implements OnInit {
   }
 
   posaljiPodatke() {
-    this.validirajFormu();
-    // @ts-ignore
-    var file = document.getElementById("fajl-input").files[0];
-    this.novaStavka.meniGrupaId = parseInt(this.novaStavka.meniGrupaId.toString());
-    var data = new FormData();
-    data.append("slikaMeniStavke", file);
-    this.httpKlijent.post(MyConfig.adresaServera + "/Meni/Add", this.novaStavka, MyConfig.httpOpcije()).subscribe((result : any)=>{
-      this.httpKlijent.post(MyConfig.adresaServera + "/Meni/AddSlika/" + result, data, MyConfig.httpOpcije()).subscribe((result:any)=>{
-        this.obavjestenje = true;
-        this.closeModal = false;
-        this.obavjestenjeNaslov = "Dodana nova stavka";
-        this.obavjestenjeSadrzaj = "Uspješno ste dodali novu stavku na meni";
-        this.ocistiFormu();
+    if (this.validirajFormu()) {
+      // @ts-ignore
+      var file = document.getElementById("fajl-input").files[0];
+      this.novaStavka.meniGrupaId = parseInt(this.novaStavka.meniGrupaId.toString());
+      var data = new FormData();
+      data.append("slikaMeniStavke", file);
+      if (file.size <= 250 * 1000) {
 
-      });
-    });
+        this.httpKlijent.post(MyConfig.adresaServera + "/Meni/Add", this.novaStavka, MyConfig.httpOpcije()).subscribe((result: any) => {
+          this.httpKlijent.post(MyConfig.adresaServera + "/Meni/AddSlika/" + result, data, MyConfig.httpOpcije()).subscribe((response: any) => {
+            this.prikaziObavjestenje("Dodana nova stavka", "Uspješno ste dodali novu stavku na meni");
+            this.ocistiFormu();
+          });
+        });
+      }
+      else this.prikaziObavjestenje("Prevelika fotografija", "Možete učitati fotografije do 250 KB, učitajte manju fotografiju");
+    }
+    else {
+      this.prikaziObavjestenje("Neadekvatno ispunjena forma za dodavanje nove meni stavke", "Molimo ispunite sva obavezna polja, pa ponovo pokušajte");
+    }
   }
 
   ocistiFormu(){
@@ -67,12 +73,8 @@ export class NovaStavkaComponent implements OnInit {
     this.novaStavka.opis = null;
     this.novaStavka.cijena = null;
     this.novaStavka.snizenaCijena = null;
-    this.novaStavka.meniGrupaId = null;
+    this.novaStavka.meniGrupaId = -1;
     document.getElementById("preview-slika").setAttribute("src","");
-  }
-
-  private validirajFormu() {
-
   }
 
   animirajObavjestenje() {
@@ -84,6 +86,34 @@ export class NovaStavkaComponent implements OnInit {
     this.animirajObavjestenje();
     this.obavjestenje = setTimeout(function (){
       return false;
-    },1000)== 0? false : true;
+    },500)== 0? false : true;
+  }
+
+  validirajFormu() : boolean{
+    // @ts-ignore
+    var slika = document.getElementById("fajl-input").files[0];
+    return this.novaStavka.naziv != null && this.novaStavka.naziv?.length > 0
+      && this.novaStavka.opis != null && this.novaStavka.opis?.length > 0
+      && this.novaStavka.cijena != null && this.novaStavka.snizenaCijena != null
+      && this.novaStavka.meniGrupaId != -1 && slika != null;
+  }
+
+  provjeriPolje(polje: any) {
+    if (polje.invalid && (polje.dirty || polje.touched)){
+      if (polje.errors?.['required']){
+        return 'Niste popunili ovo polje!';
+      }
+      else {
+        return '';
+      }
+    }
+    return 'Obavezno polje za unos';
+  }
+
+  private prikaziObavjestenje(naslov : string, sadrzaj : string) {
+    this.obavjestenje = true;
+    this.closeModal = false;
+    this.obavjestenjeNaslov = naslov;
+    this.obavjestenjeSadrzaj = sadrzaj;
   }
 }

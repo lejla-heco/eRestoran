@@ -3,5 +3,5 @@ export class NovaMeniStavka {
   opis : string;
   cijena : number;
   snizenaCijena : number;
-  meniGrupaId : number;
+  meniGrupaId : number = null;
 }

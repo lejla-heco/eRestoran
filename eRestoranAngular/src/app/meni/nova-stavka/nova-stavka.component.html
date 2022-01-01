@@ -30,19 +30,19 @@
             <div class="input-group-prepend">
               <span class="input-group-text">Naziv</span>
             </div>
-            <input type="text" class="form-control" [(ngModel)]="novaStavka.naziv">
+            <input type="text" class="form-control" [(ngModel)]="novaStavka.naziv" required #naziv="ngModel" [placeholder]="provjeriPolje(naziv)">
           </div>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Sastojci</span>
             </div>
-            <input type="text" class="form-control" [(ngModel)]="novaStavka.opis">
+            <input type="text" class="form-control" [(ngModel)]="novaStavka.opis" required #sastojci="ngModel" [placeholder]="provjeriPolje(sastojci)">
           </div>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Cijena</span>
             </div>
-            <input type="number" min="1" class="form-control" [(ngModel)]="novaStavka.cijena">
+            <input type="number" min="1" class="form-control" [(ngModel)]="novaStavka.cijena" required #cijena="ngModel" [placeholder]="provjeriPolje(cijena)">
             <div class="input-group-append">
               <span class="input-group-text">KM</span>
             </div>
@@ -51,13 +51,14 @@
             <div class="input-group-prepend">
               <span class="input-group-text">Cijena posebne ponude</span>
             </div>
-            <input type="number" min="1" class="form-control" [(ngModel)]="novaStavka.snizenaCijena">
+            <input type="number" min="1" class="form-control" [(ngModel)]="novaStavka.snizenaCijena" required #snizenaCijena="ngModel" [placeholder]="provjeriPolje(snizenaCijena)">
             <div class="input-group-append">
               <span class="input-group-text">KM</span>
             </div>
           </div>
           <label>Meni kategorija:</label>
           <select class="form-control mb-3" [(ngModel)]="novaStavka.meniGrupaId">
+            <option value=-1 disabled hidden selected>Obavezno polje za odabir</option>
             <option *ngFor = "let grupa of meniGrupe" [value]=grupa.id>{{grupa.naziv}}</option>
           </select>
         </div>
