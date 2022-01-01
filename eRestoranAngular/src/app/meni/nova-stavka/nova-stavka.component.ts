@@ -17,7 +17,6 @@ export class NovaStavkaComponent implements OnInit {
   closeModal : boolean = false;
   obavjestenjeNaslov : string = "";
   obavjestenjeSadrzaj : string = "";
-  validnaPolja : boolean = false;
 
   constructor(private httpKlijent : HttpClient) { }
 

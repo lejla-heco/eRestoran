@@ -19,43 +19,43 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text">Ime</span>
                       </div>
-                      <input type="text" class="form-control" [(ngModel)]="korisnik.ime" [ngModelOptions]="{standalone: true}">
+                      <input type="text" class="form-control" [(ngModel)]="korisnik.ime" [ngModelOptions]="{standalone: true}" required #ime="ngModel" [placeholder]="provjeriPolje(ime)">
                     </div>
                     <div class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Prezime</span>
                       </div>
-                      <input type="text" class="form-control" [(ngModel)]="korisnik.prezime" [ngModelOptions]="{standalone: true}">
+                      <input type="text" class="form-control" [(ngModel)]="korisnik.prezime" [ngModelOptions]="{standalone: true}" required #prezime="ngModel" [placeholder]="provjeriPolje(prezime)">
                     </div>
                     <div class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Email</span>
                       </div>
-                      <input type="text" class="form-control" [(ngModel)]="korisnik.email" [ngModelOptions]="{standalone: true}">
+                      <input type="email" class="form-control" [(ngModel)]="korisnik.email" [ngModelOptions]="{standalone: true}" required #email="ngModel" [placeholder]="provjeriPolje(email)">
                     </div>
                     <div *ngIf="loginInformacije.isPermisijaKorisnik" class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Broj telefona</span>
                       </div>
-                      <input type="text" class="form-control" [(ngModel)]="korisnik.brojTelefona" [ngModelOptions]="{standalone: true}">
+                      <input type="tel" class="form-control" [(ngModel)]="korisnik.brojTelefona" [ngModelOptions]="{standalone: true}" required #brojTelefona="ngModel" [placeholder]="provjeriPolje(brojTelefona)">
                     </div>
                     <div *ngIf="loginInformacije.isPermisijaKorisnik" class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Adresa stanovanja</span>
                       </div>
-                      <input type="text" class="form-control" [(ngModel)]="korisnik.adresaStanovanja" [ngModelOptions]="{standalone: true}">
+                      <input type="text" class="form-control" [(ngModel)]="korisnik.adresaStanovanja" [ngModelOptions]="{standalone: true}" required #adresa="ngModel" [placeholder]="provjeriPolje(adresa)">
                     </div>
                     <div class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Korisničko ime</span>
                       </div>
-                      <input type="text" class="form-control" placeholder="Korisnicko ime" [(ngModel)]="korisnik.korisnickoIme" [ngModelOptions]="{standalone: true}">
+                      <input type="text" class="form-control" placeholder="Korisnicko ime" [(ngModel)]="korisnik.korisnickoIme" [ngModelOptions]="{standalone: true}" required #korisnickoIme="ngModel" [placeholder]="provjeriPolje(korisnickoIme)">
                     </div>
                     <div class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Lozinka</span>
                       </div>
-                      <input [type]="fieldText ? 'text' : 'password'" class="form-control" placeholder="Lozinka" [(ngModel)]="korisnik.lozinka" [ngModelOptions]="{standalone: true}">
+                      <input [type]="fieldText ? 'text' : 'password'" class="form-control" placeholder="Lozinka" [(ngModel)]="korisnik.lozinka" [ngModelOptions]="{standalone: true}" required #lozinka="ngModel" [placeholder]="provjeriPolje(lozinka)">
 
                       <div class="input-group-append">
                         <span class="input-group-text">
@@ -73,7 +73,7 @@
                       </select>
                     </div>
 
-                    <button class="btn btn-dark flex-shrink-0"> <i class="bi bi-archive-fill"></i> Ažuriraj podatke</button>
+                    <button class="btn btn-dark flex-shrink-0" (click)="azurirajPodatke()"> <i class="bi bi-archive-fill"></i> Ažuriraj podatke</button>
 
 
 
@@ -86,3 +86,27 @@
       </div>
   </div>
 </header>
+
+<div *ngIf="obavjestenje" class="portfolio-modal modal" [ngClass]="animirajObavjestenje()" id="portfolioModalResponse" tabindex="-1" aria-labelledby="portfolioModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog mt-2">
+    <div class="modal-content">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <div class="modal-body">
+              <p class="item-intro text-muted mb-2">{{obavjestenjeNaslov}}</p>
+              <div class="text-center">
+                <div class="mb-2"><b>{{obavjestenjeSadrzaj}}</b></div>
+
+                <button class="btn btn-outline-dark" (click)="zatvoriModalObavjestenje()">
+                  <i class="bi bi-check-circle-fill"></i>
+                  Ok
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
