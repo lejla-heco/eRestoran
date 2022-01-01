@@ -33,8 +33,8 @@
           </ul>
         </li>
       </ul>
-      <ul *ngIf="loginInformacije.isPermisijaKorisnik" class="navbar-nav d-flex">
-        <li class="nav-item">
+      <ul *ngIf="loginInformacije.isLogiran" class="navbar-nav d-flex">
+        <li *ngIf="loginInformacije.isPermisijaKorisnik" class="nav-item">
           <div class="dropdown">
             <button class=" btn btn-outline-light dropdown-toggle" role="button" id="dropdownMenuKuponi" data-bs-toggle="dropdown" aria-expanded="false" (click)="preuzmiKupone()">
               <i class="bi bi-bell-fill"></i>
@@ -49,7 +49,7 @@
             </div>
           </div>
         </li>
-        <li class="nav-item btn btn-outline-light" routerLink="narudzba">
+        <li *ngIf="loginInformacije.isPermisijaKorisnik" class="nav-item btn btn-outline-light" routerLink="narudzba">
           <i class="bi-cart-fill me-1"></i>
           Korpa
           <span class="badge bg-light text-black ms-1 rounded-pill" id="kolicina">0</span>
@@ -61,11 +61,11 @@
             Moj profil
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="" routerLink="moje-narudzbe" (click)="clicked('Home')">
+            <a *ngIf="loginInformacije.isPermisijaKorisnik" class="dropdown-item" href="" routerLink="moje-narudzbe" (click)="clicked('Home')">
               <i class="bi bi-basket-fill"></i>
               Moje narudžbe
             </a>
-            <a class="dropdown-item" href="">
+            <a *ngIf="loginInformacije.isPermisijaKorisnik" class="dropdown-item" href="">
               <i class="bi bi-clock-history"></i>
               Moje rezervacije
             </a>
@@ -80,24 +80,6 @@
           </div>
         </div>
         </li>
-      </ul>
-      <ul *ngIf="loginInformacije.isPermisijaAdministrator" class="navbar-nav d-flex">
-        <a class="nav-item btn btn-outline-light" href="" (click)="odjava()">
-          <i class="bi bi-door-closed-fill"></i>
-          Odjava
-        </a>
-      </ul>
-      <ul *ngIf="loginInformacije.isPermisijaZaposlenik" class="navbar-nav d-flex">
-        <a class="nav-item btn btn-outline-light" href="" (click)="odjava()">
-          <i class="bi bi-door-closed-fill"></i>
-          Odjava
-        </a>
-      </ul>
-      <ul *ngIf="loginInformacije.isPermisijaDostavljac" class="navbar-nav d-flex">
-        <a class="nav-item btn btn-outline-light" href="" (click)="odjava()">
-          <i class="bi bi-door-closed-fill"></i>
-          Odjava
-        </a>
       </ul>
       <ul *ngIf="loginInformacije.isPermisijaGost" class="navbar-nav d-flex">
         <li class="nav-item btn btn-outline-light" routerLink="login">

@@ -36,6 +36,7 @@ import {AutorizacijaDostavljacProvjera} from "./guards/autorizacija-dostavljac-p
 import { PregledRezervacijaZaposlenikComponent } from './pregled-rezervacija-zaposlenik/pregled-rezervacija-zaposlenik.component';
 import { MojiPodaciComponent } from './moji-podaci/moji-podaci.component';
 import { EditPoslovnicaComponent } from './poslovnica/edit-poslovnica/edit-poslovnica.component';
+import {AutorizacijaLoginProvjera} from "./guards/autorizacija-login-provjera.service";
 
 
 @NgModule({
@@ -99,7 +100,7 @@ import { EditPoslovnicaComponent } from './poslovnica/edit-poslovnica/edit-poslo
       {path:"pregled-narudzbi", component:PregledNarudzbiComponent, canActivate:[AutorizacijaZaposlenikProvjera]},
       {path:"pregled-narudzbi-dostavljac", component:PregledNarudzbiDostavljacComponent, canActivate:[AutorizacijaDostavljacProvjera]},
       {path:"pregled-rezervacija-zaposlenik",component:PregledRezervacijaZaposlenikComponent,canActivate:[AutorizacijaZaposlenikProvjera]},
-      {path:"moji-podaci", component:MojiPodaciComponent, canActivate:[AutorizacijaKorisnikProvjera]}
+      {path:"moji-podaci", component:MojiPodaciComponent, canActivate:[AutorizacijaLoginProvjera]}
     ],{
       anchorScrolling : 'enabled',
       scrollPositionRestoration : 'enabled',

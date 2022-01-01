@@ -2,7 +2,9 @@ import {Injectable} from "@angular/core";
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from "@angular/router";
 import {AutentifikacijaHelper} from "../helper/autentifikacija-helper";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AutorizacijaLoginProvjera implements CanActivate{
   constructor(private router : Router){
   }
@@ -10,7 +12,7 @@ export class AutorizacijaLoginProvjera implements CanActivate{
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot){
 
     try{
-      if (AutentifikacijaHelper.getLoginInfo().isPermisijaGost)
+      if (!AutentifikacijaHelper.getLoginInfo().isPermisijaGost)
         return true;
     }
     catch(e){
