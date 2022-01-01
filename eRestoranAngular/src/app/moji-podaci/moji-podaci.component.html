@@ -1,10 +1,16 @@
-<header class="masthead-kupon" style="padding-top: 6rem; background-image: url('/assets/img/moji-podaci.jpg')">
+<header class="masthead-kupon" style="background-image: url('/assets/img/moji-podaci.jpg')" [style]="loginInformacije.isPermisijaAdministrator? 'padding-top:10rem; padding-bottom:10rem;': 'padding-top: 6rem'">
   <div class="container">
       <div class="row d-flex justify-content-center align-items-center">
-        <div class="animate__animated animate__pulse col col-xl-6">
+        <div class="animate__animated animate__pulse col" [ngClass]="podesiSirinuCarda()">
           <div class="card" style="border: none; border-radius: 0.1rem;">
             <div class="row g-0">
               <div class="col d-flex align-items-center">
+                <div *ngIf="loginInformacije.isPermisijaZaposlenik || loginInformacije.isPermisijaDostavljac" class="col-md-6">
+                  <img id="preview-slika" class="card-img-top mb-5 mb-md-0" alt="Prostor za fotografiju" src="{{korisnik.slika}}"/>
+                  <div  class="d-flex justify-content-center align-items-center position-absolute" style="bottom:10px; left:20px;">
+                    <input class="btn btn-outline-dark flex-shrink-0" id="fajl-input" accept="image/*" type="file" (change)="generisiPreview()"/>
+                  </div>
+                </div>
                 <div class="card-body p-4 p-lg-5 text-black">
                   <form>
 
@@ -27,13 +33,13 @@
                       </div>
                       <input type="text" class="form-control" [(ngModel)]="korisnik.email" [ngModelOptions]="{standalone: true}">
                     </div>
-                    <div class="input-group mb-3">
+                    <div *ngIf="loginInformacije.isPermisijaKorisnik" class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Broj telefona</span>
                       </div>
                       <input type="text" class="form-control" [(ngModel)]="korisnik.brojTelefona" [ngModelOptions]="{standalone: true}">
                     </div>
-                    <div class="input-group mb-3">
+                    <div *ngIf="loginInformacije.isPermisijaKorisnik" class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Adresa stanovanja</span>
                       </div>
@@ -58,7 +64,7 @@
                       </div>
                     </div>
 
-                    <div class="input-group mb-3">
+                    <div *ngIf="loginInformacije.isPermisijaKorisnik" class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Opstina</span>
                       </div>

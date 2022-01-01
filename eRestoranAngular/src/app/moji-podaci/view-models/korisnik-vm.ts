@@ -7,4 +7,5 @@ export class Korisnik{
   korisnickoIme : string;
   lozinka : string;
   opstinaId : number;
+  slika : string;
 }
