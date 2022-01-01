@@ -43,30 +43,5 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
         {
             return _dbContext.Korisnik.ToList();
         }
-
-        [HttpGet]
-        public ActionResult Get()
-        {
-            if (!HttpContext.GetLoginInfo().isPermisijaKorisnik)
-                return BadRequest("nije logiran");
-
-            Korisnik korisnik = HttpContext.GetLoginInfo().korisnickiNalog.Korisnik;
-            if (korisnik == null)
-                return BadRequest("Nepostojeci korisnik");
-
-            KorisnikGetVM korisnikGetVM = new KorisnikGetVM()
-            {
-                ime = korisnik.Ime,
-                prezime = korisnik.Prezime,
-                email = korisnik.Email,
-                brojTelefona = korisnik.BrojTelefona,
-                adresaStanovanja = korisnik.AdresaStanovanja,
-                korisnickoIme = korisnik.KorisnickoIme,
-                lozinka = korisnik.Lozinka,
-                opstinaId = korisnik.OpstinaID,
-            };
-
-            return Ok(korisnikGetVM);
-        }
     }
 }

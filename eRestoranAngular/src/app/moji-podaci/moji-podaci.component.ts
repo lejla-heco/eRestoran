@@ -21,7 +21,7 @@ export class MojiPodaciComponent implements OnInit {
   }
 
   private ucitajPodatke() {
-    this.httpKlijent.get(MyConfig.adresaServera + "/Korisnik/Get", MyConfig.httpOpcije()).subscribe((response : any)=>{
+    this.httpKlijent.get(MyConfig.adresaServera + "/KorisnickiNalog/Get", MyConfig.httpOpcije()).subscribe((response : any)=>{
       this.korisnik = response;
     });
   }

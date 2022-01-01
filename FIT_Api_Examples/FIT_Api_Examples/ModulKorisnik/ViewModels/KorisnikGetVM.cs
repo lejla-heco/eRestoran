@@ -15,5 +15,6 @@ namespace FIT_Api_Examples.ModulKorisnik.ViewModels
         public string korisnickoIme { get; set; }
         public string lozinka { get; set; }
         public int opstinaId { get; set; }
+        public string slika { get; set; }
     }
 }
