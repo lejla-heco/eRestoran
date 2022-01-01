@@ -38,14 +38,23 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
 
             List<Korisnik> korisnici = _dbContext.Korisnik.ToList();
             Random nasumicanBroj = new Random();
+            List<Korisnik> odabrani = new List<Korisnik>();
 
             for(int i =0; i<kuponGenerisiKuponVM.maksimalniBrojKorisnika; i++)
             {
                 int indeks = nasumicanBroj.Next(0, korisnici.Count);
                 Korisnik korisnik = korisnici[indeks];
+                odabrani.Add(korisnik);
+            }
+
+            List<Korisnik> bezDuplikata = odabrani.GroupBy(k => k.ID).Select(k => k.First()).ToList();
+
+            foreach (Korisnik k in bezDuplikata)
+            {
+
                 KorisnikKupon korisnikKupon = new KorisnikKupon()
                 {
-                    Korisnik = korisnik,
+                    Korisnik = k,
                     Kupon = kupon,
                     Iskoristen = false,
                 };
