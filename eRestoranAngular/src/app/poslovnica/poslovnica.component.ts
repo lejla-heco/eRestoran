@@ -72,7 +72,7 @@ export class PoslovnicaComponent implements OnInit {
         this.prikaziObavjestenje("Dodana nova poslovnica", "Uspješno ste dodali novu poslovnicu na adresi: " + response.adresa)
       });
     }
-    else this.prikaziObavjestenje("Neadekvatno ispunjena forma za dodavanje nove poslovnice", "Molimo ispunite sva obavezna polja, pa ponovo pokušajte")
+    else this.prikaziObavjestenje("Neadekvatno ispunjena forma za dodavanje nove poslovnice", "Molimo ispunite sva obavezna polja, pa ponovo pokušajte");
   }
 
   ocistiFormu(){

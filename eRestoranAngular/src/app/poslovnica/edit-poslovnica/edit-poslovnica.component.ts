@@ -79,9 +79,14 @@ export class EditPoslovnicaComponent implements OnInit, OnDestroy {
   zatvoriModalObavjestenje(){
     this.closeModal = true;
     this.animirajObavjestenje();
-    this.obavjestenje, this.azurirajPodatke = setTimeout(function (){
+    this.obavjestenje = setTimeout(function (){
       return false;
     },500)== 0? false : true;
+    if (this.azurirajPodatke) {
+      this.azurirajPodatke = setTimeout(function () {
+        return false;
+      }, 500) == 0 ? false : true;
+    }
   }
 
   private prikaziObavjestenje(naslov : string, sadrzaj : string) {
@@ -92,10 +97,16 @@ export class EditPoslovnicaComponent implements OnInit, OnDestroy {
   }
 
   azuriraj() {
-    this.httpKlijent.post(MyConfig.adresaServera + "/Poslovnica/Update", this.poslovnica, MyConfig.httpOpcije()).subscribe((response : any)=>{
-      this.azurirajPodatke = true;
-      this.prikaziObavjestenje("Uspješno poslati podaci", "Uspješno ste uredili podatke o odabranoj poslovnici!");
-    })
+    if (this.validirajFormu()) {
+      this.httpKlijent.post(MyConfig.adresaServera + "/Poslovnica/Update", this.poslovnica, MyConfig.httpOpcije()).subscribe((response: any) => {
+        this.azurirajPodatke = true;
+        this.prikaziObavjestenje("Uspješno poslati podaci", "Uspješno ste uredili podatke o odabranoj poslovnici!");
+      })
+    }
+    else{
+      this.azurirajPodatke = false;
+      this.prikaziObavjestenje("Neadekvatno ispunjena forma za uređivanje poslovnice", "Molimo ispunite sva obavezna polja, pa ponovo pokušajte");
+    }
   }
 
   private ucitajPoslovnicu() {
@@ -114,6 +125,15 @@ export class EditPoslovnicaComponent implements OnInit, OnDestroy {
       }
     }
     return 'Obavezno polje za unos';
+  }
+
+  private validirajFormu() {
+    return this.poslovnica.adresa != null && this.poslovnica.adresa?.length > 0
+      && this.poslovnica.brojTelefona != null && this.poslovnica.brojTelefona?.length > 0
+      && this.poslovnica.radnoVrijemeRedovno != null && this.poslovnica.radnoVrijemeRedovno?.length > 0
+      && this.poslovnica.radnoVrijemeVikend != null && this.poslovnica.radnoVrijemeVikend?.length > 0
+      && this.poslovnica.lat != null && this.poslovnica.lng != null
+      && this.poslovnica.opstinaId != -1;
   }
 
   ngOnDestroy() {
