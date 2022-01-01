@@ -35,6 +35,7 @@ import { PregledNarudzbiDostavljacComponent } from './pregled-narudzbi-dostavlja
 import {AutorizacijaDostavljacProvjera} from "./guards/autorizacija-dostavljac-provjera.service";
 import { PregledRezervacijaZaposlenikComponent } from './pregled-rezervacija-zaposlenik/pregled-rezervacija-zaposlenik.component';
 import { MojiPodaciComponent } from './moji-podaci/moji-podaci.component';
+import { EditPoslovnicaComponent } from './poslovnica/edit-poslovnica/edit-poslovnica.component';
 
 
 @NgModule({
@@ -66,6 +67,7 @@ import { MojiPodaciComponent } from './moji-podaci/moji-podaci.component';
     PregledNarudzbiDostavljacComponent,
     PregledRezervacijaZaposlenikComponent,
     MojiPodaciComponent,
+    EditPoslovnicaComponent,
   ],
   imports: [
     BrowserModule,

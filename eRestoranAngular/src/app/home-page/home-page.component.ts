@@ -111,4 +111,8 @@ export class HomePageComponent implements OnInit {
       return false;
     },2000)== 0? false : true;
   }
+
+  uredi(id : number) {
+    
+  }
 }

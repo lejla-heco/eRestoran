@@ -46,7 +46,8 @@
           <p  class="section-subheading text-muted fw-bold">Kontakt telefon: </p>
           <p  class="section-subheading text-white"> {{poslovnica.brojTelefona}}</p>
           <div *ngIf="loginInformacije.isPermisijaAdministrator" class="text-center mb-4">
-            <a class="btn btn-outline-light mt-auto" (click)="obrisi(poslovnica.id)"><i class="bi bi-trash-fill"></i>  Obriši poslovnicu</a>
+            <a class="btn btn-outline-light mt-auto" (click)="obrisi(poslovnica.id)"><i class="bi bi-trash-fill"></i>  Obriši</a>
+            <a class="btn btn-outline-light mt-auto" style="margin-left: 8px;" (click)="uredi(poslovnica.id)"><i class="bi bi-pencil-square"></i> Uredi</a>
           </div>
         </div>
       </div>
