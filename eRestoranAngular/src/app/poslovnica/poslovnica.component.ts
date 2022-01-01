@@ -22,6 +22,7 @@ export class PoslovnicaComponent implements OnInit {
   ngOnInit(): void {
     this.inicijalizirajGoogleMapu();
     this.ucitajOpstine();
+    this.poslovnica.opstinaId = -1;
   }
 
   inicijalizirajGoogleMapu() {
@@ -64,13 +65,13 @@ export class PoslovnicaComponent implements OnInit {
   }
 
   dodajPoslovnicu() {
-    this.httpKlijent.post(MyConfig.adresaServera + "/Poslovnica/Add",this.poslovnica,MyConfig.httpOpcije()).subscribe((response : any)=>{
-      this.ocistiFormu();
-      this.obavjestenje = true;
-      this.closeModal = false;
-      this.obavjestenjeNaslov = "Dodana nova poslovnica";
-      this.obavjestenjeSadrzaj ="Uspješno ste dodali novu poslovnicu na adresi: "+ response.adresa;
-    });
+    if (this.validirajFormu()) {
+      this.httpKlijent.post(MyConfig.adresaServera + "/Poslovnica/Add", this.poslovnica, MyConfig.httpOpcije()).subscribe((response: any) => {
+        this.ocistiFormu();
+        this.prikaziObavjestenje("Dodana nova poslovnica", "Uspješno ste dodali novu poslovnicu na adresi: " + response.adresa)
+      });
+    }
+    else this.prikaziObavjestenje("Neadekvatno ispunjena forma za dodavanje nove poslovnice", "Molimo ispunite sva obavezna polja, pa ponovo pokušajte")
   }
 
   ocistiFormu(){
@@ -80,7 +81,7 @@ export class PoslovnicaComponent implements OnInit {
     this.poslovnica.radnoVrijemeVikend = null;
     this.poslovnica.lat = null;
     this.poslovnica.lng = null;
-    this.poslovnica.opstinaId = null;
+    this.poslovnica.opstinaId = -1;
   }
 
   animirajObavjestenje() {
@@ -92,6 +93,34 @@ export class PoslovnicaComponent implements OnInit {
     this.animirajObavjestenje();
     this.obavjestenje = setTimeout(function (){
       return false;
-    },2000)== 0? false : true;
+    },500)== 0? false : true;
+  }
+
+  private validirajFormu() {
+    return this.poslovnica.adresa != null && this.poslovnica.adresa?.length > 0
+    && this.poslovnica.brojTelefona != null && this.poslovnica.brojTelefona?.length > 0
+    && this.poslovnica.radnoVrijemeRedovno != null && this.poslovnica.radnoVrijemeRedovno?.length > 0
+    && this.poslovnica.radnoVrijemeVikend != null && this.poslovnica.radnoVrijemeVikend?.length > 0
+    && this.poslovnica.lat != null && this.poslovnica.lng != null
+    && this.poslovnica.opstinaId != -1;
+  }
+
+  provjeriPolje(polje: any) {
+    if (polje.invalid && (polje.dirty || polje.touched)){
+      if (polje.errors?.['required']){
+        return 'Niste popunili ovo polje!';
+      }
+      else {
+        return '';
+      }
+    }
+    return 'Obavezno polje za unos';
+  }
+
+  private prikaziObavjestenje(naslov : string, sadrzaj : string) {
+    this.obavjestenje = true;
+    this.closeModal = false;
+    this.obavjestenjeNaslov = naslov;
+    this.obavjestenjeSadrzaj = sadrzaj;
   }
 }
