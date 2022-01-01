@@ -17,6 +17,7 @@ export class PoslovnicaComponent implements OnInit {
   closeModal : boolean = false;
   obavjestenjeNaslov : string = "";
   obavjestenjeSadrzaj : string = "";
+  validacija: boolean = false;
 
   constructor(private httpKlijent : HttpClient, private router : Router) { }
 
@@ -68,11 +69,15 @@ export class PoslovnicaComponent implements OnInit {
   dodajPoslovnicu() {
     if (this.validirajFormu()) {
       this.httpKlijent.post(MyConfig.adresaServera + "/Poslovnica/Add", this.poslovnica, MyConfig.httpOpcije()).subscribe((response: any) => {
+        this.validacija = false;
         this.ocistiFormu();
         this.prikaziObavjestenje("Dodana nova poslovnica", "Uspješno ste dodali novu poslovnicu na adresi: " + response.adresa)
       });
     }
-    else this.prikaziObavjestenje("Neadekvatno ispunjena forma za dodavanje nove poslovnice", "Molimo ispunite sva obavezna polja, pa ponovo pokušajte");
+    else{
+      this.validacija = true;
+      this.prikaziObavjestenje("Neadekvatno ispunjena forma za dodavanje nove poslovnice", "Molimo ispunite sva obavezna polja, pa ponovo pokušajte");
+    }
   }
 
   ocistiFormu(){
