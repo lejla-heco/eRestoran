@@ -5,6 +5,7 @@ import {PosebnaPonudaStavka} from "../posebna-ponuda/view-models/posebna-ponuda-
 import {AutentifikacijaHelper} from "../helper/autentifikacija-helper";
 import {LoginInformacije} from "../helper/login-informacije";
 import {Poslovnica} from "./view-models/poslovnica-vm";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-home-page',
@@ -20,7 +21,7 @@ export class HomePageComponent implements OnInit {
   obavjestenjeNaslov : string = "";
   obavjestenjeSadrzaj : string = "";
 
-  constructor(private httpKlijent : HttpClient) {
+  constructor(private httpKlijent : HttpClient, private router : Router) {
     this.loginInformacije = AutentifikacijaHelper.getLoginInfo();
       if (AutentifikacijaHelper.getLoginInfo().isPermisijaKorisnik) {
         this.ucitajBrojStavki(this.loginInformacije.autentifikacijaToken.korisnickiNalog.id);
@@ -113,6 +114,6 @@ export class HomePageComponent implements OnInit {
   }
 
   uredi(id : number) {
-    
+    this.router.navigate(['/edit-poslovnica', id]);
   }
 }

@@ -86,6 +86,7 @@ import { EditPoslovnicaComponent } from './poslovnica/edit-poslovnica/edit-poslo
       {path:"edit-zaposlenik/:id", component:EditZaposlenikComponent, canActivate:[AutorizacijaAdminProvjera]},
       {path:"omiljene-stavke", component:OmiljenjeStavkeComponent, canActivate:[AutorizacijaKorisnikProvjera]},
       {path:"poslovnica", component:PoslovnicaComponent, canActivate:[AutorizacijaAdminProvjera]},
+      {path:"edit-poslovnica/:id", component:EditPoslovnicaComponent, canActivate:[AutorizacijaAdminProvjera]},
       {path:"login", component:LoginComponent},
       {path:"registracija", component:RegistracijaComponent},
       {path:"dostavljac",component:DostavljacComponent,canActivate:[AutorizacijaAdminProvjera]},

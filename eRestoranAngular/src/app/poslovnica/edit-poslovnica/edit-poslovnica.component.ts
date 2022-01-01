@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Poslovnica} from "../../home-page/view-models/poslovnica-vm";
 import {Opstina} from "../../registracija/view-models/opstina-vm";
 import {MyConfig} from "../../my-config";
 import {HttpClient} from "@angular/common/http";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-edit-poslovnica',
   templateUrl: './edit-poslovnica.component.html',
   styleUrls: ['./edit-poslovnica.component.css']
 })
-export class EditPoslovnicaComponent implements OnInit {
+export class EditPoslovnicaComponent implements OnInit, OnDestroy {
+  id : number;
+  private sub : any;
   poslovnica : Poslovnica = null;
   opstine: Opstina[] = null;
   obavjestenje : boolean = false;
@@ -17,9 +20,13 @@ export class EditPoslovnicaComponent implements OnInit {
   obavjestenjeNaslov : string = "";
   obavjestenjeSadrzaj : string = "";
 
-  constructor(private httpKlijent : HttpClient) { }
+  constructor(private httpKlijent : HttpClient, private router : ActivatedRoute) {
+  }
 
   ngOnInit(): void {
+    this.sub = this.router.params.subscribe(params => {
+      this.id = +params['id'];
+    })
     this.inicijalizirajGoogleMapu();
     this.ucitajOpstine();
   }
@@ -84,5 +91,9 @@ export class EditPoslovnicaComponent implements OnInit {
 
   azuriraj() {
 
+  }
+
+  ngOnDestroy(){
+    this.sub.unsubscribe();
   }
 }
