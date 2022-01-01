@@ -21,13 +21,13 @@ export class KuponComponent implements OnInit {
   }
 
   posaljiPodatke() {
-    this.httpKlijent.post(MyConfig.adresaServera + "/Kupon/GenerisiKupon", this.popusniKupon, MyConfig.httpOpcije()).subscribe((response : any) => {
-      this.ocistiFormu();
-      this.obavjestenje = true;
-      this.closeModal = false;
-      this.obavjestenjeNaslov = "Novi kupon za Vaše korisnike";
-      this.obavjestenjeSadrzaj = "Uspješno ste generisali novi kupon sa kodom: " + response.kod;
-    });
+    if (this.validirajFormu()) {
+      this.httpKlijent.post(MyConfig.adresaServera + "/Kupon/GenerisiKupon", this.popusniKupon, MyConfig.httpOpcije()).subscribe((response: any) => {
+        this.ocistiFormu();
+        this.prikaziObavjestenje("Novi kupon za Vaše korisnike", "Uspješno ste generisali novi kupon sa kodom: " + response.kod);
+      });
+    }
+    else this.prikaziObavjestenje("Neadekvatno ispunjena forma za generisanje kupona", "Molimo ispunite sva obavezna polja, pa ponovo pokušajte");
   }
 
   private ocistiFormu() {
@@ -44,7 +44,30 @@ export class KuponComponent implements OnInit {
     this.animirajObavjestenje();
     this.obavjestenje = setTimeout(function (){
       return false;
-    },1000)== 0? false : true;
+    },500)== 0? false : true;
+  }
+
+  provjeriPolje(polje: any) {
+    if (polje.invalid && (polje.dirty || polje.touched)){
+      if (polje.errors?.['required']){
+        return 'Niste popunili ovo polje!';
+      }
+      else {
+        return '';
+      }
+    }
+    return 'Obavezno polje za unos';
+  }
+
+  private validirajFormu() {
+    return this.popusniKupon.popust != null && this.popusniKupon.maksimalniBrojKorisnika != null;
+  }
+
+  private prikaziObavjestenje(naslov : string, sadrzaj : string) {
+    this.obavjestenje = true;
+    this.closeModal = false;
+    this.obavjestenjeNaslov = naslov;
+    this.obavjestenjeSadrzaj = sadrzaj;
   }
 
 }

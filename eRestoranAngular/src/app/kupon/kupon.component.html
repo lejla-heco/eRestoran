@@ -15,7 +15,7 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text">Iznos</span>
                       </div>
-                      <input type="number" min="5" max="95" step="5" class="form-control" [(ngModel)]="popusniKupon.popust" [ngModelOptions]="{standalone: true}">
+                      <input type="number" min="5" max="95" step="5" class="form-control" [(ngModel)]="popusniKupon.popust" [ngModelOptions]="{standalone: true}" required #iznos="ngModel" [placeholder]="provjeriPolje(iznos)">
                       <div class="input-group-append">
                         <span class="input-group-text">%</span>
                       </div>
@@ -24,7 +24,7 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text">Broj korisnika</span>
                       </div>
-                      <input type="number" min="1" class="form-control" [(ngModel)]="popusniKupon.maksimalniBrojKorisnika" [ngModelOptions]="{standalone: true}">
+                      <input type="number" min="1" class="form-control" [(ngModel)]="popusniKupon.maksimalniBrojKorisnika" [ngModelOptions]="{standalone: true}" required #brojKorisnika="ngModel" [placeholder]="provjeriPolje(brojKorisnika)">
                     </div>
                   </div>
                   <div class="text-center">
