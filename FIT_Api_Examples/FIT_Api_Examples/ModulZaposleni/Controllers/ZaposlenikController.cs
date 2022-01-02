@@ -1,6 +1,7 @@
 ﻿using FIT_Api_Examples.Data;
 using FIT_Api_Examples.Helper;
 using FIT_Api_Examples.Helper.AutentifikacijaAutorizacija;
+using FIT_Api_Examples.ModulAutentifikacija.Models;
 using FIT_Api_Examples.ModulNarudzba.Models;
 using FIT_Api_Examples.ModulZaposleni.Models;
 using FIT_Api_Examples.ModulZaposleni.ViewModels;
@@ -106,11 +107,14 @@ namespace FIT_Api_Examples.ModulZaposleni.Controllers
                 narudzba.Zaposlenik = null;
             }
                 _dbContext.SaveChanges();
-                
-                _dbContext.Zaposlenik.Remove(zaposlenik);
-                
 
-                _dbContext.SaveChanges();
+            List<AutentifikacijaToken> logovi = _dbContext.AutentifikacijaToken.Where(at => at.KorisnickiNalogId == id).ToList();
+
+            _dbContext.AutentifikacijaToken.RemoveRange(logovi);
+            _dbContext.Zaposlenik.Remove(zaposlenik);
+            _dbContext.KorisnickiNalog.Remove(zaposlenik);
+
+            _dbContext.SaveChanges();
 
             return Ok(zaposlenik);
         }
