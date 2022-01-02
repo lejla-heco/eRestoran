@@ -116,4 +116,8 @@ export class MojiPodaciComponent implements OnInit {
     }
     return 'Obavezno polje za unos';
   }
+
+  deaktivirajProfil() {
+
+  }
 }

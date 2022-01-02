@@ -3954,6 +3954,7 @@ textarea.form-control-lg {
 }
 .nav-link:hover, .nav-link:focus {
   color: rgb(33,37,41);
+  cursor: pointer;
 }
 .nav-link.disabled {
   color: #6c757d;
