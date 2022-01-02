@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {MeniGrupa} from "../meni/view-models/meni-grupa-vm";
 import {Prigoda} from "./view-models/prigoda-vm";
 import {MyConfig} from "../my-config";
 import {HttpClient} from "@angular/common/http";
@@ -28,7 +27,7 @@ export class RezervacijaComponent implements OnInit {
   }
 
   posaljiPodatke() {
-    this.httpKlijent.post("https://localhost:44325" + "/Rezervacija/Add",this.rezervacija, MyConfig.httpOpcije()).subscribe((result:any)=>{
+    this.httpKlijent.post(MyConfig.adresaServera + "/Rezervacija/Add",this.rezervacija, MyConfig.httpOpcije()).subscribe((result:any)=>{
       alert("Uspješno dodana nova rezervacija");
     });
   }

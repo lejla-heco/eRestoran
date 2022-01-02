@@ -22,6 +22,7 @@ export class MojiPodaciComponent implements OnInit {
   obavjestenjeNaslov : string = "";
   obavjestenjeSadrzaj : string = "";
   obrisiProfilObavjestenje : boolean = false;
+  uspjesnoBrisanje : boolean = false;
 
   constructor(private httpKlijent : HttpClient, private router : Router) {
     this.loginInformacije = AutentifikacijaHelper.getLoginInfo();
@@ -125,9 +126,17 @@ export class MojiPodaciComponent implements OnInit {
   obrisiProfil() {
       this.httpKlijent.get(MyConfig.adresaServera + "/Korisnik/Delete", MyConfig.httpOpcije()).subscribe((response: any) => {
         AutentifikacijaHelper.ocistiMemoriju();
+        this.uspjesnoBrisanje = true;
         this.zatvoriModalObavjestenje();
         this.router.navigateByUrl("home-page");
       });
+      if (!this.uspjesnoBrisanje){
+        this.zatvoriModalObavjestenje();
+        setTimeout(() => {
+          this.obrisiProfilObavjestenje = false;
+          this.prikaziObavjestenje("Obavještenje", "Trenutno ne možete deaktivirati profil jer su Vaše narudžbe u izradi");
+        }, 1000);
+      }
   }
 
   otvoriModal() {
