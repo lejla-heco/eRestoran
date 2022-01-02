@@ -72,7 +72,7 @@
                         <option *ngFor = "let opstina of opstine" [value]=opstina.id>{{opstina.naziv}}</option>
                       </select>
                     </div>
-                    <button *ngIf="loginInformacije.isPermisijaKorisnik" class="btn btn-outline-dark flex-shrink-0 mx-2" (click)="deaktivirajProfil()"> <i class="bi bi-shield-fill-x"></i> Obriši profil</button>
+                    <button *ngIf="loginInformacije.isPermisijaKorisnik" class="btn btn-outline-dark flex-shrink-0 mx-2" (click)="otvoriModal()"> <i class="bi bi-shield-fill-x"></i> Obriši profil</button>
                     <button class="btn btn-dark flex-shrink-0" (click)="azurirajPodatke()"> <i class="bi bi-archive-fill"></i> Ažuriraj podatke</button>
 
 
@@ -98,9 +98,17 @@
               <div class="text-center">
                 <div class="mb-2"><b>{{obavjestenjeSadrzaj}}</b></div>
 
-                <button class="btn btn-outline-dark" (click)="zatvoriModalObavjestenje()">
+                <button *ngIf="!obrisiProfilObavjestenje" class="btn btn-outline-dark" (click)="zatvoriModalObavjestenje()">
                   <i class="bi bi-check-circle-fill"></i>
                   Ok
+                </button>
+                <button *ngIf="obrisiProfilObavjestenje" class="btn btn-outline-dark mx-2" (click)="obrisiProfil()">
+                  <i class="bi bi-check-circle-fill"></i>
+                  Da
+                </button>
+                <button *ngIf="obrisiProfilObavjestenje" class="btn btn-outline-dark" (click)="zatvoriModalObavjestenje();">
+                  <i class="bi bi-x-circle-fill"></i>
+                  Ne
                 </button>
               </div>
             </div>

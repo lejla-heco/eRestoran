@@ -5,6 +5,7 @@ import {MyConfig} from "../my-config";
 import {Opstina} from "../registracija/view-models/opstina-vm";
 import {AutentifikacijaHelper} from "../helper/autentifikacija-helper";
 import {LoginInformacije} from "../helper/login-informacije";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-moji-podaci',
@@ -20,8 +21,9 @@ export class MojiPodaciComponent implements OnInit {
   closeModal : boolean = false;
   obavjestenjeNaslov : string = "";
   obavjestenjeSadrzaj : string = "";
+  obrisiProfilObavjestenje : boolean = false;
 
-  constructor(private httpKlijent : HttpClient) {
+  constructor(private httpKlijent : HttpClient, private router : Router) {
     this.loginInformacije = AutentifikacijaHelper.getLoginInfo();
   }
 
@@ -71,15 +73,18 @@ export class MojiPodaciComponent implements OnInit {
   }
 
   animirajObavjestenje() {
-    return this.closeModal == true? 'animate__animated animate__bounceOut' : 'animate__animated animate__bounceIn';
+    return this.closeModal == true? 'animate__animated animate__bounceOutUp' : 'animate__animated animate__bounceInDown';
   }
 
   zatvoriModalObavjestenje(){
     this.closeModal = true;
     this.animirajObavjestenje();
-    this.obavjestenje = setTimeout(function (){
-      return false;
-    },500)== 0? false : true;
+    setTimeout( () => {
+      this.obavjestenje = false;
+    },500);
+    setTimeout( () => {
+      this.obrisiProfilObavjestenje = false;
+    },500);
   }
 
   private validirajFormu() {
@@ -117,7 +122,16 @@ export class MojiPodaciComponent implements OnInit {
     return 'Obavezno polje za unos';
   }
 
-  deaktivirajProfil() {
+  obrisiProfil() {
+      this.httpKlijent.get(MyConfig.adresaServera + "/Korisnik/Delete", MyConfig.httpOpcije()).subscribe((response: any) => {
+        AutentifikacijaHelper.ocistiMemoriju();
+        this.zatvoriModalObavjestenje();
+        this.router.navigateByUrl("home-page");
+      });
+  }
 
+  otvoriModal() {
+    this.obrisiProfilObavjestenje = true;
+    this.prikaziObavjestenje("Upozorenje!", "Da li ste sigurni da želite obrisati svoj profil?");
   }
 }
