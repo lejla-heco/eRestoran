@@ -2,7 +2,9 @@
   <div class="container px-5 my-3">
     <div class="text-center text-white mb-3">
       <h1 class="display-4 fw-bolder">Lista rezervacija</h1>
-
+      <p style="font-size: larger" class="fw-bold">
+        Pretraži po datumu <input type="date" [(ngModel)]="datum">
+      </p>
     </div>
     <div class="row gx-5 justify-content-center text-dark">
       <div *ngIf ="rezervacije == null || rezervacije?.length == 0" class="py-5 my-5">
@@ -10,7 +12,7 @@
           Trenutno nemate rezervacija</h3>
         <!-- <button class="btn btn-outline-light text mt-2" (click)="reloadPage()" routerLinkActive="/pregled-narudzbi"><i class="bi bi-search"></i> Pregledaj meni</button>-->
       </div>
-      <div *ngFor = "let rezervacija of rezervacije" class="animate__animated animate__bounceIn col-lg-6 col-xl-4 mb-4" style="text-align: left;">
+      <div *ngFor = "let rezervacija of  getRezervacije()" class="animate__animated animate__bounceIn col-lg-6 col-xl-4 mb-4" style="text-align: left;">
         <div  class="card h-100 mb-5 mb-xl-0" >
           <div class="card-body p-5">
             <div class="big text-uppercase fw-bold text-muted">Rezervacija na dan:

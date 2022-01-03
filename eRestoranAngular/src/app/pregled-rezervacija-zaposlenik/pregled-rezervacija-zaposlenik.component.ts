@@ -30,17 +30,28 @@ export class PregledRezervacijaZaposlenikComponent implements OnInit {
   closeModal : boolean = false;
   obavjestenjeNaslov : string = "";
   obavjestenjeSadrzaj : string = "";
+
+  datum:string="";
+
   constructor(private httpKlijent:HttpClient) { }
 
   ngOnInit(): void {
     this.ucitajRezervacije();
     this.getAllStatusiRezervacije();
+   // var date = new Date();
+    //console.log(this.datePipe.transform(date,"dd/MM/yyyy"));
   }
   private ucitajRezervacije() {
-    this.httpKlijent.get(MyConfig.adresaServera + "/Rezervacija/GetAllPagedZaposlenik/" + this.currentPage,MyConfig.httpOpcije()).subscribe((response : any)=>{
+    this.httpKlijent.get("https://localhost:44325" + "/Rezervacija/GetAllPagedZaposlenik/" + this.currentPage,MyConfig.httpOpcije()).subscribe((response : any)=>{
       this.totalPages = response.totalPages;
       this.rezervacije = response.dataItems;
     })
+  }
+  getRezervacije() {
+    if (this.rezervacije == null)
+      return [];
+
+    return this.rezervacije.filter((x: RezervacijaZaposlenik)=> x.datumRezerviranjaPomocni.length==0 || (x.datumRezerviranjaPomocni.startsWith(this.datum) ));
   }
   private getAllStatusiRezervacije() {
     this.httpKlijent.get(MyConfig.adresaServera + "/StatusRezervacije/GetAll").subscribe((result:any)=>{

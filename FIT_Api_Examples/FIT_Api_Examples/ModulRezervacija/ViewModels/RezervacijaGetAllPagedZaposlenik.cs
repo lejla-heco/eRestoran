@@ -9,6 +9,7 @@ namespace FIT_Api_Examples.ModulRezervacija.ViewModels
     {
         public int id { get; set; }
         public string datumRezerviranja { get; set; }
+        public string datumRezerviranjaPomocni { get; set; }// za filtriranje
         public int brojOsoba { get; set; }
         public int brojStolova { get; set; }
         public string poruka { get; set; }
