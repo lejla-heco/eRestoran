@@ -52,7 +52,9 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
         [HttpPost("{id}")]
         public ActionResult Update(int id, [FromBody] MeniUpdateVM meniUpdateVM)
         {
-            
+            if (!HttpContext.GetLoginInfo().isPermisijaAdministrator)
+                return BadRequest("nije logiran");
+
             MeniStavka meniStavka = _dbContext.MeniStavka.Find(id);
 
             if (meniStavka == null)

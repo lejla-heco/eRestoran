@@ -80,5 +80,28 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
         {
             return _dbContext.Korisnik.ToList();
         }
+
+        [HttpPost]
+        public ActionResult Update([FromBody] KorisnikUpdateVM korisnikUpdateVM)
+        {
+            if (!HttpContext.GetLoginInfo().isPermisijaKorisnik)
+                return BadRequest("nije logiran");
+
+            Korisnik korisnik = HttpContext.GetLoginInfo().korisnickiNalog.Korisnik;
+
+
+
+            korisnik.Ime = korisnikUpdateVM.ime;
+            korisnik.Prezime = korisnikUpdateVM.prezime;
+            korisnik.Email = korisnikUpdateVM.email;
+            korisnik.BrojTelefona = korisnikUpdateVM.brojTelefona;
+            korisnik.AdresaStanovanja = korisnikUpdateVM.adresaStanovanja;
+            korisnik.KorisnickoIme = korisnikUpdateVM.korisnickoIme;
+            korisnik.Lozinka = korisnikUpdateVM.lozinka;
+            korisnik.OpstinaID = korisnikUpdateVM.opstinaId;
+         
+            _dbContext.SaveChanges();
+            return Ok(korisnik);
+        }
     }
 }
