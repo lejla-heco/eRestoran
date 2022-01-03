@@ -19,6 +19,11 @@ export class RegistracijaComponent implements OnInit {
   sifra:string;
   prijava : Login = new Login();
 
+  obavjestenje : boolean = false;
+  closeModal : boolean = false;
+  obavjestenjeNaslov : string = "";
+  obavjestenjeSadrzaj : string = "";
+
   constructor(private httpKlijent : HttpClient, private router : Router) { }
 
 
@@ -38,7 +43,12 @@ export class RegistracijaComponent implements OnInit {
 
     this.registracija.opstinaId = parseInt(this.registracija.opstinaId.toString());
   this.httpKlijent.post(MyConfig.adresaServera + "/Korisnik/Add",this.registracija).subscribe((result:any)=>{
-  alert("Uspješno registrovan korisnik "+ this.registracija.username);
+   /* this.obavjestenje = true;
+    this.closeModal = false;
+    this.obavjestenjeNaslov = "Nova registracija";
+    this.obavjestenjeSadrzaj = "Uspješno ste registrovali svoj profil";*/
+    alert("Uspješno ste se registrovali");
+
   this.prijava.korisnickoIme=this.registracija.username;
   this.prijava.lozinka=this.registracija.password;
 
@@ -47,12 +57,30 @@ export class RegistracijaComponent implements OnInit {
       sessionStorage.setItem("autentifikacija-token", JSON.stringify(response));
       this.router.navigateByUrl("/home-page");
 
+
     }
   )
 
     });}
-    else alert("Neispravna lozinka");
+    else //alert("Neispravna lozinka");
+    {
+      this.obavjestenje = true;
+      this.closeModal = false;
+      this.obavjestenjeNaslov = "Greška";
+      this.obavjestenjeSadrzaj = "Neispravna lozinka";
+    }
 
 
+  }
+  animirajObavjestenje() {
+    return this.closeModal == true? 'animate__animated animate__bounceOut' : 'animate__animated animate__bounceIn';
+  }
+
+  zatvoriModalObavjestenje(){
+    this.closeModal = true;
+    this.animirajObavjestenje();
+    this.obavjestenje = setTimeout(function (){
+      return false;
+    },1000)== 0? false : true;
   }
 }

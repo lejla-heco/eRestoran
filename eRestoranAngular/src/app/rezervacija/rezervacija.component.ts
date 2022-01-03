@@ -13,6 +13,11 @@ export class RezervacijaComponent implements OnInit {
   public prigode : Prigoda[] = null;
   rezervacija:NovaRezervacija= new NovaRezervacija();
 
+
+  obavjestenje : boolean = false;
+  closeModal : boolean = false;
+  obavjestenjeNaslov : string = "";
+  obavjestenjeSadrzaj : string = "";
   constructor(private httpKlijent:HttpClient) { }
 
   ngOnInit(): void {
@@ -28,7 +33,22 @@ export class RezervacijaComponent implements OnInit {
 
   posaljiPodatke() {
     this.httpKlijent.post(MyConfig.adresaServera + "/Rezervacija/Add",this.rezervacija, MyConfig.httpOpcije()).subscribe((result:any)=>{
-      alert("Uspješno dodana nova rezervacija");
+      this.obavjestenje = true;
+      this.closeModal = false;
+      this.obavjestenjeNaslov = "Nova rezervacija";
+      this.obavjestenjeSadrzaj = "Uspješno ste dodali novu rezervaciju";
+
     });
+  }
+  animirajObavjestenje() {
+    return this.closeModal == true? 'animate__animated animate__bounceOut' : 'animate__animated animate__bounceIn';
+  }
+
+  zatvoriModalObavjestenje(){
+    this.closeModal = true;
+    this.animirajObavjestenje();
+    this.obavjestenje = setTimeout(function (){
+      return false;
+    },1000)== 0? false : true;
   }
 }
