@@ -13,57 +13,57 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text">Ime</span>
                     </div>
-                    <input type="text" class="form-control" [(ngModel)]="registracija.ime" [ngModelOptions]="{standalone: true}">
+                    <input type="text" class="form-control" [(ngModel)]="registracija.ime" [ngModelOptions]="{standalone: true}"  required #ime="ngModel" [placeholder]="provjeriPolje(ime)">
                   </div>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Prezime</span>
                     </div>
-                    <input type="text" class="form-control" [(ngModel)]="registracija.prezime" [ngModelOptions]="{standalone: true}" >
+                    <input type="text" class="form-control" [(ngModel)]="registracija.prezime" [ngModelOptions]="{standalone: true}"  required #prezime="ngModel" [placeholder]="provjeriPolje(prezime)">
                   </div>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Email</span>
                     </div>
-                    <input type="text" class="form-control" [(ngModel)]="registracija.email" [ngModelOptions]="{standalone: true}">
+                    <input type="text" class="form-control" [(ngModel)]="registracija.email" [ngModelOptions]="{standalone: true}"  required #email="ngModel" [placeholder]="provjeriPolje(email)">
                   </div>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Broj telefona</span>
                     </div>
-                    <input type="text" class="form-control" [(ngModel)]="registracija.brojTelefona" [ngModelOptions]="{standalone: true}">
+                    <input type="text" class="form-control" [(ngModel)]="registracija.brojTelefona" [ngModelOptions]="{standalone: true}"  required #brojTelefona="ngModel" [placeholder]="provjeriPolje(brojTelefona)">
                   </div>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Adresa stanovanja</span>
                     </div>
-                    <input type="text" class="form-control" [(ngModel)]="registracija.adresaStanovanja" [ngModelOptions]="{standalone: true}">
+                    <input type="text" class="form-control" [(ngModel)]="registracija.adresaStanovanja" [ngModelOptions]="{standalone: true}" required #adresaStanovanja="ngModel" [placeholder]="provjeriPolje(adresaStanovanja)">
                   </div>
                  <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Korisničko ime</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Korisnicko ime" [(ngModel)]="registracija.username" [ngModelOptions]="{standalone: true}">
+                    <input type="text" class="form-control" placeholder="Korisnicko ime" [(ngModel)]="registracija.username" [ngModelOptions]="{standalone: true}"  required #username="ngModel" [placeholder]="provjeriPolje(username)">
                   </div>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Lozinka</span>
                     </div>
-                    <input type="password" class="form-control" placeholder="Lozinka"[(ngModel)]="registracija.password" [ngModelOptions]="{standalone: true}" >
+                    <input type="password" class="form-control" placeholder="Lozinka"[(ngModel)]="registracija.password" [ngModelOptions]="{standalone: true}"  required #password="ngModel" [placeholder]="provjeriPolje(password)">
                   </div>
 
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Ponovite lozinku</span>
                     </div>
-                    <input type="password" class="form-control"  [(ngModel)]="sifra" [ngModelOptions]="{standalone: true}">
+                    <input type="password" class="form-control"  [(ngModel)]="sifra" [ngModelOptions]="{standalone: true}"  required #password2="ngModel" [placeholder]="provjeriPolje(password2)">
                   </div>
 
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Opstina</span>
                     </div>
-                    <select class="form-control mb-3" [(ngModel)]="registracija.opstinaId"  [ngModelOptions]="{standalone: true}">
+                    <select class="form-control mb-3" [(ngModel)]="registracija.opstinaId"  [ngModelOptions]="{standalone: true}"  >
                       <option *ngFor = "let opstina of opstine" [value]=opstina.id>{{opstina.naziv}}</option>
                     </select>
                   </div>
@@ -104,7 +104,7 @@
                 <div class="mb-2"><b>{{obavjestenjeSadrzaj}}</b></div>
 
                 <button class="btn btn-outline-dark" (click)="zatvoriModalObavjestenje()">
-                  <i class="bi bi-check-circle-fill"></i>
+                  <i class="bi bi-check-circle-fill" ></i>
                   Ok
                 </button>
               </div>

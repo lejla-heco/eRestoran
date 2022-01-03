@@ -6,6 +6,8 @@ import {Registracija} from "./view-models/registracija-vm";
 import {MeniGrupa} from "../meni/view-models/meni-grupa-vm";
 import {MyConfig} from "../my-config";
 import {Opstina} from "./view-models/opstina-vm";
+import {LoginInformacije} from "../helper/login-informacije";
+import {AutentifikacijaHelper} from "../helper/autentifikacija-helper";
 
 @Component({
   selector: 'app-registracija',
@@ -24,7 +26,10 @@ export class RegistracijaComponent implements OnInit {
   obavjestenjeNaslov : string = "";
   obavjestenjeSadrzaj : string = "";
 
-  constructor(private httpKlijent : HttpClient, private router : Router) { }
+  loginInformacije : LoginInformacije = null;
+  constructor(private httpKlijent : HttpClient, private router : Router) {
+    this.loginInformacije = AutentifikacijaHelper.getLoginInfo();
+  }
 
 
 
@@ -39,15 +44,14 @@ export class RegistracijaComponent implements OnInit {
   }
 
   registracijaPodataka() {
-    if(this.registracija.password==this.sifra){
+    if(this.registracija.password==this.sifra && this.validirajFormu()){
+
 
     this.registracija.opstinaId = parseInt(this.registracija.opstinaId.toString());
   this.httpKlijent.post(MyConfig.adresaServera + "/Korisnik/Add",this.registracija).subscribe((result:any)=>{
-   /* this.obavjestenje = true;
-    this.closeModal = false;
-    this.obavjestenjeNaslov = "Nova registracija";
-    this.obavjestenjeSadrzaj = "Uspješno ste registrovali svoj profil";*/
+
     alert("Uspješno ste se registrovali");
+    //this.prikaziObavjestenje("Nova registracija", "Uspješno ste registrovali svoj profil");
 
   this.prijava.korisnickoIme=this.registracija.username;
   this.prijava.lozinka=this.registracija.password;
@@ -62,15 +66,43 @@ export class RegistracijaComponent implements OnInit {
   )
 
     });}
-    else //alert("Neispravna lozinka");
-    {
-      this.obavjestenje = true;
-      this.closeModal = false;
-      this.obavjestenjeNaslov = "Greška";
-      this.obavjestenjeSadrzaj = "Neispravna lozinka";
+
+    else this.prikaziObavjestenje("Neadekvatno ispunjena forma za registraciju", "Molimo ispunite sva obavezna polja ili ispravno unesite lozinku, pa ponovo pokušajte");
+
+
+
+  }
+  private prikaziObavjestenje(naslov : string, sadrzaj : string) {
+    this.obavjestenje = true;
+    this.closeModal = false;
+    this.obavjestenjeNaslov = naslov;
+    this.obavjestenjeSadrzaj = sadrzaj;
+  }
+
+  private validirajFormu() {
+    var osnovneInformacije : boolean = this.registracija.username != null && this.registracija.username?.length > 0
+      && this.registracija.password != null && this.registracija.password?.length > 0
+      && this.registracija.ime != null && this.registracija.ime?.length > 0
+      && this.registracija.prezime != null && this.registracija.prezime?.length > 0
+      && this.registracija.email != null && this.registracija.email?.length > 0;
+    var dodatneInformacije : boolean = true;
+    if (this.loginInformacije.isPermisijaKorisnik)
+      dodatneInformacije = this.registracija.adresaStanovanja != null && this.registracija.adresaStanovanja?.length > 0
+        && this.registracija.brojTelefona != null && this.registracija.brojTelefona?.length > 0
+        && this.registracija.opstinaId != null;
+
+    return osnovneInformacije && dodatneInformacije;
+  }
+  provjeriPolje(polje: any) {
+    if (polje.invalid && (polje.dirty || polje.touched)){
+      if (polje.errors?.['required']){
+        return 'Niste popunili ovo polje!';
+      }
+      else {
+        return '';
+      }
     }
-
-
+    return 'Obavezno polje za unos';
   }
   animirajObavjestenje() {
     return this.closeModal == true? 'animate__animated animate__bounceOut' : 'animate__animated animate__bounceIn';
@@ -83,4 +115,5 @@ export class RegistracijaComponent implements OnInit {
       return false;
     },1000)== 0? false : true;
   }
+
 }

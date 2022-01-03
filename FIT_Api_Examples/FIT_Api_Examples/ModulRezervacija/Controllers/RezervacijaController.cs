@@ -69,6 +69,7 @@ namespace FIT_Api_Examples.ModulRezervacija.Controllers
                                               brojOsoba=z.BrojOsoba,
                                               brojStolova=z.BrojStolova,
                                               datumRezerviranja=z.DatumRezerviranja,
+                                              datumRezerviranjaPomocni=z.DatumRezerviranja.ToString("dd/MM/yyyy hh:mm"),
                                               prigodaID=z.PrigodaID,
                                               nazivPrigode=z.Prigoda.Naziv,
                                                poruka=z.Poruka,
