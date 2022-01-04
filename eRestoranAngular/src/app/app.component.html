@@ -36,8 +36,9 @@
       <ul *ngIf="loginInformacije.isLogiran" class="navbar-nav d-flex">
         <li *ngIf="loginInformacije.isPermisijaKorisnik" class="nav-item">
           <div class="dropdown">
-            <button class=" btn btn-outline-light dropdown-toggle" role="button" id="dropdownMenuKuponi" data-bs-toggle="dropdown" aria-expanded="false" (click)="preuzmiKupone()">
+            <button class=" btn btn-outline-light" role="button" id="dropdownMenuKuponi" data-bs-toggle="dropdown" aria-expanded="false" (click)="preuzmiKupone()">
               <i class="bi bi-bell-fill"></i>
+              <span class="badge bg-light text-black ms-1 rounded-pill" id="notifikacije">0</span>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuKuponi">
               <a class="dropdown-item" *ngIf="kuponi == null || kuponi.length == 0">

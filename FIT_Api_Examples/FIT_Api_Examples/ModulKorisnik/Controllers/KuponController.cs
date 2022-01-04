@@ -3,7 +3,9 @@ using FIT_Api_Examples.Helper.AutentifikacijaAutorizacija;
 using FIT_Api_Examples.ModulKorisnik.Models;
 using FIT_Api_Examples.ModulKorisnik.ViewModels;
 using FIT_Api_Examples.ModulNarudzba.Models;
+using FIT_Api_Examples.SignalR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +18,11 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
     public class KuponController : Controller
     {
         private ApplicationDbContext _dbContext;
-        public KuponController(ApplicationDbContext dbContext)
+        private IHubContext<NotificationHub> _hubContext;
+        public KuponController(ApplicationDbContext dbContext, IHubContext<NotificationHub> hubContext)
         {
             _dbContext = dbContext;
+            _hubContext = hubContext;
         }
 
         [HttpPost]
@@ -48,7 +52,7 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
             }
 
             List<Korisnik> bezDuplikata = odabrani.GroupBy(k => k.ID).Select(k => k.First()).ToList();
-
+            List<int> dobitniciId = new List<int>();
             foreach (Korisnik k in bezDuplikata)
             {
 
@@ -58,10 +62,17 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
                     Kupon = kupon,
                     Iskoristen = false,
                 };
+                dobitniciId.Add(k.ID);
                 _dbContext.KorisnikKupon.Add(korisnikKupon);
                 _dbContext.SaveChanges();
             }
-
+            var data = new
+            {
+                dobitnici = dobitniciId,
+                popust = kupon.Popust,
+                kod = kupon.Kod
+            };
+            _hubContext.Clients.All.SendAsync("kuponNotifikacija", data);
             return Ok(kupon);   
         }
 
@@ -97,6 +108,17 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
             float novaCijena = trenutnaNarudzba.Cijena - (trenutnaNarudzba.Cijena * kupon.Popust / 100);
 
             return Ok(Math.Round(novaCijena, 2));
+        }
+
+        [HttpGet]
+        public IActionResult GetBrojKupona()
+        {
+            if (!HttpContext.GetLoginInfo().isPermisijaKorisnik)
+                return BadRequest("nije logiran");
+
+            Korisnik korisnik = HttpContext.GetLoginInfo().korisnickiNalog.Korisnik;
+            int notifikacije = _dbContext.KorisnikKupon.Where(kk => kk.KorisnikID == korisnik.ID && !kk.Iskoristen).ToList().Count;
+            return Ok(notifikacije);
         }
     }
 }

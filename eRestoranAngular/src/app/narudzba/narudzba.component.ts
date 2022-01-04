@@ -106,6 +106,11 @@ export class NarudzbaComponent implements OnInit {
 
   posaljiNarudzbu() {
     this.httpKlijent.get(MyConfig.adresaServera + "/Narudzba/Zakljuci/" + this.odabraniKupon.id, MyConfig.httpOpcije()).subscribe((response : any)=>{
+      if (this.odabraniKupon.id != 0){
+        this.httpKlijent.get(MyConfig.adresaServera + "/Kupon/GetBrojKupona", MyConfig.httpOpcije()).subscribe((result : any)=>{
+          document.getElementById("notifikacije").innerHTML  = result;
+        });
+      }
       this.zatvoriModal();
       this.obavjestenjeMessage = "Cijena Vaše narudžbe iznosi: " + response + " KM";
       this.obavjestenje = true;

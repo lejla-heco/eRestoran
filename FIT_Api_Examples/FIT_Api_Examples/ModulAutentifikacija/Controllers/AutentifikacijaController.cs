@@ -3,7 +3,9 @@ using FIT_Api_Examples.Helper;
 using FIT_Api_Examples.ModulAutentifikacija.Models;
 using FIT_Api_Examples.ModulAutentifikacija.ViewModels;
 using FIT_Api_Examples.ModulKorisnickiNalog.Models;
+using FIT_Api_Examples.SignalR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,10 +20,12 @@ namespace FIT_Api_Examples.ModulAutentifikacija.Controllers
     public class AutentifikacijaController : ControllerBase
     {
         private ApplicationDbContext _dbContext;
+        private IHubContext<NotificationHub> _hubContext;
 
-        public AutentifikacijaController(ApplicationDbContext dbContext)
+        public AutentifikacijaController(ApplicationDbContext dbContext, IHubContext<NotificationHub> hubContext)
         {
             _dbContext = dbContext;
+            _hubContext = hubContext;
         }
 
         [HttpPost]
