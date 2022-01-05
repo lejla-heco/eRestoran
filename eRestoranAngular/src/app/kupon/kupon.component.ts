@@ -42,9 +42,9 @@ export class KuponComponent implements OnInit {
   zatvoriModalObavjestenje(){
     this.closeModal = true;
     this.animirajObavjestenje();
-    this.obavjestenje = setTimeout(function (){
-      return false;
-    },500)== 0? false : true;
+    setTimeout(() => {
+      this.obavjestenje = false;
+    },500);
   }
 
   provjeriPolje(polje: any) {

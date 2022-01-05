@@ -5,8 +5,6 @@ import {HttpClient} from "@angular/common/http";
 import {MyConfig} from "../my-config";
 import {MeniGrupa} from "../meni/view-models/meni-grupa-vm";
 import {StavkaNarudzbe} from "../narudzba/view-models/stavka-narudzbe-vm";
-import {AutentifikacijaHelper} from "../helper/autentifikacija-helper";
-import {LoginInformacije} from "../helper/login-informacije";
 
 @Component({
   selector: 'app-omiljenje-stavke',

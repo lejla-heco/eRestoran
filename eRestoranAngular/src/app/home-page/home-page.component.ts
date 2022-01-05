@@ -108,9 +108,9 @@ export class HomePageComponent implements OnInit {
   zatvoriModalObavjestenje(){
     this.closeModal = true;
     this.animirajObavjestenje();
-    this.obavjestenje = setTimeout(function (){
-      return false;
-    },2000)== 0? false : true;
+    setTimeout( ()=>{
+      this.obavjestenje = false;
+    },1000);
   }
 
   uredi(id : number) {

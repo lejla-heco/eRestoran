@@ -93,9 +93,9 @@ export class NarudzbaComponent implements OnInit {
     this.odabraniKupon.id = 0;
     this.closeModal = true;
     this.animiraj();
-    this.zakljuciNarudzbu = setTimeout(function (){
-      return false;
-    },2000)== 0? false : true;
+    setTimeout(() => {
+      this.zakljuciNarudzbu = false;
+    },1000);
   }
 
   posaljiKupon() {
@@ -130,9 +130,9 @@ export class NarudzbaComponent implements OnInit {
   zatvoriModalObavjestenje(){
     this.closeModalObavjestenje = true;
     this.animiraj();
-    this.obavjestenje = setTimeout(function (){
-      return false;
-    },1000)== 0? false : true;
+    setTimeout(() => {
+      this.obavjestenje = false;
+    },1000);
     this.obavjestenjeMessage = "";
   }
 }

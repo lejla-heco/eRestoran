@@ -79,9 +79,9 @@ urediStatusNarudzbe:UrediStatusNarudzbe= new UrediStatusNarudzbe();
   zatvoriModalObavjestenje(){
     this.closeModal = true;
     this.animirajObavjestenje();
-    this.obavjestenje = setTimeout(function (){
-      return false;
-    },1000)== 0? false : true;
+    setTimeout(() => {
+      this.obavjestenje = false;
+    },1000);
   }
 
 
