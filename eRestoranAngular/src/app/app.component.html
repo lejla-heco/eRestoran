@@ -110,3 +110,27 @@
     </div>
   </div>
 </footer>
+
+<div *ngIf="signalRService.podaci != null" class="portfolio-modal modal" [ngClass]="animirajNotifikaciju()" id="portfolioModalResponse" tabindex="-1" aria-labelledby="portfolioModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog mt-2">
+    <div class="modal-content">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <div class="modal-body">
+              <p class="item-intro text-muted mb-2">Osvojili ste novi kupon</p>
+              <div class="text-center">
+                <div class="mb-2"><b>Naš restoran Vam poklanja kupon {{signalRService.podaci.kod}} sa {{signalRService.podaci.popust}}% popusta!</b></div>
+
+                <button class="btn btn-outline-dark" (click)="zatvoriModal()">
+                  <i class="bi bi-check-circle-fill"></i>
+                  Ok
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

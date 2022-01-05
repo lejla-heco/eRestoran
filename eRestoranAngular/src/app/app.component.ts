@@ -17,15 +17,16 @@ export class AppComponent {
   loginInformacije : LoginInformacije = new LoginInformacije();
   kuponi : Kupon[] = null;
   trenutnaSelekcija: string = "Home";
+  closeModal : boolean = false;
 
   constructor(public signalRService: SignalRService, private router: Router, private httpKlijent : HttpClient) {
     router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
           this.loginInformacije = this.loginInfo();
+        if (this.loginInformacije.isPermisijaKorisnik) this.preuzmiBrojKupona();
       }
     });
     router.navigateByUrl('home-page');
-    if (this.loginInformacije.isPermisijaKorisnik) this.preuzmiBrojKupona();
     signalRService.startConnection();
     signalRService.kuponNotifikacija();
   }
@@ -56,5 +57,18 @@ export class AppComponent {
 
   clicked(naziv : string){
     this.trenutnaSelekcija = naziv;
+  }
+
+  animirajNotifikaciju() {
+    return this.closeModal == true? 'animate__animated animate__bounceOutUp' : 'animate__animated animate__bounceInDown';
+  }
+
+  zatvoriModal(){
+    this.closeModal = true;
+    this.animirajNotifikaciju();
+    setTimeout(()=>{
+      this.signalRService.podaci = null;
+      this.closeModal = false;
+    },500);
   }
 }

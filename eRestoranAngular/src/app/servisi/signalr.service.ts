@@ -9,9 +9,7 @@ import {AutentifikacijaHelper} from "../helper/autentifikacija-helper";
 })
 export class SignalRService {
   loginInformacije : LoginInformacije;
-  notifikacija: boolean = false;
-  notifikacijaNaslov: string;
-  notifikacijaSadrzaj: string;
+  podaci : any = null;
   constructor() {
     this.loginInformacije = AutentifikacijaHelper.getLoginInfo();
   }
@@ -30,13 +28,13 @@ export class SignalRService {
     this.hubConnection.on('kuponNotifikacija', (data) => {
       let id : number= this.loginInformacije.autentifikacijaToken.korisnickiNalogId;
       if (data.dobitnici.includes(id)) {
-        alert("Osvojili ste kupon");
         let trenutniBroj : number = parseInt(document.getElementById("notifikacije").innerHTML);
         trenutniBroj++;
         document.getElementById("notifikacije").innerHTML = trenutniBroj.toString();
-        this.notifikacija = true;
-        this.notifikacijaNaslov = "Osvojili ste popusni kupon!";
-        this.notifikacijaSadrzaj = "Restoran Vam dodjeljuje kupon " + data.kod + " sa " + data.popust +"% popusta";
+        this.podaci = {
+          popust : data.popust,
+          kod : data.kod
+        };
       }
     });
   }
