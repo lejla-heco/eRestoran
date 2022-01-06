@@ -1,16 +1,59 @@
-<header class="masthead" style="padding-top: 8rem;">
+<header class="masthead" style="padding-top: 8rem; background-image: url('/assets/img/rezervacija.jpg')">
   <div class="container">
     <div class="row d-flex justify-content-center align-items-center">
-      <div class="animate__animated animate__fadeIn col col-xl-6">
 
         <div style="text-align: left">
-          <button class="btn btn-outline-light flex-shrink-0 mb-2" type="button" routerLink="/rezervacija">
+          <button class="btn btn-outline-light flex-shrink-0 mb-2" type="button" routerLink="/rezervacija" style="margin-left:35px;">
             <i class="bi bi-arrow-bar-left"></i>
-            Nazad
+            Nova rezervacija
           </button>
 
         </div>
+        <div class="row gx-5 justify-content-center text-dark">
+          <div *ngIf ="rezervacije == null || rezervacije?.length == 0" class="py-5 my-5">
+            <h3 class="animate__animated animate__bounceIn display-7 fw-bolder text-center text-white">
+              Nemate rezervacija</h3>
+          </div>
+          <div *ngFor="let rezervacija of rezervacije; let i=index" class="animate__animated animate__bounceIn col-lg-6 col-xl-4 mb-4" style="text-align: left;">
+            <div class="card h-100 mb-5 mb-xl-0">
 
+              <div class="card-body p-5">
+                <div class="small text-uppercase fw-bold text-muted">Rezervacija na dan: {{rezervacija.datumRezerviranjaPomocni}}<div>
+                  <div class="mb-3">
+                    <span class="display-4 fw-bold text-dark" style="font-size:30px;">Rezervacija {{i+1}}</span>
+                  </div>
+                  <ul class="list-unstyled mb-4">
+                    <li class="mb-2 text-dark">
+                      Broj osoba: {{rezervacija.brojOsoba}}
+                    </li>
+                    <li class="mb-2 text-dark">
+                      Broj stolova: {{rezervacija.brojStolova}}
+                    </li>
+                    <li class="mb-2 text-dark">
+                      Prigoda : {{rezervacija.nazivPrigode}}
+                    </li>
+                    <li *ngIf="rezervacija.poruka == null" class="mb-2 text-dark">
+                      Poruka: nema poruke
+                    </li>
+                    <li *ngIf="rezervacija.poruka != null" class="mb-2 text-dark">
+                      Poruka: {{rezervacija.poruka}}
+                    </li>
+                  </ul>
+                </div>
+                  <div>
+                    <div class="text-dark">Status rezervacije: {{rezervacija.nazivStatusa}}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                <div class="text-center">
+                  <button class="btn btn-outline-dark flex-shrink-0"(click)="prikaziBrisanje(rezervacija)"  ><i  class="bi bi-trash" ></i> Otkaži rezervaciju</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    <!--
         <div class="card" style="border: none">
           <div class="row g-0">
 
@@ -25,7 +68,6 @@
 
                     <div   class="card h-100">
 
-                      <!-- Rezervacija details-->
                       <div class="card-body p-3">
                         <div class="text-center">
 
@@ -53,9 +95,10 @@
             </div>
           </div>
         </div>
+-->
       </div>
     </div>
-  </div>
+
 </header>
 
 <!-- Modal za brisanje rezervacije-->

@@ -42,7 +42,7 @@ export class PregledRezervacijaZaposlenikComponent implements OnInit {
     //console.log(this.datePipe.transform(date,"dd/MM/yyyy"));
   }
   private ucitajRezervacije() {
-    this.httpKlijent.get("https://localhost:44325" + "/Rezervacija/GetAllPagedZaposlenik/" + this.currentPage,MyConfig.httpOpcije()).subscribe((response : any)=>{
+    this.httpKlijent.get(MyConfig.adresaServera + "/Rezervacija/GetAllPagedZaposlenik/" + this.currentPage,MyConfig.httpOpcije()).subscribe((response : any)=>{
       this.totalPages = response.totalPages;
       this.rezervacije = response.dataItems;
     })

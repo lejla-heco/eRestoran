@@ -71,4 +71,11 @@ export class AppComponent {
       this.closeModal = false;
     },500);
   }
+
+  preusmjeri() {
+    if (this.trenutnaSelekcija!='Home') this.router.navigate(['/home-page']);
+    setTimeout(()=>{
+      this.router.navigate(['/home-page'], {fragment:'kontakt'});
+    },500);
+  }
 }

@@ -3,7 +3,7 @@
   <div class="container">
     <div class="masthead-subheading">Dobro došli u</div>
     <div class="masthead-heading text-uppercase">eRestoran</div>
-    <a class="btn btn-primary btn-xl text-uppercase" [routerLink] = "['/home-page']"  [fragment]="'kontakt'">O nama</a>
+    <a class="btn btn-primary btn-xl text-uppercase" [routerLink] = "['/meni']">Naš meni</a>
   </div>
 </header>
 <!-- Posebna ponuda -->
@@ -22,6 +22,7 @@
           </a>
           <div class="portfolio-caption">
             <div class="portfolio-caption-heading">{{stavka.naziv}}</div>
+            <div class="portfolio-caption-subheading">{{stavka.snizenaCijena}} KM</div>
             <div class="portfolio-caption-subheading text-muted">{{stavka.opis}}</div>
           </div>
         </div>
@@ -35,7 +36,7 @@
 <section id="kontakt" class="animate__animated animate__fadeIn page-section pb-0">
   <div class="container pb-2">
     <div class="text-center">
-      <h2 class="section-heading text-uppercase">O nama</h2>
+      <h2 class="section-heading text-uppercase">Kontakt</h2>
       <div *ngIf ="poslovnice != null" class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
         <div *ngFor ="let poslovnica of poslovnice" class="col-sm text-center">
           <p  class="section-subheading text-muted fw-bold">Lokacija: </p>
