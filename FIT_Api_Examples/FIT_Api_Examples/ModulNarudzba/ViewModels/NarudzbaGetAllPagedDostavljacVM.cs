@@ -13,7 +13,9 @@ namespace FIT_Api_Examples.ModulNarudzba.ViewModels
         public string status { get; set; }
         public int statusID { get; set; }
         public bool isKoristenKupon { get; set; }
-
+        public string adresaStanovanja { get; set; }
+        public string brojTelefona { get; set; }
+        public string imeKupca { get; set; }
         public class Stavka
         {
             public string naziv { get; set; }

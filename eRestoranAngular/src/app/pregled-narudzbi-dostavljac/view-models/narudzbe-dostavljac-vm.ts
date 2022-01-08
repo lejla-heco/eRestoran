@@ -8,4 +8,7 @@ export class NarudzbaDostavljac {
   statusID:number;
   isKoristenKupon : boolean;
   stavke: NarudzbaStavka[];
+   adresaStanovanja: string;
+   brojTelefona : string;
+   imeKupca : string;
 }

@@ -46,7 +46,7 @@
                 </div>
               </div>
               <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center">
+                <div  *ngIf="rezervacija.nazivStatusa=='Na čekanju' || rezervacija.nazivStatusa=='Odobrena'" class="text-center">
                   <button class="btn btn-outline-dark flex-shrink-0"(click)="prikaziBrisanje(rezervacija)"  ><i  class="bi bi-trash" ></i> Otkaži rezervaciju</button>
                 </div>
               </div>

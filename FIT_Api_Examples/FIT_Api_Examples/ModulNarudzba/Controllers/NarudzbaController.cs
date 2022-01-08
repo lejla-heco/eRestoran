@@ -406,7 +406,7 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
                 return BadRequest("Nemate ovlasti za trazenu akciju!");
 
 
-        
+
             var data = _dbContext.Narudzba.Where(n => n.DostavljacID == dostavljac.ID && n.StatusNarudzbe.Naziv != "Preuzeto" && n.StatusNarudzbe.Naziv != "Poslano" && n.StatusNarudzbe.Naziv != "U pripremi")
                                                             .Select(n => new NarudzbaGetAllPagedDostavljacVM()
                                                             {
@@ -415,6 +415,9 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
                                                                 datumNarucivanja = n.DatumNarucivanja.ToString("dd/MM/yyyy hh:mm"),
                                                                 status = n.StatusNarudzbe.Naziv,
                                                                 statusID = n.StatusNarudzbe.ID,
+                                                                brojTelefona=n.Korisnik.BrojTelefona,
+                                                                adresaStanovanja= n.Korisnik.AdresaStanovanja,
+                                                                imeKupca=n.Korisnik.Ime + " " +n.Korisnik.Prezime,
                                                                 isKoristenKupon = n.KuponKoristen,
                                                                 stavke = _dbContext.StavkaNarudzbe.Where(sn => sn.NarudzbaID == n.ID).Select(sn => new NarudzbaGetAllPagedDostavljacVM.Stavka()
                                                                 {

@@ -31,6 +31,10 @@
                   <option *ngFor = "let status of statusi" [value]=status.id>{{status.naziv}}</option>
                 </select><button (click)="urediStatus(narudzba)" class="btn btn-outline-dark mt-auto mx-2"><i class="bi bi-pencil-square"  style="margin-left: 10px"></i>Uredi status</button></div>
               <div clas="text-muted" *ngIf="narudzba.isKoristenKupon">Korišten kupon za narudžbu</div>
+
+              <div clas="text-muted">Ime kupca: {{narudzba.imeKupca}}</div>
+              <div clas="text-muted">Adresa: {{narudzba.adresaStanovanja}}</div>
+              <div clas="text-muted">Broj telefona: {{narudzba.brojTelefona}}</div>
             </div>
           </div>
           <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
