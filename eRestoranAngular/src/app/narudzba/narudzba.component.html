@@ -48,7 +48,7 @@
   <div *ngIf ="narudzba.cijena != 0" class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
     <div class="text-center">
     <div class="mb-2"><b>Cijena narudžbe: {{narudzba.cijena}} KM</b></div>
-    <button class="btn btn-outline-dark" (click)="zakljuciNarudzbu = true; closeModal = false;">
+    <button class="btn btn-dark" (click)="zakljuciNarudzbu = true; closeModal = false;">
       <i class="bi bi-check-circle-fill"></i>
       Zaključi narudžbu
     </button>
@@ -86,7 +86,7 @@
                 <div *ngIf="narudzba.omiljeno" style="font-size:medium"> Omiljena narudžba</div>
                 <div *ngIf="!narudzba.omiljeno" style="font-size:medium"> Dodaj narudžbu u omiljene?</div>
               </div>
-              <button class="btn btn-outline-dark" (click)="posaljiNarudzbu()">
+              <button class="btn btn-dark" (click)="posaljiNarudzbu()">
                 <i class="bi bi-check-circle-fill"></i>
                 Zaključi narudžbu
               </button>

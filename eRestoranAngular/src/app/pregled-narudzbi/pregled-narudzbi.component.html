@@ -2,7 +2,7 @@
   <div class="container px-5 my-3">
     <div class="text-center text-white mb-3">
       <h1 class="display-4 fw-bolder">Lista narudžbi</h1>
-
+      <p class="lead fw-normal text-white mb-0">Vama dodijeljene narudžbe</p>
     </div>
     <div class="row gx-5 justify-content-center text-dark">
       <div *ngIf ="mojeNarudzbe == null || mojeNarudzbe?.length == 0" class="py-5 my-5">
@@ -20,23 +20,21 @@
               <ul class="list-unstyled mb-4">
                 <li class="mb-2" *ngFor="let stavka of narudzba.stavke">
                   <i class="bi bi-check text-primary"></i>
-                  {{stavka.naziv}} × {{stavka.kolicina}}
+                  <span class="text-dark">{{stavka.naziv}} × {{stavka.kolicina}}</span>
                 </li>
               </ul>
             </div>
-              <div class="text-dark">Status narudžbe: {{narudzba.status}}</div> <br/>
-                <div clas="text-muted">Uredi status narudžbe
+              <div class="text-muted" *ngIf="narudzba.isKoristenKupon">Korišten kupon za narudžbu</div> <br/>
+                <div class="text-dark">Ažuriraj status narudžbe
+                  </div>
+              <div class="input-group">
                 <select class="form-control mb-3" [(ngModel)]="narudzba.statusID">
-
                   <option *ngFor = "let status of statusi" [value]=status.id>{{status.naziv}}</option>
-                </select><button (click)="urediStatus(narudzba)" class="btn btn-outline-dark mt-auto mx-2"><i class="bi bi-pencil-square"  style="margin-left: 10px"></i>Uredi status</button></div>
-              <div clas="text-muted" *ngIf="narudzba.isKoristenKupon">Korišten kupon za narudžbu</div>
-            </div>
-          </div>
-          <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-            <div class="text-center">
-              <!--<a *ngIf = "narudzba.status != 'Poslano'" class="btn btn-outline-dark mt-auto" ><i class="bi bi-arrow-repeat"></i> Naruči ponovo</a>-->
-              <a *ngIf = "narudzba.status == 'Preuzeto'" class="btn btn-outline-dark mt-auto mx-2"><i class="bi bi-trash-fill"></i> Obriši</a>
+                </select>
+                <div class="input-group-append">
+                  <button (click)="urediStatus(narudzba)" class="btn btn-dark mt-auto"><i class="bi bi-pencil-square"></i></button></div>
+              </div>
+
             </div>
           </div>
         </div>

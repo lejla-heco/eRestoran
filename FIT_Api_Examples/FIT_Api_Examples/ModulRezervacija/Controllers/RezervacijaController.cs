@@ -99,6 +99,7 @@ namespace FIT_Api_Examples.ModulRezervacija.Controllers
             var data = _dbContext.Rezervacija.Where(r=>r.Obavljena==false).Select(z => new RezervacijaGetAllPagedZaposlenik()
             {
                 id = z.ID,
+                korisnik = z.Korisnik.Ime + " " + z.Korisnik.Prezime,
                 brojOsoba = z.BrojOsoba,
                 brojStolova = z.BrojStolova,
                 datumRezerviranja = z.DatumRezerviranja.ToString("dd/MM/yyyy hh:mm"),

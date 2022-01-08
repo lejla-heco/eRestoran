@@ -13,7 +13,7 @@
                       <div class="col-md-6">
                         <div id="map" style="height: 600px; width: 100%"></div>
                       </div>
-                      <div class="col-md-6" style="padding-right: 55px;">
+                      <div class="col-md-6" style="padding-right: 55px; text-align: left;">
                         <div class="small mb-1">Na karti pored odaberite lokaciju (geografsku širinu i dužinu) nove poslovnice</div>
                         <h3 class="display-5 fw-bolder">Nova poslovnica</h3>
                         <div class="fs-6 mb-3">
@@ -55,7 +55,7 @@
                           </div>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                              <span class="input-group-text">Opstina</span>
+                              <span class="input-group-text">Opština</span>
                             </div>
                             <select class="form-control mb-3" [(ngModel)]="poslovnica.opstinaId"  [ngModelOptions]="{standalone: true}" [ngModelOptions]="{standalone: true}">
                               <option value=-1 disabled hidden selected>Obavezno polje za odabir</option>
@@ -63,8 +63,8 @@
                             </select>
                           </div>
                         </div>
-                        <div class="d-flex text-center">
-                          <button class="btn btn-outline-dark flex-shrink-0 mx-auto" type="button" (click)="dodajPoslovnicu()">
+                        <div class="d-flex">
+                          <button class="btn btn-dark flex-shrink-0 mx-auto position-absolute" type="button" (click)="dodajPoslovnicu()" style="right:38px;">
                             <i class="bi bi-briefcase-fill"></i>
                             Dodaj novu poslovnicu
                           </button>

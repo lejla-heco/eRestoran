@@ -1,8 +1,8 @@
-<header class="masthead-kupon" style="padding-top: 5rem; background-image: url('/assets/img/omiljene-narudzbe.jpg')">
+<header class="masthead-kupon" style="padding-top: 5rem; background-image: url('/assets/img/rezervacija.jpg')">
   <div class="container px-5 my-3">
     <div class="text-center text-white mb-3">
       <h1 class="display-4 fw-bolder">Lista rezervacija</h1>
-      <p style="font-size: larger" class="fw-bold">
+      <p class="lead fw-normal text-white mb-0">
         Pretraži po datumu <input type="date" [(ngModel)]="datum">
       </p>
     </div>
@@ -15,26 +15,41 @@
       <div *ngFor = "let rezervacija of  getRezervacije()" class="animate__animated animate__bounceIn col-lg-6 col-xl-4 mb-4" style="text-align: left;">
         <div  class="card h-100 mb-5 mb-xl-0" >
           <div class="card-body p-5">
-            <div class="big text-uppercase fw-bold text-muted">Rezervacija na dan:
-              <h5 class="text-dark">{{rezervacija.datumRezerviranja}}</h5>
-
-              <div>
-
-            </div>
-              <div class="text-dark">Broj osoba: {{rezervacija.brojOsoba}}</div>
-              <div class="text-dark">Broj stolova: {{rezervacija.brojStolova}}</div>
-
-              <div *ngIf="rezervacija.poruka==null" class="text-muted">Poruka: nema poruke</div>
-              <div *ngIf="rezervacija.poruka!=null" class="text-muted">Poruka: {{rezervacija.poruka}}</div>
-              <div class="text-dark">Prigoda: {{rezervacija.nazivPrigode}}</div> <br/>
-              <div class="text-dark">Status rezervacije: {{rezervacija.nazivStatusa}}</div>
-              <div clas="text-muted">Uredi status narudžbe
+            <div class="small text-uppercase fw-bold text-muted">Rezervacija na dan:<div>
+              <div class="mb-3">
+                <span class="display-4 fw-bold text-dark" style="font-size:30px;">{{rezervacija.datumRezerviranja}}</span>
+              </div>
+              <ul class="list-unstyled mb-4">
+                <li class="mb-2 text-dark">
+                  Rezervisao: {{rezervacija.korisnik}}
+                </li>
+                <li class="mb-2 text-dark">
+                  Broj osoba: {{rezervacija.brojOsoba}}
+                </li>
+                <li class="mb-2 text-dark">
+                  Broj stolova: {{rezervacija.brojStolova}}
+                </li>
+                <li class="mb-2 text-dark">
+                  Prigoda : {{rezervacija.nazivPrigode}}
+                </li>
+                <li *ngIf="rezervacija.poruka == null" class="mb-2 text-dark">
+                  Poruka: nema poruke
+                </li>
+                <li *ngIf="rezervacija.poruka != null" class="mb-2 text-dark">
+                  Poruka: {{rezervacija.poruka}}
+                </li>
+              </ul>
+              <div class="text-dark">Ažuriraj status rezervacije
+              </div>
+              <div class="input-group">
                 <select class="form-control mb-3" [(ngModel)]="rezervacija.statusID">
-
                   <option *ngFor = "let status of statusi" [value]=status.id>{{status.naziv}}</option>
-                </select><button  (click)="urediStatus(rezervacija)" class="btn btn-outline-dark mt-auto mx-2"><i class="bi bi-pencil-square"  style="margin-left: 10px"></i>Uredi status</button></div>
+                </select>
+                <div class="input-group-append">
+                  <button (click)="urediStatus(rezervacija)" class="btn btn-dark mt-auto"><i class="bi bi-pencil-square"></i></button></div>
+              </div>
 
-
+              <!--
             <br/>
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" [(ngModel)]="rezervacija.obavljena" (change)="onChange(rezervacija)">
@@ -42,16 +57,7 @@
                   Obavljena
                 </label>
               </div>
-
-            </div>
-
-
-
-          </div>
-          <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-            <div class="text-center">
-              <!--<a *ngIf = "narudzba.status != 'Poslano'" class="btn btn-outline-dark mt-auto" ><i class="bi bi-arrow-repeat"></i> Naruči ponovo</a>-->
-
+-->
             </div>
           </div>
         </div>
@@ -63,6 +69,7 @@
     <ul class="mx-auto">
       <a *ngFor="let page of createRangeStranica()" (click)="ucitajStranicu(page)" [ngClass]="this.currentPage == page ? 'is-active' : ''"><li></li></a>
     </ul>
+  </div>
   </div>
 </header>
 

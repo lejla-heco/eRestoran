@@ -55,10 +55,12 @@
                   {{odabranaStavka.meniGrupaNaziv}}
                 </li>
                 <li>
-                  <strong>Ocjena:</strong>
-                  <div class="d-flex justify-content-center small text-warning mb-2">
-                    <div *ngFor = "let item of createRange(odabranaStavka.ocjena)"class="bi-star-fill"></div>
-                  </div>
+                  <strong>Ocjena: </strong>
+                    <span *ngFor = "let item of createRange(odabranaStavka.ocjena)"class="text-warning bi-star-fill"></span>
+                </li>
+                <li>
+                  <strong>Standardna cijena:</strong>
+                  {{odabranaStavka.standardnaCijena}} KM
                 </li>
                 <li>
                   <strong>Snižena cijena:</strong>

@@ -24,10 +24,11 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
         {
             List<PosebnaPonudaGetAllVM> posebnaPonuda = _dbContext.MeniStavka
                 .Where(ms => ms.Izdvojeno)
-                .Select(ms => new PosebnaPonudaGetAllVM() { 
+                .Select(ms => new PosebnaPonudaGetAllVM() {
                     id = ms.ID,
                     naziv = ms.Naziv,
                     opis = ms.Opis,
+                    standardnaCijena = ms.Cijena,
                     snizenaCijena = ms.SnizenaCijena,
                     slika = ms.Slika,
                     ocjena = ms.Ocjena,
