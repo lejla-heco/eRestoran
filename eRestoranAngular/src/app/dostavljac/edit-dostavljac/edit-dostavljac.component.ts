@@ -14,6 +14,12 @@ export class EditDostavljacComponent implements OnInit {
 
   id : number;
   urediDostavljac : EditDostavljac =null;
+
+
+  obavjestenje : boolean = false;
+  closeModal : boolean = false;
+  obavjestenjeNaslov : string = "";
+  obavjestenjeSadrzaj : string = "";
   constructor( private httpKlijent :HttpClient ,private route: ActivatedRoute,private router:Router) { }
 
   ngOnInit(): void {
@@ -42,19 +48,33 @@ export class EditDostavljacComponent implements OnInit {
     }
   }
 
-  //MyConfig.adresaServera
+
     posaljiPodatke() {
   // @ts-ignore
   var file = document.getElementById("fajl-input").files[0];
 
   var data = new FormData();
-  data.append("slikaZaposlenika", file);
+  data.append("slikaDostavljaca", file);
   this.httpKlijent.post(MyConfig.adresaServera + "/Dostavljac/Update/"+ this.id, this.urediDostavljac).subscribe((result :any)=>{
   this.httpKlijent.post(MyConfig.adresaServera + "/Dostavljac/AddSlika/" + result, data).subscribe((result: any)=>{
-  alert("Uspješno uređen dostavljač "+ this.urediDostavljac.ime+" "+this.urediDostavljac.prezime);
-  this.router.navigate(['/dostavljac']);
+    this.obavjestenje = true;
+    this.closeModal = false;
+    this.obavjestenjeNaslov = "Ažuriranje podataka uspješno";
+    this.obavjestenjeSadrzaj = "Uspješno ste uredili podatke o dostavljaču "+ this.urediDostavljac.ime+" "+this.urediDostavljac.prezime;
+ // this.router.navigate(['/dostavljac']);
 });
 });
 
 }
+  animirajObavjestenje() {
+    return this.closeModal == true? 'animate__animated animate__bounceOut' : 'animate__animated animate__bounceIn';
+  }
+
+  zatvoriModalObavjestenje(){
+    this.closeModal = true;
+    this.animirajObavjestenje();
+    setTimeout(() => {
+      this.obavjestenje = false;
+    },1000);
+  }
 }

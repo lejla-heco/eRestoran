@@ -14,6 +14,12 @@ export class DostavljacComponent implements OnInit {
   dostavljaci : Dostavljac[] = null;
   odabraniDostavljac: Dostavljac = null;//brisanje
 
+
+  obavjestenje : boolean = false;
+  closeModal : boolean = false;
+  obavjestenjeNaslov : string = "";
+  obavjestenjeSadrzaj : string = "";
+
   id : number = null;//edit
   constructor(private httpKlijent:HttpClient,private router : Router) { }
 
@@ -37,9 +43,23 @@ export class DostavljacComponent implements OnInit {
 
   obrisi(dostavljac: Dostavljac) {
     this.httpKlijent.post(MyConfig.adresaServera+"/Dostavljac/Delete/"+dostavljac.id, dostavljac).subscribe((x:any)=>{
-      alert("Dostavljac "+ dostavljac.ime+dostavljac.prezime+ " je uspješno obrisan");
+      this.obavjestenje = true;
+      this.closeModal = false;
+      this.obavjestenjeNaslov = "Ažuriranje podataka uspješno";
+      this.obavjestenjeSadrzaj = "Uspješno ste uredili podatke o dostavljaču "+ dostavljac.ime+" "+dostavljac.prezime;
 
       this.ucitajDostavljace();
     });
+  }
+  animirajObavjestenje() {
+    return this.closeModal == true? 'animate__animated animate__bounceOut' : 'animate__animated animate__bounceIn';
+  }
+
+  zatvoriModalObavjestenje(){
+    this.closeModal = true;
+    this.animirajObavjestenje();
+    setTimeout(() => {
+      this.obavjestenje = false;
+    },1000);
   }
 }

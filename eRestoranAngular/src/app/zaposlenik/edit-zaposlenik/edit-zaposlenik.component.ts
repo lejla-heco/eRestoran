@@ -13,6 +13,11 @@ import {MyConfig} from "../../my-config";
 export class EditZaposlenikComponent implements OnInit {
   id : number;
   urediZaposlenik : EditZaposlenik =null;
+
+  obavjestenje : boolean = false;
+  closeModal : boolean = false;
+  obavjestenjeNaslov : string = "";
+  obavjestenjeSadrzaj : string = "";
   constructor( private httpKlijent :HttpClient ,private route: ActivatedRoute,private router:Router) { }
 
   ngOnInit(): void {
@@ -48,9 +53,22 @@ export class EditZaposlenikComponent implements OnInit {
     data.append("slikaZaposlenika", file);
     this.httpKlijent.post(MyConfig.adresaServera + "/Zaposlenik/Update/"+ this.id, this.urediZaposlenik).subscribe((result :any)=>{
       this.httpKlijent.post(MyConfig.adresaServera + "/Zaposlenik/AddSlika/" + result, data).subscribe((result: any)=>{
-        alert("Uspješno uređen zaposlenik "+ this.urediZaposlenik.ime+" "+this.urediZaposlenik.prezime);
-        this.router.navigate(['/zaposlenik']);
+        this.obavjestenje = true;
+        this.closeModal = false;
+        this.obavjestenjeNaslov = "Ažuriranje podataka uspješno";
+        this.obavjestenjeSadrzaj = "Uspješno ste uredili podatke o dostavljaču "+ this.urediZaposlenik.ime+" "+this.urediZaposlenik.prezime;
       });
     });
+  }
+  animirajObavjestenje() {
+    return this.closeModal == true? 'animate__animated animate__bounceOut' : 'animate__animated animate__bounceIn';
+  }
+
+  zatvoriModalObavjestenje(){
+    this.closeModal = true;
+    this.animirajObavjestenje();
+    setTimeout(() => {
+      this.obavjestenje = false;
+    },1000);
   }
 }

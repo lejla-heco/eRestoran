@@ -11,6 +11,11 @@ import {MyConfig} from "../../my-config";
 })
 export class NoviZaposlenikComponent implements OnInit {
   noviZaposlenik : NoviZaposlenik = new NoviZaposlenik();
+
+  obavjestenje : boolean = false;
+  closeModal : boolean = false;
+  obavjestenjeNaslov : string = "";
+  obavjestenjeSadrzaj : string = "";
   constructor(private httpKlijent : HttpClient) { }
 
   ngOnInit(): void {
@@ -37,7 +42,10 @@ export class NoviZaposlenikComponent implements OnInit {
     data.append("slikaZaposlenika", file);
     this.httpKlijent.post(MyConfig.adresaServera + "/Zaposlenik/Add", this.noviZaposlenik).subscribe((result : any)=>{
       this.httpKlijent.post(MyConfig.adresaServera + "/Zaposlenik/AddSlika/" + result, data).subscribe((result:any)=>{
-        alert("Uspjesno dodan novi zaposlenik");
+        this.obavjestenje = true;
+        this.closeModal = false;
+        this.obavjestenjeNaslov = "Ažuriranje podataka uspješno";
+        this.obavjestenjeSadrzaj = "Uspješno ste uredili podatke o dostavljaču "+ this.noviZaposlenik.ime+" "+this.noviZaposlenik.prezime;
         this.ocistiFormu();
       });
     });
@@ -56,5 +64,16 @@ export class NoviZaposlenikComponent implements OnInit {
 
   private validirajFormu() {
 
+  }
+  animirajObavjestenje() {
+    return this.closeModal == true? 'animate__animated animate__bounceOut' : 'animate__animated animate__bounceIn';
+  }
+
+  zatvoriModalObavjestenje(){
+    this.closeModal = true;
+    this.animirajObavjestenje();
+    setTimeout(() => {
+      this.obavjestenje = false;
+    },1000);
   }
 }

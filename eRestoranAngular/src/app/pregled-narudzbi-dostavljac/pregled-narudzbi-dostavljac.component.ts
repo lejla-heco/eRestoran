@@ -35,7 +35,7 @@ export class PregledNarudzbiDostavljacComponent implements OnInit {
 
   }
   private ucitajNarudzbe() {
-    this.httpKlijent.get("https://localhost:44325/" + "/Narudzba/GetAllPagedDostavljac/" + this.currentPage,MyConfig.httpOpcije()).subscribe((response : any)=>{
+    this.httpKlijent.get(MyConfig.adresaServera + "/Narudzba/GetAllPagedDostavljac/" + this.currentPage,MyConfig.httpOpcije()).subscribe((response : any)=>{
       this.totalPages = response.totalPages;
       this.mojeNarudzbe = response.dataItems;
     })

@@ -24,19 +24,28 @@
                 </li>
               </ul>
             </div>
-              <div class="text-dark">Status narudžbe: {{narudzba.status}}</div> <br/>
-              <div clas="text-muted">Uredi status narudžbe
+              <div clas="text-muted">Ažuriraj status narudžbe
+              </div>
+              <div class="input-group">
                 <select class="form-control mb-3" [(ngModel)]="narudzba.statusID">
 
                   <option *ngFor = "let status of statusi" [value]=status.id>{{status.naziv}}</option>
-                </select><button (click)="urediStatus(narudzba)" class="btn btn-outline-dark mt-auto mx-2"><i class="bi bi-pencil-square"  style="margin-left: 10px"></i>Uredi status</button></div>
+                </select>
+                <div class="input-group-append">
+                  <button (click)="urediStatus(narudzba)" class="btn btn-dark mt-auto"><i class="bi bi-pencil-square"></i></button></div>
+              </div>
               <div clas="text-muted" *ngIf="narudzba.isKoristenKupon">Korišten kupon za narudžbu</div>
 
-              <div clas="text-muted">Ime kupca: {{narudzba.imeKupca}}</div>
-              <div clas="text-muted">Adresa: {{narudzba.adresaStanovanja}}</div>
-              <div clas="text-muted">Broj telefona: {{narudzba.brojTelefona}}</div>
             </div>
+            <br/>
+            <div class="text-muted fw-bold">PODACI O KUPCU:</div> <br/>
+            <div class="small text-uppercase fw-bold text-dark">Ime kupca: {{narudzba.imeKupca}}</div>
+            <div class="small text-uppercase fw-bold text-dark">Adresa: {{narudzba.adresaStanovanja}}</div>
+            <div class="small text-uppercase fw-bold text-dark">Broj telefona: {{narudzba.brojTelefona}}</div>
           </div>
+
+
+
           <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
             <div class="text-center">
               <!--<a *ngIf = "narudzba.status != 'Poslano'" class="btn btn-outline-dark mt-auto" ><i class="bi bi-arrow-repeat"></i> Naruči ponovo</a>-->

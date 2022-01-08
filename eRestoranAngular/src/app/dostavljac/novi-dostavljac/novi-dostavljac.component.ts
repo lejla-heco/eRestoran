@@ -10,6 +10,11 @@ import {HttpClient} from "@angular/common/http";
 })
 export class NoviDostavljacComponent implements OnInit {
 noviDostavljac:NoviDostavljac= new NoviDostavljac();
+
+  obavjestenje : boolean = false;
+  closeModal : boolean = false;
+  obavjestenjeNaslov : string = "";
+  obavjestenjeSadrzaj : string = "";
   constructor(private httpKlijent: HttpClient) { }
 
   ngOnInit(): void {
@@ -37,7 +42,10 @@ noviDostavljac:NoviDostavljac= new NoviDostavljac();
     data.append("slikaDostavljaca", file);
     this.httpKlijent.post(MyConfig.adresaServera + "/Dostavljac/Add", this.noviDostavljac).subscribe((result : any)=>{
       this.httpKlijent.post(MyConfig.adresaServera + "/Dostavljac/AddSlika/" + result, data).subscribe((result:any)=>{
-        alert("Uspjesno dodan novi dostavljač");
+        this.obavjestenje = true;
+        this.closeModal = false;
+        this.obavjestenjeNaslov = "Ažuriranje podataka uspješno";
+        this.obavjestenjeSadrzaj = "Uspješno ste uredili podatke o dostavljaču "+ this.noviDostavljac.ime+" "+this.noviDostavljac.prezime;
         this.ocistiFormu();
       });
     });
@@ -52,5 +60,15 @@ noviDostavljac:NoviDostavljac= new NoviDostavljac();
 
     document.getElementById("preview-slika").setAttribute("src","");
   }
+  animirajObavjestenje() {
+    return this.closeModal == true? 'animate__animated animate__bounceOut' : 'animate__animated animate__bounceIn';
+  }
 
+  zatvoriModalObavjestenje(){
+    this.closeModal = true;
+    this.animirajObavjestenje();
+    setTimeout(() => {
+      this.obavjestenje = false;
+    },1000);
+  }
 }

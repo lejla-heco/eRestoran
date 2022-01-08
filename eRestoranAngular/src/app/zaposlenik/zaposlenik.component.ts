@@ -14,6 +14,11 @@ export class ZaposlenikComponent implements OnInit {
   zaposlenici : Zaposlenik[] = null;
   odabraniZaposlenik: Zaposlenik = null;//brisanje
 
+  obavjestenje : boolean = false;
+  closeModal : boolean = false;
+  obavjestenjeNaslov : string = "";
+  obavjestenjeSadrzaj : string = "";
+
   id : number = null;//edit
   constructor(private httpKlijent:HttpClient,private router : Router) { }
 
@@ -33,7 +38,10 @@ export class ZaposlenikComponent implements OnInit {
 
   brisanje(zaposlenik: Zaposlenik) {
     this.httpKlijent.get(MyConfig.adresaServera+"/Zaposlenik/Delete/"+zaposlenik.id).subscribe((x:any)=>{
-      alert("Zaposlenik "+ zaposlenik.ime+zaposlenik.prezime+ " je uspješno obrisan");
+      this.obavjestenje = true;
+      this.closeModal = false;
+      this.obavjestenjeNaslov = "Brisanje uspješno uspješno";
+      this.obavjestenjeSadrzaj = "Uspješno ste obrisali zaposlenika "+ zaposlenik.ime+" "+zaposlenik.prezime;
 
       this.ucitajZaposlenike();
     });
@@ -43,5 +51,15 @@ export class ZaposlenikComponent implements OnInit {
     this.router.navigate(['/edit-zaposlenik', id]);
   }
 
+  animirajObavjestenje() {
+    return this.closeModal == true? 'animate__animated animate__bounceOut' : 'animate__animated animate__bounceIn';
+  }
 
+  zatvoriModalObavjestenje(){
+    this.closeModal = true;
+    this.animirajObavjestenje();
+    setTimeout(() => {
+      this.obavjestenje = false;
+    },1000);
+  }
 }
