@@ -131,8 +131,8 @@ namespace FIT_Api_Examples.ModulZaposleni.Controllers
                     ime = zaposlenik.Ime,
                     prezime = zaposlenik.Prezime,
                     email = zaposlenik.Email,
-                    username = zaposlenik.KorisnickoIme,
-                    password = zaposlenik.Lozinka,
+                    korisnickoIme = zaposlenik.KorisnickoIme,
+                    lozinka = zaposlenik.Lozinka,
                     slika = zaposlenik.Slika
                 };
                 return odabraniZaposlenik;
@@ -151,11 +151,62 @@ namespace FIT_Api_Examples.ModulZaposleni.Controllers
             zaposlenik.Ime = zaposlenikUpdateVM.ime.RemoveTags();
             zaposlenik.Prezime = zaposlenikUpdateVM.prezime.RemoveTags();
             zaposlenik.Email = zaposlenikUpdateVM.email.RemoveTags();
-            zaposlenik.KorisnickoIme = zaposlenikUpdateVM.username.RemoveTags();
-            zaposlenik.Lozinka = zaposlenikUpdateVM.password.RemoveTags();
+            zaposlenik.KorisnickoIme = zaposlenikUpdateVM.korisnickoIme.RemoveTags();
+            zaposlenik.Lozinka = zaposlenikUpdateVM.lozinka.RemoveTags();
            
             _dbContext.SaveChanges();
             return Ok(zaposlenik.ID);
+        }
+
+        [HttpPost]
+        public ActionResult UpdatePostavkaProfila([FromBody] ZaposlenikUpdateVM zaposlenikUpdateVM)
+        {
+            if (!HttpContext.GetLoginInfo().isPermisijaZaposlenik)
+                return BadRequest("nije logiran");
+
+            Zaposlenik zaposlenik = HttpContext.GetLoginInfo().korisnickiNalog.Zaposlenik;
+
+
+            zaposlenik.Ime = zaposlenikUpdateVM.ime;
+            zaposlenik.Prezime = zaposlenikUpdateVM.prezime;
+            zaposlenik.Email = zaposlenikUpdateVM.email;
+            zaposlenik.KorisnickoIme = zaposlenikUpdateVM.korisnickoIme;
+            zaposlenik.Lozinka = zaposlenikUpdateVM.lozinka;
+           
+
+            _dbContext.SaveChanges();
+            return Ok(zaposlenik);
+        }
+        [HttpPost]
+        public ActionResult UpdateSlika( [FromForm] ZaposlenikAddSlikaVM zaposlenikAddSlikaVM)
+        {
+           // try
+           // {
+                if (!HttpContext.GetLoginInfo().isPermisijaZaposlenik)
+                    return BadRequest("nije logiran");
+
+                Zaposlenik zaposlenik = HttpContext.GetLoginInfo().korisnickiNalog.Zaposlenik;
+
+                if (zaposlenikAddSlikaVM.slikaZaposlenika != null && zaposlenik != null)
+                {
+                    if (zaposlenikAddSlikaVM.slikaZaposlenika.Length > 250 * 1000)
+                        return BadRequest("max velicina fajla je 250 KB");
+
+                    string ekstenzija = Path.GetExtension(zaposlenikAddSlikaVM.slikaZaposlenika.FileName);
+
+                    var filename = $"{Guid.NewGuid()}{ekstenzija}";
+
+                    zaposlenikAddSlikaVM.slikaZaposlenika.CopyTo(new FileStream(Config.SlikeFolder + filename, FileMode.Create));
+                    zaposlenik.Slika = Config.SlikeURL + filename;
+                    _dbContext.SaveChanges();
+                }
+
+                return Ok(zaposlenik);
+            //}
+            //catch (Exception ex)
+            //{
+            //    return BadRequest(ex.Message + ex.InnerException);
+            //}
         }
     }
 }

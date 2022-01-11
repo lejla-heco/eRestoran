@@ -66,10 +66,10 @@ export class MojiPodaciComponent implements OnInit {
     return (this.loginInformacije.isPermisijaZaposlenik || this.loginInformacije.isPermisijaDostavljac) ? 'col-xl-12' :'col-xl-6';
   }
 
-  azurirajPodatke() {
+  azurirajPodatkeKorisnik() {
     if (this.validirajFormu()){
 
-      this.httpKlijent.post("https://localhost:44325" + "/Korisnik/Update",this.korisnik, MyConfig.httpOpcije()).subscribe((result :any)=>{
+      this.httpKlijent.post(MyConfig.adresaServera + "/Korisnik/Update",this.korisnik, MyConfig.httpOpcije()).subscribe((result :any)=>{
 
           this.obavjestenje = true;
           this.closeModal = false;
@@ -150,5 +150,24 @@ export class MojiPodaciComponent implements OnInit {
   otvoriModal() {
     this.obrisiProfilObavjestenje = true;
     this.prikaziObavjestenje("Upozorenje!", "Da li ste sigurni da želite obrisati svoj profil?");
+  }
+
+  azurirajPodatkeZaposlenik() {
+    if (this.validirajFormu()) {
+      // @ts-ignore
+      var file = document.getElementById("fajl-input").files[0];
+
+      var data = new FormData();
+      data.append("slikaZaposlenika", file);
+      this.httpKlijent.post("https://localhost:44325" + "/Zaposlenik/UpdatePostavkaProfila", this.korisnik, MyConfig.httpOpcije()).subscribe((result: any) => {
+        this.httpKlijent.post("https://localhost:44325" + "/Zaposlenik/UpdateSlika" ,data, MyConfig.httpOpcije()).subscribe((result: any)=>{
+        this.obavjestenje = true;
+        this.closeModal = false;
+        this.obavjestenjeNaslov = "Uređen profil";
+        this.obavjestenjeSadrzaj = this.korisnik.ime + " " + this.korisnik.prezime + ", uspješno ste uredili svoje podatke profila";
+      });
+      });
+    }
+    else this.prikaziObavjestenje("Neadekvatno ispunjena forma za promjenu ličnih podataka", "Molimo ispunite sva obavezna polja, pa ponovo pokušajte");
   }
 }

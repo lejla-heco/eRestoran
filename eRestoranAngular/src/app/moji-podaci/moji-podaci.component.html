@@ -73,7 +73,8 @@
                       </select>
                     </div>
                     <button *ngIf="loginInformacije.isPermisijaKorisnik" class="btn btn-outline-dark flex-shrink-0 mx-2" (click)="otvoriModal()"> <i class="bi bi-shield-fill-x"></i> Obriši profil</button>
-                    <button class="btn btn-dark flex-shrink-0" (click)="azurirajPodatke()"> <i class="bi bi-archive-fill"></i> Ažuriraj podatke</button>
+                    <button *ngIf="loginInformacije.isPermisijaKorisnik" class="btn btn-dark flex-shrink-0" (click)="azurirajPodatkeKorisnik()"> <i class="bi bi-archive-fill"></i> Ažuriraj podatke</button>
+                    <button *ngIf="loginInformacije.isPermisijaZaposlenik" class="btn btn-dark flex-shrink-0" (click)="azurirajPodatkeZaposlenik()"> <i class="bi bi-archive-fill"></i> Ažuriraj podatke</button>
 
 
 

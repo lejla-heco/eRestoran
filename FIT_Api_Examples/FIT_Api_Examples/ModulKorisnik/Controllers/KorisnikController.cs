@@ -5,6 +5,7 @@ using FIT_Api_Examples.ModulKorisnik.Models;
 using FIT_Api_Examples.ModulKorisnik.ViewModels;
 using FIT_Api_Examples.ModulNarudzba.Models;
 using FIT_Api_Examples.ModulRezervacija.Models;
+using FIT_Api_Examples.ModulZaposleni.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -88,6 +89,8 @@ namespace FIT_Api_Examples.ModulKorisnik.Controllers
                 return BadRequest("nije logiran");
 
             Korisnik korisnik = HttpContext.GetLoginInfo().korisnickiNalog.Korisnik;
+
+      
 
 
 
