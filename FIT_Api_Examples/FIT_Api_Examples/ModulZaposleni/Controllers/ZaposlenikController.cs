@@ -180,8 +180,8 @@ namespace FIT_Api_Examples.ModulZaposleni.Controllers
         [HttpPost]
         public ActionResult UpdateSlika( [FromForm] ZaposlenikAddSlikaVM zaposlenikAddSlikaVM)
         {
-           // try
-           // {
+            try
+            {
                 if (!HttpContext.GetLoginInfo().isPermisijaZaposlenik)
                     return BadRequest("nije logiran");
 
@@ -202,11 +202,11 @@ namespace FIT_Api_Examples.ModulZaposleni.Controllers
                 }
 
                 return Ok(zaposlenik);
-            //}
-            //catch (Exception ex)
-            //{
-            //    return BadRequest(ex.Message + ex.InnerException);
-            //}
+            }
+            catch (Exception ex)
+           {
+               return BadRequest(ex.Message + ex.InnerException);
+            }
         }
     }
 }

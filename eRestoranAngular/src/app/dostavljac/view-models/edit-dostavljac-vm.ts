@@ -3,7 +3,7 @@ export class EditDostavljac{
   ime : string;
   prezime : string;
   email : string;
-  username : string;
-  password : string;
+  korisnickoIme : string;
+  lozinka : string;
   slika : string;
 }

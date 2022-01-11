@@ -159,8 +159,8 @@ export class MojiPodaciComponent implements OnInit {
 
       var data = new FormData();
       data.append("slikaZaposlenika", file);
-      this.httpKlijent.post("https://localhost:44325" + "/Zaposlenik/UpdatePostavkaProfila", this.korisnik, MyConfig.httpOpcije()).subscribe((result: any) => {
-        this.httpKlijent.post("https://localhost:44325" + "/Zaposlenik/UpdateSlika" ,data, MyConfig.httpOpcije()).subscribe((result: any)=>{
+      this.httpKlijent.post(MyConfig.adresaServera  + "/Zaposlenik/UpdatePostavkaProfila", this.korisnik, MyConfig.httpOpcije()).subscribe((result: any) => {
+        this.httpKlijent.post(MyConfig.adresaServera  + "/Zaposlenik/UpdateSlika" ,data, MyConfig.httpOpcije()).subscribe((result: any)=>{
         this.obavjestenje = true;
         this.closeModal = false;
         this.obavjestenjeNaslov = "Uređen profil";
@@ -170,4 +170,24 @@ export class MojiPodaciComponent implements OnInit {
     }
     else this.prikaziObavjestenje("Neadekvatno ispunjena forma za promjenu ličnih podataka", "Molimo ispunite sva obavezna polja, pa ponovo pokušajte");
   }
+
+  azurirajPodatkeDostavljac() {
+    if (this.validirajFormu()) {
+      // @ts-ignore
+      var file = document.getElementById("fajl-input").files[0];
+
+      var data = new FormData();
+      data.append("slikaDostavljaca", file);
+      this.httpKlijent.post(MyConfig.adresaServera  + "/Dostavljac/UpdatePostavkaProfila", this.korisnik, MyConfig.httpOpcije()).subscribe((result: any) => {
+        this.httpKlijent.post(MyConfig.adresaServera  + "/Dostavljac/UpdateSlika" ,data, MyConfig.httpOpcije()).subscribe((result: any)=>{
+          this.obavjestenje = true;
+          this.closeModal = false;
+          this.obavjestenjeNaslov = "Uređen profil";
+          this.obavjestenjeSadrzaj = this.korisnik.ime + " " + this.korisnik.prezime + ", uspješno ste uredili svoje podatke profila";
+        });
+      });
+    }
+    else this.prikaziObavjestenje("Neadekvatno ispunjena forma za promjenu ličnih podataka", "Molimo ispunite sva obavezna polja, pa ponovo pokušajte");
+  }
+
 }

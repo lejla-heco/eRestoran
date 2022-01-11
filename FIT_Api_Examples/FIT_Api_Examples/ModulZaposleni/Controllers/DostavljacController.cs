@@ -1,5 +1,6 @@
 ﻿using FIT_Api_Examples.Data;
 using FIT_Api_Examples.Helper;
+using FIT_Api_Examples.Helper.AutentifikacijaAutorizacija;
 using FIT_Api_Examples.ModulNarudzba.Models;
 using FIT_Api_Examples.ModulZaposleni.Models;
 using FIT_Api_Examples.ModulZaposleni.ViewModels;
@@ -85,8 +86,8 @@ namespace FIT_Api_Examples.ModulZaposleni.Controllers
                     ime = dostavljac.Ime,
                     prezime = dostavljac.Prezime,
                     email = dostavljac.Email,
-                    username = dostavljac.KorisnickoIme,
-                    password = dostavljac.Lozinka,
+                    korisnickoIme = dostavljac.KorisnickoIme,
+                    lozinka = dostavljac.Lozinka,
                     slika = dostavljac.Slika
                 };
                 return odabraniDostavljac;
@@ -105,8 +106,8 @@ namespace FIT_Api_Examples.ModulZaposleni.Controllers
             dostavljac.Ime = dostavljacUpdateVM.ime.RemoveTags();
             dostavljac.Prezime = dostavljacUpdateVM.prezime.RemoveTags();
             dostavljac.Email = dostavljacUpdateVM.email.RemoveTags();
-            dostavljac.KorisnickoIme = dostavljacUpdateVM.username.RemoveTags();
-            dostavljac.Lozinka = dostavljacUpdateVM.password.RemoveTags();
+            dostavljac.KorisnickoIme = dostavljacUpdateVM.korisnickoIme.RemoveTags();
+            dostavljac.Lozinka = dostavljacUpdateVM.lozinka.RemoveTags();
 
             
             _dbContext.SaveChanges();
@@ -132,6 +133,56 @@ namespace FIT_Api_Examples.ModulZaposleni.Controllers
 
             _dbContext.SaveChanges();
             return Ok(dostavljac);
+        }
+        [HttpPost]
+        public ActionResult UpdatePostavkaProfila([FromBody] DostavljacUpdateVM dostavljacUpdateVM)
+        {
+            if (!HttpContext.GetLoginInfo().isPermisijaDostavljac)
+                return BadRequest("nije logiran");
+
+            Dostavljac dostavljac = HttpContext.GetLoginInfo().korisnickiNalog.Dostavljac;
+
+
+            dostavljac.Ime = dostavljacUpdateVM.ime;
+            dostavljac.Prezime = dostavljacUpdateVM.prezime;
+            dostavljac.Email = dostavljacUpdateVM.email;
+            dostavljac.KorisnickoIme = dostavljacUpdateVM.korisnickoIme;
+            dostavljac.Lozinka = dostavljacUpdateVM.lozinka;
+
+
+            _dbContext.SaveChanges();
+            return Ok(dostavljac);
+        }
+        [HttpPost]
+        public ActionResult UpdateSlika([FromForm] DostavljacAddSlikaVM dostavljacAddSlikaVM)
+        {
+            try
+            {
+                if (!HttpContext.GetLoginInfo().isPermisijaDostavljac)
+                    return BadRequest("nije logiran");
+
+                Dostavljac dostavljac = HttpContext.GetLoginInfo().korisnickiNalog.Dostavljac;
+
+                if (dostavljacAddSlikaVM.slikaDostavljaca != null && dostavljac != null)
+                {
+                    if (dostavljacAddSlikaVM.slikaDostavljaca.Length > 250 * 1000)
+                        return BadRequest("max velicina fajla je 250 KB");
+
+                    string ekstenzija = Path.GetExtension(dostavljacAddSlikaVM.slikaDostavljaca.FileName);
+
+                    var filename = $"{Guid.NewGuid()}{ekstenzija}";
+
+                    dostavljacAddSlikaVM.slikaDostavljaca.CopyTo(new FileStream(Config.SlikeFolder + filename, FileMode.Create));
+                    dostavljac.Slika = Config.SlikeURL + filename;
+                    _dbContext.SaveChanges();
+                }
+
+                return Ok(dostavljac);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message + ex.InnerException);
+            }
         }
     }
 }
