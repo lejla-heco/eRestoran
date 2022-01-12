@@ -1,6 +1,7 @@
 ﻿using FIT_Api_Examples.Data;
 using FIT_Api_Examples.Helper.AutentifikacijaAutorizacija;
 using FIT_Api_Examples.ModulKorisnickiNalog.Models;
+using FIT_Api_Examples.ModulKorisnickiNalog.ViewModels;
 using FIT_Api_Examples.ModulKorisnik.Models;
 using FIT_Api_Examples.ModulKorisnik.ViewModels;
 using FIT_Api_Examples.ModulZaposleni.Models;
@@ -75,5 +76,29 @@ namespace FIT_Api_Examples.ModulKorisnickiNalog.Controllers
 
             return Ok(korisnikGetVM);
         }
+        [HttpPost]
+        public IActionResult UpdateAdmin([FromBody] AdminUpdateVM adminUpdateVM)
+        {
+
+            
+            if (!HttpContext.GetLoginInfo().isPermisijaAdministrator)
+                return BadRequest("Nije logiran");
+
+            Administrator admin = HttpContext.GetLoginInfo().korisnickiNalog.Administrator;
+            if (admin == null)
+                return BadRequest("Nepostojeci administrator");
+      
+            admin.Ime = adminUpdateVM.ime;
+            admin.Prezime = adminUpdateVM.prezime;
+            admin.Email = adminUpdateVM.email;
+            admin.KorisnickoIme = adminUpdateVM.korisnickoIme;
+            admin.Lozinka = adminUpdateVM.lozinka;
+            admin.DatumKreiranja = DateTime.Now;
+            
+            _dbContext.SaveChanges();
+            return Ok(admin);
+
+        }
     }
+    
 }

@@ -190,4 +190,20 @@ export class MojiPodaciComponent implements OnInit {
     else this.prikaziObavjestenje("Neadekvatno ispunjena forma za promjenu ličnih podataka", "Molimo ispunite sva obavezna polja, pa ponovo pokušajte");
   }
 
+  azurirajPodatkeAdmin() {
+
+    if (this.validirajFormu()){
+
+      this.httpKlijent.post(MyConfig.adresaServera + "/KorisnickiNalog/UpdateAdmin",this.korisnik, MyConfig.httpOpcije()).
+      subscribe((result :any)=>{
+console.log(result);
+        this.obavjestenje = true;
+        this.closeModal = false;
+        this.obavjestenjeNaslov ="Uređen profil";
+        this.obavjestenjeSadrzaj=this.korisnik.ime+" "+this.korisnik.prezime+", uspješno ste uredili svoje podatke profila";
+      });
+
+    }
+    else this.prikaziObavjestenje("Neadekvatno ispunjena forma za promjenu ličnih podataka", "Molimo ispunite sva obavezna polja, pa ponovo pokušajte");
+  }
 }
