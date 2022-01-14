@@ -84,13 +84,21 @@ export class MeniComponent implements OnInit {
     this.router.navigate(['/edit-stavka', id]);
   }
 
-  brisanje(s :MeniStavka) {
-  this.httpKlijent.post(MyConfig.adresaServera+"/Meni/Delete/"+s.id, s).subscribe((x:any)=>{
-    this.zatvoriModal();
-    this.ucitajMeniStavke(s.nazivGrupe);
-  });
 
-  }
+
+    brisanje(s : MeniStavka) {
+      console.log(s);
+      this.httpKlijent.get(MyConfig.adresaServera + "/Meni/Delete/" + s.id, MyConfig.httpOpcije()).subscribe((response : any)=>{
+        this.zatvoriModal();
+        this.ucitajMeniStavke(s.nazivGrupe);
+        this.obavjestenje = true;
+        this.closeModal = false;
+        this.obavjestenjeNaslov="Uspješno obrisana meni stavka";
+        this.obavjestenjeSadrzaj="Uspješno ste obrisali meni stavku  "+s.naziv;
+      });
+    }
+
+
 
   public prikazi_brisanje(stavka : MeniStavka){
     this.odabranaStavkaMenija = stavka;

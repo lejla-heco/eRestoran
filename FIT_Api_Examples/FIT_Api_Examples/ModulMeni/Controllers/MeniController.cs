@@ -1,9 +1,11 @@
 ﻿using FIT_Api_Examples.Data;
 using FIT_Api_Examples.Helper;
 using FIT_Api_Examples.Helper.AutentifikacijaAutorizacija;
+using FIT_Api_Examples.ModulKorisnickiNalog.Models;
 using FIT_Api_Examples.ModulKorisnik.Models;
 using FIT_Api_Examples.ModulMeni.Models;
 using FIT_Api_Examples.ModulMeni.ViewModels;
+using FIT_Api_Examples.ModulNarudzba.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -68,15 +70,38 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
             _dbContext.SaveChanges();
             return Ok(meniStavka.ID);
         }
-        [HttpPost("{id}")]
-        public ActionResult Delete(int id)
+
+
+
+
+
+    
+
+        [HttpGet("{id}")]
+        public IActionResult Delete(int id)
         {
+            if (!HttpContext.GetLoginInfo().isPermisijaAdministrator)
+               return BadRequest("Nije logiran");
+
+
             MeniStavka meniStavka = _dbContext.MeniStavka.Find(id);
 
             if (meniStavka == null)
                 return BadRequest("pogresan ID");
 
-            _dbContext.Remove(meniStavka);
+            List<StavkaNarudzbe> stavkaNarudzbe = _dbContext.StavkaNarudzbe.Where(sn => sn.MeniStavkaID == meniStavka.ID).ToList();
+
+            List<Narudzba> narudzba = new List<Narudzba>();
+            foreach (StavkaNarudzbe stavka in stavkaNarudzbe)
+            {
+                narudzba.AddRange(_dbContext.Narudzba.Where(n => n.ID == stavka.NarudzbaID).ToList());
+            }
+            List<OmiljenaStavka> omiljeneStavke = _dbContext.OmiljenaStavka.Where(os => os.MeniStavkaID == meniStavka.ID).ToList();
+            _dbContext.Narudzba.RemoveRange(narudzba);
+            _dbContext.OmiljenaStavka.RemoveRange(omiljeneStavke);
+            _dbContext.StavkaNarudzbe.RemoveRange(stavkaNarudzbe);
+            
+            _dbContext.MeniStavka.Remove(meniStavka);
 
             _dbContext.SaveChanges();
             return Ok(meniStavka);

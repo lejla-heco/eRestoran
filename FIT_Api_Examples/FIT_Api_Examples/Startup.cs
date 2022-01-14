@@ -32,9 +32,11 @@ namespace FIT_Api_Examples
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+            services.AddCors();
 
             services.AddSignalR();
             services.AddControllers();
+
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen();
@@ -43,6 +45,14 @@ namespace FIT_Api_Examples
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors(
+           options => options
+           .SetIsOriginAllowed(x => _ = true)
+           .AllowAnyMethod()
+           .AllowAnyHeader()
+           .AllowCredentials()
+        ); //This needs to set everything allowed
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -69,13 +79,6 @@ namespace FIT_Api_Examples
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
 
-            app.UseCors(
-               options => options
-               .SetIsOriginAllowed(x => _ = true)
-               .AllowAnyMethod()
-               .AllowAnyHeader()
-               .AllowCredentials()
-           ); //This needs to set everything allowed
 
             app.UseRouting();
 
