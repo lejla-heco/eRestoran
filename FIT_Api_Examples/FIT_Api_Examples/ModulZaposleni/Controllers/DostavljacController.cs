@@ -1,6 +1,8 @@
 ﻿using FIT_Api_Examples.Data;
 using FIT_Api_Examples.Helper;
 using FIT_Api_Examples.Helper.AutentifikacijaAutorizacija;
+using FIT_Api_Examples.ModulAutentifikacija.Models;
+using FIT_Api_Examples.ModulKorisnickiNalog.Models;
 using FIT_Api_Examples.ModulNarudzba.Models;
 using FIT_Api_Examples.ModulZaposleni.Models;
 using FIT_Api_Examples.ModulZaposleni.ViewModels;
@@ -113,9 +115,13 @@ namespace FIT_Api_Examples.ModulZaposleni.Controllers
             _dbContext.SaveChanges();
             return Ok(dostavljac.ID);
         }
-        [HttpPost("{id}")]
-        public ActionResult Delete(int id)
+        [HttpGet("{id}")]
+        public IActionResult Delete(int id)
         {
+
+            if (!HttpContext.GetLoginInfo().isPermisijaAdministrator)
+                return BadRequest("nije logiran");
+
             Dostavljac dostavljac = _dbContext.Dostavljac.Find(id);
 
             if (dostavljac == null || id == 1)
@@ -126,10 +132,16 @@ namespace FIT_Api_Examples.ModulZaposleni.Controllers
 
             List<Narudzba> narudzbeZaposlenika = _dbContext.Narudzba.Where(n => n.DostavljacID == dostavljac.ID).ToList();
             foreach (Narudzba narudzba in narudzbeZaposlenika)
-                narudzba.DostavljacID = null;
+               narudzba.DostavljacID = null;
             _dbContext.SaveChanges();
 
-            _dbContext.Remove(dostavljac);
+            KorisnickiNalog korisnickinalog = _dbContext.KorisnickiNalog.Where(kn => kn.KorisnickoIme == dostavljac.KorisnickoIme && kn.Lozinka==dostavljac.Lozinka).FirstOrDefault();
+
+            List<AutentifikacijaToken> logovi = _dbContext.AutentifikacijaToken.Where(at => at.KorisnickiNalogId == dostavljac.ID).ToList();
+
+            _dbContext.AutentifikacijaToken.RemoveRange(logovi);
+            _dbContext.KorisnickiNalog.Remove(korisnickinalog);
+            _dbContext.Dostavljac.Remove(dostavljac);
 
             _dbContext.SaveChanges();
             return Ok(dostavljac);

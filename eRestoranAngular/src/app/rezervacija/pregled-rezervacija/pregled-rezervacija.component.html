@@ -13,6 +13,7 @@
           <div *ngIf ="rezervacije == null || rezervacije?.length == 0" class="py-5 my-5">
             <h3 class="animate__animated animate__bounceIn display-7 fw-bolder text-center text-white">
               Nemate rezervacija</h3>
+            <button class="btn btn-outline-light text mt-2" routerLink="/rezervacija"><i class="bi bi-search"></i> Kreiraj rezervaciju</button>
           </div>
           <div *ngFor="let rezervacija of rezervacije; let i=index" class="animate__animated animate__bounceIn col-lg-6 col-xl-4 mb-4" style="text-align: left;">
             <div class="card h-100 mb-5 mb-xl-0">

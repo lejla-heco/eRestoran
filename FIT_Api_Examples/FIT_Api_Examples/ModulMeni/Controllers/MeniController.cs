@@ -92,14 +92,20 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
             List<StavkaNarudzbe> stavkaNarudzbe = _dbContext.StavkaNarudzbe.Where(sn => sn.MeniStavkaID == meniStavka.ID).ToList();
 
             List<Narudzba> narudzba = new List<Narudzba>();
+            
             foreach (StavkaNarudzbe stavka in stavkaNarudzbe)
             {
-                narudzba.AddRange(_dbContext.Narudzba.Where(n => n.ID == stavka.NarudzbaID).ToList());
+                narudzba = _dbContext.Narudzba.Where(n => n.ID == stavka.NarudzbaID).ToList();
+                
+                   
             }
+           
             List<OmiljenaStavka> omiljeneStavke = _dbContext.OmiljenaStavka.Where(os => os.MeniStavkaID == meniStavka.ID).ToList();
+          
+            _dbContext.StavkaNarudzbe.RemoveRange(stavkaNarudzbe);
             _dbContext.Narudzba.RemoveRange(narudzba);
             _dbContext.OmiljenaStavka.RemoveRange(omiljeneStavke);
-            _dbContext.StavkaNarudzbe.RemoveRange(stavkaNarudzbe);
+           
             
             _dbContext.MeniStavka.Remove(meniStavka);
 

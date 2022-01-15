@@ -14,6 +14,11 @@
       Dodaj novog dostavljača
     </button>
   </div>
+  <div *ngIf ="dostavljaci == null || dostavljaci?.length == 0" class="py-5 my-5">
+    <h3 class="animate__animated animate__bounceIn display-7 fw-bolder text-center text-black">
+      Trenutno nemate dostavljače</h3>
+
+  </div>
 
   <div    class="container px-4 px-lg-5 mt-5">
     <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">

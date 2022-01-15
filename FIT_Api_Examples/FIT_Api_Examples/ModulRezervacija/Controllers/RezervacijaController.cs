@@ -62,7 +62,10 @@ namespace FIT_Api_Examples.ModulRezervacija.Controllers
         [HttpGet]
         public List<RezervacijaGetAllVM> GetAll()
         {
-            List<RezervacijaGetAllVM> rezervacije = _dbContext.Rezervacija
+           
+
+            Korisnik korisnik = HttpContext.GetLoginInfo().korisnickiNalog.Korisnik;
+            List<RezervacijaGetAllVM> rezervacije = _dbContext.Rezervacija.Where(r=>r.KorisnikID==korisnik.ID)
                                           .Select(z => new RezervacijaGetAllVM()
                                           {
                                               id=z.ID,

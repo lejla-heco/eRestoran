@@ -88,7 +88,7 @@ export class MeniComponent implements OnInit {
 
     brisanje(s : MeniStavka) {
       console.log(s);
-      this.httpKlijent.get(MyConfig.adresaServera + "/Meni/Delete/" + s.id, MyConfig.httpOpcije()).subscribe((response : any)=>{
+      this.httpKlijent.get(MyConfig.adresaServera+ "/Meni/Delete/" + s.id, MyConfig.httpOpcije()).subscribe((response : any)=>{
         this.zatvoriModal();
         this.ucitajMeniStavke(s.nazivGrupe);
         this.obavjestenje = true;

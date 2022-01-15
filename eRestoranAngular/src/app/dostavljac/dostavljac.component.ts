@@ -42,11 +42,11 @@ export class DostavljacComponent implements OnInit {
   }
 
   obrisi(dostavljac: Dostavljac) {
-    this.httpKlijent.post(MyConfig.adresaServera+"/Dostavljac/Delete/"+dostavljac.id, dostavljac).subscribe((x:any)=>{
+    this.httpKlijent.get(MyConfig.adresaServera+"/Dostavljac/Delete/"+dostavljac.id, MyConfig.httpOpcije()).subscribe((x:any)=>{
       this.obavjestenje = true;
       this.closeModal = false;
-      this.obavjestenjeNaslov = "Ažuriranje podataka uspješno";
-      this.obavjestenjeSadrzaj = "Uspješno ste uredili podatke o dostavljaču "+ dostavljac.ime+" "+dostavljac.prezime;
+      this.obavjestenjeNaslov = "Brisanje podataka uspješno";
+      this.obavjestenjeSadrzaj = "Uspješno ste obrisali dostavljača "+ dostavljac.ime+" "+dostavljac.prezime;
 
       this.ucitajDostavljace();
     });
