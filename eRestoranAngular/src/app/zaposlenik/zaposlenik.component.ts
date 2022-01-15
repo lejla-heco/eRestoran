@@ -37,7 +37,7 @@ export class ZaposlenikComponent implements OnInit {
   }
 
   brisanje(zaposlenik: Zaposlenik) {
-    this.httpKlijent.get(MyConfig.adresaServera+"/Zaposlenik/Delete/"+zaposlenik.id).subscribe((x:any)=>{
+    this.httpKlijent.get(MyConfig.adresaServera+"/Zaposlenik/Delete/"+zaposlenik.id,MyConfig.httpOpcije()).subscribe((x:any)=>{
       this.obavjestenje = true;
       this.closeModal = false;
       this.obavjestenjeNaslov = "Brisanje uspješno uspješno";

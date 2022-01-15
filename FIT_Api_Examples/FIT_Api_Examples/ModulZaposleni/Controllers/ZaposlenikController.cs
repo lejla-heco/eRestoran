@@ -2,6 +2,7 @@
 using FIT_Api_Examples.Helper;
 using FIT_Api_Examples.Helper.AutentifikacijaAutorizacija;
 using FIT_Api_Examples.ModulAutentifikacija.Models;
+using FIT_Api_Examples.ModulKorisnickiNalog.Models;
 using FIT_Api_Examples.ModulNarudzba.Models;
 using FIT_Api_Examples.ModulZaposleni.Models;
 using FIT_Api_Examples.ModulZaposleni.ViewModels;
@@ -90,7 +91,9 @@ namespace FIT_Api_Examples.ModulZaposleni.Controllers
         }
         [HttpGet("{id}")]
         public ActionResult Delete(int id)
-        { 
+        {
+            if (!HttpContext.GetLoginInfo().isPermisijaAdministrator)
+                return BadRequest("nije logiran");
 
             Zaposlenik zaposlenik = _dbContext.Zaposlenik.Find(id);
 
@@ -109,6 +112,7 @@ namespace FIT_Api_Examples.ModulZaposleni.Controllers
                 _dbContext.SaveChanges();
 
             List<AutentifikacijaToken> logovi = _dbContext.AutentifikacijaToken.Where(at => at.KorisnickiNalogId == id).ToList();
+            //KorisnickiNalog  korisnickinalog=_dbContext.
 
             _dbContext.AutentifikacijaToken.RemoveRange(logovi);
             _dbContext.Zaposlenik.Remove(zaposlenik);

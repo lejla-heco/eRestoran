@@ -6,6 +6,7 @@ import {MyConfig} from "../my-config";
 import {HttpClient} from "@angular/common/http";
 import {NarudzbaStatus} from "./view-model/status-narudzbe-vm";
 import {UrediStatusNarudzbe} from "./view-model/narudzba-status-uredu-vm";
+import {Dostavljac} from "../dostavljac/view-models/dostavljac-vm";
 
 @Component({
   selector: 'app-pregled-narudzbi',
@@ -20,6 +21,7 @@ statusi:NarudzbaStatus[]=null;
 
 urediStatusNarudzbe:UrediStatusNarudzbe= new UrediStatusNarudzbe();
 
+  dostavljaci : Dostavljac[] = null;
 
   obavjestenje : boolean = false;
   closeModal : boolean = false;
@@ -31,6 +33,13 @@ urediStatusNarudzbe:UrediStatusNarudzbe= new UrediStatusNarudzbe();
   ngOnInit(): void {
     this.ucitajNarudzbe();
     this.getAllStatusiNarudzbe();
+    this.ucitajDostavljace();
+  }
+  public ucitajDostavljace() {
+    this.httpKlijent.get(MyConfig.adresaServera + "/Dostavljac/GetAll").subscribe((result : any)=>{
+      this.dostavljaci = result;
+
+    })
   }
   private ucitajNarudzbe() {
     this.httpKlijent.get(MyConfig.adresaServera + "/Narudzba/GetAllPagedZaposlenik/" + this.currentPage,MyConfig.httpOpcije()).subscribe((response : any)=>{
@@ -62,6 +71,13 @@ urediStatusNarudzbe:UrediStatusNarudzbe= new UrediStatusNarudzbe();
    this.urediStatusNarudzbe.statusID=narudzba.statusID;
   // this.urediStatusNarudzbe.status=narudzba.status;
 
+    if(this.urediStatusNarudzbe.statusID==4 && (this.dostavljaci == null || this.dostavljaci?.length == 0 ))//Spremljeno
+    {
+      this.obavjestenje = true;
+      this.closeModal = false;
+      this.obavjestenjeNaslov ="Upozorenje";
+      this.obavjestenjeSadrzaj="Trenutno nemate dostavljača kojim bi dodijelili narudzbu";
+    }
     this.httpKlijent.post(MyConfig.adresaServera + "/Narudzba/UpdateStatusZaposlenik/"+this.urediStatusNarudzbe.id,this.urediStatusNarudzbe,MyConfig.httpOpcije()).subscribe((result:any)=>{
 
       this.obavjestenje = true;

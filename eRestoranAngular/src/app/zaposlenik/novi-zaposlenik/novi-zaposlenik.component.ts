@@ -45,7 +45,7 @@ export class NoviZaposlenikComponent implements OnInit {
         this.obavjestenje = true;
         this.closeModal = false;
         this.obavjestenjeNaslov = "Ažuriranje podataka uspješno";
-        this.obavjestenjeSadrzaj = "Uspješno ste uredili podatke o dostavljaču "+ this.noviZaposlenik.ime+" "+this.noviZaposlenik.prezime;
+        this.obavjestenjeSadrzaj = "Uspješno ste uredili podatke o zaposleniku "+ this.noviZaposlenik.ime+" "+this.noviZaposlenik.prezime;
         this.ocistiFormu();
       });
     });

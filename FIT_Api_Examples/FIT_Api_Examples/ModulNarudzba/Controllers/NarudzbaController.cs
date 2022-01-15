@@ -371,10 +371,12 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
             //narudzba.StatusNarudzbe.Naziv = narudzbaStatusUpdateVM.status;
             narudzba.StatusNarudzbeID= narudzbaStatusUpdateVM.statusID;
 
-            if (narudzba.StatusNarudzbeID == 4)// Spremljeno
+            if (narudzba.StatusNarudzbeID == 4 )// Spremljeno
             {
                 zaposlenik.AktivneNarudzbe--;
                 zaposlenik.ObavljeneNarudzbe++;
+                if(_dbContext.Dostavljac.Count()==0)
+                    return BadRequest("Trenutno nemamo dostavljača kojim bi dodijelili ovu narudžbu");
                 Dostavljac odabraniDostavljac = _dbContext.Dostavljac
           .Where(d => d.AktivneNarudzbe == _dbContext.Dostavljac.Min<Dostavljac>(w => w.AktivneNarudzbe)).FirstOrDefault();
                 odabraniDostavljac.AktivneNarudzbe++;
