@@ -22,6 +22,7 @@ export class RezervacijaComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllPrigode();
+    this.rezervacija.prigodaID = -1;
   }
 
   private getAllPrigode() {
@@ -32,13 +33,52 @@ export class RezervacijaComponent implements OnInit {
   }
 
   posaljiPodatke() {
-    this.httpKlijent.post(MyConfig.adresaServera + "/Rezervacija/Add",this.rezervacija, MyConfig.httpOpcije()).subscribe((result:any)=>{
-      this.obavjestenje = true;
-      this.closeModal = false;
-      this.obavjestenjeNaslov = "Nova rezervacija";
-      this.obavjestenjeSadrzaj = "Uspješno ste dodali novu rezervaciju";
+    if(this.validirajFormu()) {
+      this.httpKlijent.post(MyConfig.adresaServera + "/Rezervacija/Add", this.rezervacija, MyConfig.httpOpcije()).subscribe((result: any) => {
 
-    });
+        this.prikaziObavjestenje("Nova rezervacija", "Uspješno ste dodali novu rezervaciju");
+        this.ocistiFormu();
+
+      });
+    }
+    else {
+      this.prikaziObavjestenje("Neadekvatno ispunjena forma za dodavanje nove meni stavke", "Molimo ispunite sva obavezna polja, pa ponovo pokušajte");
+    }
+
+  }
+  ocistiFormu(){
+    this.rezervacija.brojOsoba = null;
+    this.rezervacija.brojStolova = null;
+    this.rezervacija.poruka = null;
+    this.rezervacija.prigodaID = -1;
+    this.rezervacija.datumRezerviranja = null;
+
+  }
+  validirajFormu() : boolean{
+
+
+    return this.rezervacija.brojOsoba != null && this.rezervacija.brojStolova!=null
+      && this.rezervacija.datumRezerviranja != null && this.rezervacija.datumRezerviranja?.length > 0
+      && this.rezervacija.prigodaID != -1 ;
+  }
+
+  provjeriPolje(polje: any) {
+    if (polje.invalid && (polje.dirty || polje.touched)){
+      if (polje.errors?.['required']){
+        return 'Niste popunili ovo polje!';
+      }
+      else {
+        return '';
+      }
+    }
+    return 'Obavezno polje za unos';
+  }
+
+  private prikaziObavjestenje(naslov : string, sadrzaj : string) {
+    this.obavjestenje = true;
+    this.closeModal = false;
+    this.obavjestenjeNaslov = naslov;
+    this.obavjestenjeSadrzaj = sadrzaj;
   }
   animirajObavjestenje() {
     return this.closeModal == true? 'animate__animated animate__bounceOut' : 'animate__animated animate__bounceIn';

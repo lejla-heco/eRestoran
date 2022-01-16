@@ -148,7 +148,7 @@ namespace FIT_Api_Examples.ModulMeni.Controllers
              MeniStavka meniStavka = _dbContext.MeniStavka.Find(id);
                 if ( meniStavka != null)
                 {
-                     
+                     if(meniStavka.Ocjena==0) meniStavka.Ocjena = meniAddOcjenaVM.ocjena; //ukoliko je nemi stavka tek dodana
                     meniStavka.Ocjena += meniAddOcjenaVM.ocjena;
                     meniStavka.Ocjena = (float)Math.Round(meniStavka.Ocjena / 2, 2);
                     _dbContext.SaveChanges();

@@ -10,6 +10,12 @@
 <!--*ngIf="urediStavka!=null"-->
 <section  class="py-5 bg-light" *ngIf="urediStavka!=null">
   <div class="container px-4 px-lg-5 my-5 mt-2">
+    <div style="text-align: left">
+      <button class="btn btn-outline-dark flex-shrink-0 mb-2" type="button" routerLink="/meni">
+        <i class="bi bi-arrow-bar-left"></i>
+        Nazad
+      </button>
+    </div>
     <div class="row gx-4 gx-lg-5 align-items-center">
       <div class="col-md-6">
         <img id="preview-slika" class="card-img-top mb-5 mb-md-0" alt="Prostor za fotografiju" src="{{urediStavka.slika}}"/>
@@ -25,19 +31,19 @@
             <div class="input-group-prepend">
               <span class="input-group-text">Naziv</span>
             </div>
-           <input type="text" class="form-control" [(ngModel)]="urediStavka.naziv">
+           <input type="text" class="form-control" [(ngModel)]="urediStavka.naziv" required #naziv="ngModel" [placeholder]="provjeriPolje(naziv)">
           </div>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Sastojci</span>
             </div>
-            <input type="text" class="form-control" [(ngModel)]="urediStavka.opis">
+            <input type="text" class="form-control" [(ngModel)]="urediStavka.opis" required #opis="ngModel" [placeholder]="provjeriPolje(opis)">
           </div>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Cijena</span>
             </div>
-            <input type="number" min="0.1" class="form-control" [(ngModel)]="urediStavka.cijena">
+            <input type="number" min="0.1" class="form-control" [(ngModel)]="urediStavka.cijena" required #cijena="ngModel" [placeholder]="provjeriPolje(cijena)">
             <div class="input-group-append">
               <span class="input-group-text">KM</span>
             </div>
@@ -46,14 +52,15 @@
             <div class="input-group-prepend">
               <span class="input-group-text">Cijena posebne ponude</span>
             </div>
-            <input type="number" min="0.1" class="form-control" [(ngModel)]="urediStavka.snizenaCijena">
+            <input type="number" min="0.1" class="form-control" [(ngModel)]="urediStavka.snizenaCijena" required #snizenaCijena="ngModel" [placeholder]="provjeriPolje(snizenaCijena)">
             <div class="input-group-append">
               <span class="input-group-text">KM</span>
             </div>
           </div>
 
           <label>Meni kategorija:</label>
-          <select class="form-control mb-3" [(ngModel)]="urediStavka.meniGrupaId">
+          <select class="form-control mb-3" [(ngModel)]="urediStavka.meniGrupaId" >
+            <option value=-1 disabled hidden selected>Obavezno polje za odabir</option>
             <option *ngFor = "let grupa of meniGrupe" [value]=grupa.id>{{grupa.naziv}}</option>
           </select>
         </div>

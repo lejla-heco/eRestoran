@@ -34,25 +34,25 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text">Broj osoba</span>
                     </div>
-                    <input type="number"  min="1" class="form-control" [(ngModel)]="rezervacija.brojOsoba" [ngModelOptions]="{standalone: true}" >
+                    <input type="number"  min="1" class="form-control" [(ngModel)]="rezervacija.brojOsoba" [ngModelOptions]="{standalone: true}" required #brojOsoba="ngModel" [placeholder]="provjeriPolje(brojOsoba)">
                   </div>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Broj stolova</span>
                     </div>
-                    <input type="number"  min="1" class="form-control"  [(ngModel)]="rezervacija.brojStolova" [ngModelOptions]="{standalone: true}" >
+                    <input type="number"  min="1" class="form-control"  [(ngModel)]="rezervacija.brojStolova" [ngModelOptions]="{standalone: true}" required #brojStolova="ngModel" [placeholder]="provjeriPolje(brojStolova)">
                   </div>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Poruka</span>
                     </div>
-                    <input type="text" class="form-control" [(ngModel)]="rezervacija.poruka" [ngModelOptions]="{standalone: true}">
+                    <input type="text" class="form-control" [(ngModel)]="rezervacija.poruka" [ngModelOptions]="{standalone: true}" placeholder="Nije obavezno polje za unos" >
                   </div>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Datum rezervacije</span>
                     </div>
-                    <input type="datetime-local" class="form-control" [(ngModel)]="rezervacija.datumRezerviranja" [ngModelOptions]="{standalone: true}">
+                    <input type="datetime-local" class="form-control" [(ngModel)]="rezervacija.datumRezerviranja" [ngModelOptions]="{standalone: true}" required #datumRezerviranja="ngModel" [placeholder]="provjeriPolje(datumRezerviranja)">
                   </div>
 
 
@@ -61,6 +61,7 @@
                       <span class="input-group-text">Prigoda</span>
                     </div>
                     <select class="form-control mb-3"  [(ngModel)]="rezervacija.prigodaID" [ngModelOptions]="{standalone: true}" >
+                      <option value=-1 disabled hidden selected>Obavezno polje za odabir</option>
                     <option *ngFor = "let prigoda of prigode" [value]=prigoda.id>{{prigoda.naziv}}</option>
                     </select>
                   </div>

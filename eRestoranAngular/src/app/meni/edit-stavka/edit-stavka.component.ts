@@ -47,23 +47,52 @@ export class EditStavkaComponent implements OnInit {
     }
   }
   posaljiPodatke() {
-
+if(this.validirajFormu()){
      // @ts-ignore
     var file = document.getElementById("fajl-input").files[0];
     this.urediStavka.meniGrupaId = parseInt(this.urediStavka.meniGrupaId.toString());
 console.log(this.urediStavka.naziv);
     var data = new FormData();
     data.append("slikaMeniStavke", file);
+
     this.httpKlijent.post(MyConfig.adresaServera + "/Meni/Update/"+ this.id, this.urediStavka, MyConfig.httpOpcije()).subscribe((result :any)=>{
       this.httpKlijent.post(MyConfig.adresaServera + "/Meni/AddSlika/" + result, data, MyConfig.httpOpcije()).subscribe((result: any)=>{
-        this.obavjestenje = true;
-        this.closeModal = false;
-        this.obavjestenjeNaslov ="Uređena stavka menija";
-        this.obavjestenjeSadrzaj="Uspješno ste uredili stavku menija: " + this.urediStavka.naziv;
+        this.prikaziObavjestenje("Uređena stavka menija", "Uspješno ste uredili stavku menija: " + this.urediStavka.naziv);
+
       });
-    });
+    });}
+
+else {
+  this.prikaziObavjestenje("Neadekvatno ispunjena forma za dodavanje nove meni stavke", "Molimo ispunite sva obavezna polja, pa ponovo pokušajte");
+}
+  }
+  validirajFormu() : boolean{
+    // @ts-ignore
+    //var slika = document.getElementById("fajl-input").files[0];
+    return this.urediStavka.naziv != null && this.urediStavka.naziv?.length > 0
+      && this.urediStavka.opis != null && this.urediStavka.opis?.length > 0
+      && this.urediStavka.cijena != null && this.urediStavka.snizenaCijena != null
+      && this.urediStavka.meniGrupaId != -1 && this.urediStavka.slika != null;
   }
 
+  provjeriPolje(polje: any) {
+    if (polje.invalid && (polje.dirty || polje.touched)){
+      if (polje.errors?.['required']){
+        return 'Niste popunili ovo polje!';
+      }
+      else {
+        return '';
+      }
+    }
+    return 'Obavezno polje za unos';
+  }
+
+  private prikaziObavjestenje(naslov : string, sadrzaj : string) {
+    this.obavjestenje = true;
+    this.closeModal = false;
+    this.obavjestenjeNaslov = naslov;
+    this.obavjestenjeSadrzaj = sadrzaj;
+  }
   private dohvatiMeniStavku() {
     this.httpKlijent.get(MyConfig.adresaServera + "/Meni/GetById/"+this.id).subscribe((result : any) =>{
       this.urediStavka = result;
