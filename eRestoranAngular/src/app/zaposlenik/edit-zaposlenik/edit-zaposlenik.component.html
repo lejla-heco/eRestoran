@@ -29,31 +29,36 @@
             <div class="input-group-prepend">
               <span class="input-group-text">Ime</span>
             </div>
-            <input type="text" class="form-control" [(ngModel)]="urediZaposlenik.ime">
+            <input type="text" class="form-control" [(ngModel)]="urediZaposlenik.ime"  required #ime="ngModel" [placeholder]="provjeriPolje(ime)">
           </div>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Prezime</span>
             </div>
-            <input type="text" class="form-control" [(ngModel)]="urediZaposlenik.prezime">
+            <input type="text" class="form-control" [(ngModel)]="urediZaposlenik.prezime" required #prezime="ngModel" [placeholder]="provjeriPolje(prezime)">
           </div>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Email</span>
             </div>
-            <input type="text" class="form-control" [(ngModel)]="urediZaposlenik.email">
+            <input type="text" class="form-control" [(ngModel)]="urediZaposlenik.email" required #email="ngModel" [placeholder]="provjeriPolje(email)">
           </div>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Korisnicko ime</span>
             </div>
-            <input type="text" class="form-control" [(ngModel)]="urediZaposlenik.korisnickoIme">
+            <input type="text" class="form-control" [(ngModel)]="urediZaposlenik.korisnickoIme" required #korisnickoIme="ngModel" [placeholder]="provjeriPolje(korisnickoIme)">
           </div>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Lozinka</span>
             </div>
-            <input type="text" class="form-control" [(ngModel)]="urediZaposlenik.lozinka">
+            <input [type]="fieldText ? 'text' : 'password'" class="form-control" [(ngModel)]="urediZaposlenik.lozinka" required #lozinka="ngModel" [placeholder]="provjeriPolje(lozinka)">
+            <div class="input-group-append">
+                        <span class="input-group-text">
+                          <i class="bi" [ngClass]="{'bi-eye-slash-fill': !fieldText,'bi-eye-fill': fieldText}" (click)="prikaziSakrij()"></i>
+                        </span>
+            </div>
           </div>
 
           <div class="d-flex">
@@ -79,7 +84,7 @@
               <div class="text-center">
                 <div class="mb-2"><b>{{obavjestenjeSadrzaj}}</b></div>
 
-                <button class="btn btn-outline-dark" (click)="zatvoriModalObavjestenje()" routerLink="/zaposlenik">
+                <button class="btn btn-outline-dark" (click)="zatvoriModalObavjestenje()" >
                   <i class="bi bi-check-circle-fill"></i>
                   Ok
                 </button>
