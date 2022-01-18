@@ -8,6 +8,7 @@ import {StavkaNarudzbe} from "../narudzba/view-models/stavka-narudzbe-vm";
 import {MeniStavkaKorisnik} from "./view-models/meni-korisnik-vm";
 import {LoginInformacije} from "../helper/login-informacije";
 import {AutentifikacijaHelper} from "../helper/autentifikacija-helper";
+import {AngularFireDatabase} from "@angular/fire/compat/database";
 
 
 @Component({
@@ -36,7 +37,7 @@ export class MeniComponent implements OnInit {
   rating = 0;
   hoverState = 0;
 
-  constructor(private httpKlijent : HttpClient, private router : Router) {
+  constructor(private httpKlijent : HttpClient, private router : Router, private db : AngularFireDatabase) {
     this.loginInformacije = AutentifikacijaHelper.getLoginInfo();
   }
 
@@ -77,6 +78,12 @@ export class MeniComponent implements OnInit {
   izdvoji(stavka : MeniStavka) {
     this.httpKlijent.post(MyConfig.adresaServera + "/PosebnaPonuda/Izdvoji", stavka.id, MyConfig.httpOpcije()).subscribe((result : any)=>{
       this.ucitajMeniStavke(stavka.nazivGrupe);
+      this.db.list("PosebnaPonuda").set("NazivStavke",stavka.naziv);
+      this.db.list("PosebnaPonuda").set("Cijena",stavka.snizenaCijena);
+      this.db.list("PosebnaPonuda").set("Notifikacija",true);
+      setTimeout(()=>{
+        this.db.list("PosebnaPonuda").set("Notifikacija",false);
+      },650);
     });
   }
 

@@ -149,3 +149,32 @@
     </div>
   </div>
 </div>
+
+
+<div *ngIf="firebaseNotifikacija" class="portfolio-modal modal" [ngClass]="animirajNotifikaciju()" id="portfolioModalResponseFirebase" tabindex="-1" aria-labelledby="portfolioModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog mt-2">
+    <div class="modal-content">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <div class="modal-body">
+              <p class="item-intro text-muted mb-2">Obavještenje o sniženju</p>
+              <div class="text-center">
+                <div class="mb-2"><b>{{firebaseSadrzajNotifikacije}}</b></div>
+
+                <button class="btn btn-outline-dark" (click)="zatvoriModal()">
+                  <i class="bi bi-check-circle-fill"></i>
+                  Ok
+                </button>
+                <button *ngIf="this.firebaseNotifikacija" class="btn btn-outline-dark mx-2" (click)="navigirajDoPosebnePonude()">
+                  <i class="bi bi-book-fill"></i>
+                  Pregledaj posebnu ponudu
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

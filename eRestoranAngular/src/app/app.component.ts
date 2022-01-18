@@ -6,6 +6,8 @@ import {LoginInformacije} from "./helper/login-informacije";
 import {HttpClient} from "@angular/common/http";
 import { Kupon } from './narudzba/view-models/kupon-vm';
 import {SignalRService} from "./servisi/signalr.service";
+import {AngularFireDatabase} from "@angular/fire/compat/database";
+
 
 @Component({
   selector: 'app-root',
@@ -18,8 +20,10 @@ export class AppComponent {
   kuponi : Kupon[] = null;
   trenutnaSelekcija: string = "Home";
   closeModal : boolean = false;
+  firebaseNotifikacija : boolean = false;
+  firebaseSadrzajNotifikacije : string = "";
 
-  constructor(public signalRService: SignalRService, private router: Router, private httpKlijent : HttpClient) {
+  constructor(public signalRService: SignalRService, private router: Router, private httpKlijent : HttpClient, private firebase : AngularFireDatabase) {
     router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
           this.loginInformacije = this.loginInfo();
@@ -29,6 +33,12 @@ export class AppComponent {
     router.navigateByUrl('home-page');
     signalRService.startConnection();
     signalRService.kuponNotifikacija();
+    firebase.database.ref().child('PosebnaPonuda').on('value', (podatak)=>{
+      if (podatak.val().Notifikacija && this.loginInformacije.isPermisijaKorisnik){
+        this.firebaseSadrzajNotifikacije = "Snižena stavka menija: " + podatak.val().NazivStavke + " po cijeni: " + podatak.val().Cijena + " KM";
+        this.firebaseNotifikacija = true;
+      }
+    });
   }
 
   odjava() {
@@ -67,8 +77,9 @@ export class AppComponent {
     this.closeModal = true;
     this.animirajNotifikaciju();
     setTimeout(()=>{
-      this.signalRService.podaci = null;
+      if (this.signalRService.podaci != null) this.signalRService.podaci = null;
       this.closeModal = false;
+      if (this.firebaseNotifikacija) this.firebaseNotifikacija = false;
     },500);
   }
 
@@ -77,5 +88,10 @@ export class AppComponent {
     setTimeout(()=>{
       this.router.navigate(['/home-page'], {fragment:'kontakt'});
     },500);
+  }
+
+  navigirajDoPosebnePonude() {
+    this.router.navigate(['/posebna-ponuda']);
+    this.zatvoriModal();
   }
 }

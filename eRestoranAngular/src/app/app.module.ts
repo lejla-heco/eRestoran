@@ -37,6 +37,9 @@ import { PregledRezervacijaZaposlenikComponent } from './pregled-rezervacija-zap
 import { MojiPodaciComponent } from './moji-podaci/moji-podaci.component';
 import { EditPoslovnicaComponent } from './poslovnica/edit-poslovnica/edit-poslovnica.component';
 import {AutorizacijaLoginProvjera} from "./guards/autorizacija-login-provjera.service";
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database/';
+import {environment} from "../environments/environment.prod";
 
 
 @NgModule({
@@ -107,6 +110,8 @@ import {AutorizacijaLoginProvjera} from "./guards/autorizacija-login-provjera.se
       onSameUrlNavigation: 'reload'
     }),
     GoogleMapsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
