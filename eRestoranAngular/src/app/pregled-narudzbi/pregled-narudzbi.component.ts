@@ -48,7 +48,7 @@ urediStatusNarudzbe:UrediStatusNarudzbe= new UrediStatusNarudzbe();
     })
   }
   private getAllStatusiNarudzbe() {
-    this.httpKlijent.get(MyConfig.adresaServera + "/StatusNarudzbe/GetAll").subscribe((result:any)=>{
+    this.httpKlijent.get(MyConfig.adresaServera + "/StatusNarudzbe/GetAll", MyConfig.httpOpcije()).subscribe((result:any)=>{
       this.statusi = result;
     });
   }

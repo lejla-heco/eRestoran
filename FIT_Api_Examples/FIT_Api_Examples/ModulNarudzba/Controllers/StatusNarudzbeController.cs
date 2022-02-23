@@ -1,6 +1,9 @@
 ﻿using FIT_Api_Examples.Data;
+using FIT_Api_Examples.Helper.AutentifikacijaAutorizacija;
+using FIT_Api_Examples.ModulKorisnickiNalog.Models;
 using FIT_Api_Examples.ModulNarudzba.Models;
 using FIT_Api_Examples.ModulNarudzba.ViewModels;
+using FIT_Api_Examples.ModulZaposleni.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -35,6 +38,11 @@ namespace FIT_Api_Examples.ModulNarudzba.Controllers
         [HttpGet]
         public List<StatusNarudzbe> GetAll()
         {
+            KorisnickiNalog logiraniKorisnik = HttpContext.GetLoginInfo().korisnickiNalog;
+            if (logiraniKorisnik.isZaposlenik)
+                return _dbContext.StatusNarudzbe.Where(s => s.ID <= 4).ToList();
+            else if (logiraniKorisnik.isDostavljac)
+                return _dbContext.StatusNarudzbe.Where(s => s.ID >= 4).ToList();
             return _dbContext.StatusNarudzbe.ToList();
         }
 

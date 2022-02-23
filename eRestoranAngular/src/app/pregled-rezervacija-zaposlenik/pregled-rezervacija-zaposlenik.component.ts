@@ -76,15 +76,31 @@ export class PregledRezervacijaZaposlenikComponent implements OnInit {
     this.urediStatusRezervacije.id=rezervacija.id;
     this.urediStatusRezervacije.statusID=rezervacija.statusID;
     // this.urediStatusNarudzbe.status=narudzba.status;
+    if (rezervacija.statusID != 4) {
+      this.httpKlijent.post(MyConfig.adresaServera + "/StatusRezervacije/UpdateStatusZaposlenik/" + this.urediStatusRezervacije.id, this.urediStatusRezervacije, MyConfig.httpOpcije()).subscribe((result: any) => {
 
-    this.httpKlijent.post(MyConfig.adresaServera + "/StatusRezervacije/UpdateStatusZaposlenik/"+this.urediStatusRezervacije.id,this.urediStatusRezervacije,MyConfig.httpOpcije()).subscribe((result:any)=> {
+        this.obavjestenje = true;
+        this.closeModal = false;
+        this.obavjestenjeNaslov = "Uređen status";
+        this.obavjestenjeSadrzaj = "Uspješno ste uredili status narudzbe";
+        this.ucitajRezervacije();
+      })
+    }
+    else{
+      rezervacija.obavljena=true;
 
-      this.obavjestenje = true;
-      this.closeModal = false;
-      this.obavjestenjeNaslov = "Uređen status";
-      this.obavjestenjeSadrzaj = "Uspješno ste uredili status narudzbe";
-      this.ucitajRezervacije();
-    })
+      this.obavljena.id=rezervacija.id;
+      this.obavljena.obavljena=rezervacija.obavljena;
+      this.httpKlijent.post(MyConfig.adresaServera + "/Rezervacija/UpdateObavljenaZaposlenik/"+this.obavljena.id,this.obavljena,MyConfig.httpOpcije()).subscribe((result:any)=> {
+
+        this.obavjestenje = true;
+        this.closeModal = false;
+        this.obavjestenjeNaslov = "Rezervacija obavljena";
+        this.obavjestenjeSadrzaj = "Uspješno ste označili rezervaciju obavljenom";
+        this.ucitajRezervacije();
+        this.ucitajRezervacije();
+      });
+    }
   }
   animirajObavjestenje() {
     return this.closeModal == true? 'animate__animated animate__bounceOut' : 'animate__animated animate__bounceIn';

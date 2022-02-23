@@ -14,6 +14,10 @@
         <div  class="card h-100 mb-5 mb-xl-0" >
           <div class="card-body p-5">
             <div class="small text-uppercase fw-bold text-muted">Narudžba na dan: {{narudzba.datumNarucivanja}}<div>
+              <div class="text-primary text-dark">PODACI O KUPCU:</div>
+              <div class="text-primary text-dark">Ime kupca: {{narudzba.imeKupca}}</div>
+              <div class="text-primary text-dark">Adresa: {{narudzba.adresaStanovanja}}</div>
+              <div class="text-primary text-dark">Broj telefona: {{narudzba.brojTelefona}}</div>
               <div class="mb-3">
                 <span class="display-4 fw-bold text-dark">{{narudzba.cijena}} KM</span>
               </div>
@@ -24,7 +28,7 @@
                 </li>
               </ul>
             </div>
-              <div clas="text-muted">Ažuriraj status narudžbe
+              <div class="text-primary text-dark">Ažuriraj status narudžbe
               </div>
               <div class="input-group">
                 <select class="form-control mb-3" [(ngModel)]="narudzba.statusID">
@@ -36,20 +40,6 @@
               </div>
               <div clas="text-muted" *ngIf="narudzba.isKoristenKupon">Korišten kupon za narudžbu</div>
 
-            </div>
-            <br/>
-            <div class="text-muted fw-bold">PODACI O KUPCU:</div> <br/>
-            <div class="small text-uppercase fw-bold text-dark">Ime kupca: {{narudzba.imeKupca}}</div>
-            <div class="small text-uppercase fw-bold text-dark">Adresa: {{narudzba.adresaStanovanja}}</div>
-            <div class="small text-uppercase fw-bold text-dark">Broj telefona: {{narudzba.brojTelefona}}</div>
-          </div>
-
-
-
-          <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-            <div class="text-center">
-              <!--<a *ngIf = "narudzba.status != 'Poslano'" class="btn btn-outline-dark mt-auto" ><i class="bi bi-arrow-repeat"></i> Naruči ponovo</a>-->
-              <!--<a *ngIf = "narudzba.status == 'Preuzeto'" class="btn btn-outline-dark mt-auto mx-2"><i class="bi bi-trash-fill"></i> Obriši</a>-->
             </div>
           </div>
         </div>

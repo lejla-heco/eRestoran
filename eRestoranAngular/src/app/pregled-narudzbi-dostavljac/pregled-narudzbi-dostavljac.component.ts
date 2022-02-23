@@ -41,7 +41,7 @@ export class PregledNarudzbiDostavljacComponent implements OnInit {
     })
   }
   private getAllStatusiNarudzbe() {
-    this.httpKlijent.get(MyConfig.adresaServera + "/StatusNarudzbe/GetAll").subscribe((result:any)=>{
+    this.httpKlijent.get(MyConfig.adresaServera + "/StatusNarudzbe/GetAll", MyConfig.httpOpcije()).subscribe((result:any)=>{
       this.statusi = result;
     });
   }
