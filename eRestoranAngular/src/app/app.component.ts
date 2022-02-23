@@ -38,10 +38,19 @@ export class AppComponent {
         this.firebaseSadrzajNotifikacije = "Snižena stavka menija: " + podatak.val().NazivStavke + " po cijeni: " + podatak.val().Cijena + " KM";
         this.firebaseNotifikacija = true;
         if (this.router.url == "/posebna-ponuda") {
-          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-          this.router.onSameUrlNavigation = 'reload';
-          this.router.navigate(["/posebna-ponuda"]);
+          let currentUrl = this.router.url;
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+            this.router.navigate([currentUrl]);
+          });
         }
+      }
+    });
+    firebase.database.ref().child('PosebnaPonudaUkloni').on('value', (podatak)=>{
+      if (podatak.val().Ukloni && this.loginInformacije.isPermisijaKorisnik && this.router.url == "/posebna-ponuda"){
+        let currentUrl = this.router.url;
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+          this.router.navigate([currentUrl]);
+        });
       }
     });
   }

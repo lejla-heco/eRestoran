@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 import {StavkaNarudzbe} from "../narudzba/view-models/stavka-narudzbe-vm";
 import {AutentifikacijaHelper} from "../helper/autentifikacija-helper";
 import {LoginInformacije} from "../helper/login-informacije";
+import {AngularFireDatabase} from "@angular/fire/compat/database";
 
 @Component({
   selector: 'app-posebna-ponuda',
@@ -19,7 +20,7 @@ export class PosebnaPonudaComponent implements OnInit {
   novaStavkaNarudzbe : StavkaNarudzbe = new StavkaNarudzbe();
   closeModal: boolean = false;
 
-  constructor(private httpKlijent : HttpClient, private router : Router) {
+  constructor(private httpKlijent : HttpClient, private router : Router, private db : AngularFireDatabase) {
     this.loginInformacije = AutentifikacijaHelper.getLoginInfo();
   }
 
@@ -41,6 +42,10 @@ export class PosebnaPonudaComponent implements OnInit {
   ukloni(id : number) {
     this.httpKlijent.post(MyConfig.adresaServera + "/PosebnaPonuda/Ukloni", id, MyConfig.httpOpcije()).subscribe((result : any)=>{
       this.getPosebnaPonuda();
+      this.db.list("PosebnaPonudaUkloni").set("Ukloni",true);
+      setTimeout(()=>{
+        this.db.list("PosebnaPonudaUkloni").set("Ukloni",false);
+      },650);
     });
   }
 
