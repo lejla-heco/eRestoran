@@ -37,6 +37,11 @@ export class AppComponent {
       if (podatak.val().Notifikacija && this.loginInformacije.isPermisijaKorisnik){
         this.firebaseSadrzajNotifikacije = "Snižena stavka menija: " + podatak.val().NazivStavke + " po cijeni: " + podatak.val().Cijena + " KM";
         this.firebaseNotifikacija = true;
+        if (this.router.url == "/posebna-ponuda") {
+          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+          this.router.onSameUrlNavigation = 'reload';
+          this.router.navigate(["/posebna-ponuda"]);
+        }
       }
     });
   }
