@@ -4,6 +4,8 @@ import {Dostavljac} from "./view-models/dostavljac-vm";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {MyConfig} from "../my-config";
+import {AutentifikacijaToken} from "../helper/autentifikacija-token";
+import {AutentifikacijaHelper} from "../helper/autentifikacija-helper";
 
 @Component({
   selector: 'app-dostavljac',
@@ -61,5 +63,22 @@ export class DostavljacComponent implements OnInit {
     setTimeout(() => {
       this.obavjestenje = false;
     },1000);
+  }
+
+  generisiIzvjestaj() {
+    let autentifikacijaToken:AutentifikacijaToken = AutentifikacijaHelper.getLoginInfo().autentifikacijaToken;
+    let mojtoken = "";
+
+    if (autentifikacijaToken!=null)
+      mojtoken = autentifikacijaToken.vrijednost;
+
+    this.httpKlijent.get(MyConfig.adresaServera+"/ReportDostavljac/PreuzmiIzvjestaj", {
+      responseType: 'blob',
+      headers: { 'autentifikacija-token': mojtoken, }
+    }).subscribe((response:any)=>{
+      console.log(response);
+      var link = window.URL.createObjectURL(response);
+      window.open(link);
+    });
   }
 }

@@ -5,14 +5,6 @@
     <UserSecretsId>d34a87ca-df94-40ff-9646-3a36e6c2616a</UserSecretsId>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Reporti\ReportDostavljaci.rdlc" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Reporti\ReportDostavljaci.rdlc" />
-  </ItemGroup>
-
 	<ItemGroup>
 		<PackageReference Include="AspNetCore.Reporting" Version="2.1.0" />
 		<PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="5.0.12" />

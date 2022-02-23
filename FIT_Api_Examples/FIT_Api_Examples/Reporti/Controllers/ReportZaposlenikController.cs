@@ -25,6 +25,8 @@ namespace FIT_Api_Examples.Reporti
         [HttpGet]
         public List<ReportZaposleniciRow> getZaposlenici()
         {
+            if (!HttpContext.GetLoginInfo().isPermisijaAdministrator)
+                return null;
 
             List<ReportZaposleniciRow> zaposlenici = _dbContext.Zaposlenik.Select(
                 z => new ReportZaposleniciRow()
@@ -43,6 +45,8 @@ namespace FIT_Api_Examples.Reporti
         [HttpGet]
         public ActionResult PreuzmiIzvjestaj()
         {
+            if (!HttpContext.GetLoginInfo().isPermisijaAdministrator)
+                return BadRequest("Nemate ovlasti za generisanje izvještaja!");
             try
             {
                 LocalReport localReport = new("Reporti/ReportZaposlenici.rdlc");
@@ -50,7 +54,7 @@ namespace FIT_Api_Examples.Reporti
                 localReport.AddDataSource("DataSetZaposlenici", podaci);
 
 
-                //KorisnickiNalog korisnik = HttpContext.GetLoginInfo().autentifikacijaToken.korisnickiNalog;
+                KorisnickiNalog korisnik = HttpContext.GetLoginInfo().autentifikacijaToken.korisnickiNalog;
 
                 var poslovnice = _dbContext.Poslovnica.ToList();
                 string nazivi = "";
@@ -62,7 +66,7 @@ namespace FIT_Api_Examples.Reporti
                 });
 
                 Dictionary<string, string> parametri = new Dictionary<string, string>();
-                parametri.Add("AutorIzvjestaja", $"Lejla Hećo");
+                parametri.Add("AutorIzvjestaja", $"{korisnik.Ime} {korisnik.Prezime}");
                 parametri.Add("UkupnaZarada", podaci.Sum(p => p.OstvarenaZarada).ToString());
                 parametri.Add("Adresa", $"Adrese: {nazivi}");
                 parametri.Add("BrojTelefona", $"{brojeviTelefona}");
