@@ -3,3 +3,21 @@
     stroke-dashoffset: 0;
   }
 }
+
+@keyframes fill {
+  form {
+    fill: transparent;
+  }
+  to {
+    fill: whitesmoke;
+  }
+}
+
+@keyframes fill-mask {
+  from{
+    fill : black;
+  }
+  to {
+    fill: #c8a97e;
+  }
+}

@@ -9,9 +9,7 @@ function svg() {
     elementi[i + 1].style.animation = `line-anim 2s ease forwards ${delay}s`;
     delay += 0.3;
   }
-  setTimeout(() => {
-    for (let i = 0; i < 9; i++) {
-      elementi[i + 1].style.strokeDasharray = 0;
-    }
-  }, 2800);
+
+  document.getElementById("eRestoranLogo").style.animation = "fill 1s ease forwards 3.5s";
+  elementi[0].style.animation = "fill-mask 1s ease forwards 3.5s"
 }
