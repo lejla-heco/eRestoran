@@ -7,6 +7,8 @@ import {LoginInformacije} from "../helper/login-informacije";
 import {Poslovnica} from "./view-models/poslovnica-vm";
 import {Router} from "@angular/router";
 
+declare function svg():any;
+
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
@@ -31,6 +33,7 @@ export class HomePageComponent implements OnInit {
   ngOnInit() {
     this.getPosebnaPonuda();
     this.getPoslovnice();
+    svg();
   }
 
   private getPosebnaPonuda() {
